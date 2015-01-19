@@ -1,0 +1,215 @@
+package es.art83.ticTacToe.views.beans;
+
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+
+import org.apache.logging.log4j.LogManager;
+
+import es.art83.ticTacToe.controllers.CreateGameController;
+import es.art83.ticTacToe.controllers.LogoutController;
+import es.art83.ticTacToe.controllers.OpenGameController;
+import es.art83.ticTacToe.controllers.PlaceCardController;
+import es.art83.ticTacToe.controllers.SaveGameController;
+import es.art83.ticTacToe.controllers.ShowGameController;
+import es.art83.ticTacToe.models.entities.CoordinateEntity;
+import es.art83.ticTacToe.models.utils.ColorModel;
+
+@ManagedBean
+public class GameViewBean extends ViewBean {
+
+    private List<String> gameNames;
+
+    private String gameNameSelected;
+
+    private boolean createdGame;
+
+    private String gameName;
+
+    private ColorModel[][] fichas;
+
+    private boolean gameOver;
+
+    private ColorModel winner;
+
+    private boolean savedGame;
+
+    private ColorModel turn;
+
+    private boolean fullBoard;
+
+    private List<CoordinateEntity> validSourceCoordinates;
+
+    private String selectedSourceCoordinate;
+
+    private List<CoordinateEntity> validDestinationCoordinates;
+
+    private String selectedDestinationCoordinate;
+
+    @PostConstruct
+    public void update() {
+        ShowGameController showGameController = this.getControllerFactory().getShowGameController();
+        this.createdGame = showGameController.createdGame();
+        if (this.createdGame) {
+            this.gameName = this.getControllerFactory().getShowGameController().getNameGame();
+            this.fichas = this.getControllerFactory().getShowGameController().completeBoard();
+            this.gameOver = this.getControllerFactory().getShowGameController().isGameOver();
+            if (this.gameOver) {
+                this.winner = this.getControllerFactory().getShowGameController().winner();
+            } else {
+                this.savedGame = this.getControllerFactory().getShowGameController().isSavedGame();
+                this.turn = this.getControllerFactory().getShowGameController().turnColor();
+                this.fullBoard = this.getControllerFactory().getShowGameController().isFullBoard();
+                if (this.fullBoard) {
+                    this.validSourceCoordinates = this.getControllerFactory()
+                            .getShowGameController().validSourceCoordinates();
+                }
+                this.validDestinationCoordinates = this.getControllerFactory()
+                        .getShowGameController().validDestinationCoordinates();
+            }
+        }
+        this.gameNames = this.getControllerFactory().getStartGameController().readGameNames();
+    }
+
+    public String getGameNameSelected() {
+        return gameNameSelected;
+    }
+
+    public void setGameNameSelected(String gameNameSelected) {
+        this.gameNameSelected = gameNameSelected;
+    }
+
+    public List<String> getGameNames() {
+        return this.gameNames;
+    }
+
+    public boolean isCreatedGame() {
+        return this.createdGame;
+    }
+
+    public boolean isZeroGameNames() {
+        return this.gameNames.size() == 0;
+    }
+
+    public boolean isGameNamed() {
+        return this.gameName != null;
+    }
+
+    public String getGameName() {
+        return this.gameName;
+    }
+
+    public ColorModel[][] getFichas() {
+        return fichas;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public ColorModel getWinner() {
+        return winner;
+    }
+
+    public boolean isSavedGame() {
+        return savedGame;
+    }
+
+    public ColorModel getTurn() {
+        return turn;
+    }
+
+    public boolean isFullBoard() {
+        return fullBoard;
+    }
+
+    public List<CoordinateEntity> getValidSourceCoordinates() {
+        return validSourceCoordinates;
+    }
+
+    public String getSelectedSourceCoordinate() {
+        return selectedSourceCoordinate;
+    }
+
+    public void setSelectedSourceCoordinate(String selectedSourceCoordinate) {
+        this.selectedSourceCoordinate = selectedSourceCoordinate;
+    }
+
+    public List<CoordinateEntity> getValidDestinationCoordinates() {
+        return validDestinationCoordinates;
+    }
+
+    public String getSelectedDestinationCoordinate() {
+        return this.selectedDestinationCoordinate;
+    }
+
+    public void setSelectedDestinationCoordinate(String selectedDestinationCoordinate) {
+        this.selectedDestinationCoordinate = selectedDestinationCoordinate;
+    }
+
+    // P R O C E S S -------- ---------- ---------- ---------- ----------
+    public String createGame() {
+        CreateGameController createGameController = this.getControllerFactory()
+                .getCreateGameControler();
+        createGameController.createGame();
+        this.update();
+        LogManager.getLogger("Bean:" + createGameController.getClass().getName()).info(
+                "Creado game");
+        return null;
+    }
+
+    public String logout() {
+        String next = null;
+        LogoutController logoutController = this.getControllerFactory().getLogoutController();
+        if (!logoutController.isSavedGame()) {
+            next = "logout";
+        } else {
+            logoutController.logout();
+            LogManager.getLogger("Bean:" + logoutController.getClass().getName()).info("Usuario cerrado");
+            next = "/login";
+        }
+        return next;
+    }
+
+    public String placeCard() {
+        PlaceCardController placeCardController = this.getControllerFactory()
+                .getPlaceCardController();
+        if (this.fullBoard) {
+            placeCardController.placeCard(new CoordinateEntity(this.selectedSourceCoordinate),
+                    new CoordinateEntity(this.selectedDestinationCoordinate));
+        } else {
+            placeCardController.placeCard(new CoordinateEntity(this.selectedDestinationCoordinate));
+        }
+        LogManager.getLogger("Bean:" + placeCardController.getClass().getName()).info(
+                "Place card: " + this.selectedSourceCoordinate + ">"
+                        + this.selectedDestinationCoordinate);
+        this.update();
+        return null;
+    }
+
+    public String saveGame() {
+        String result = null;
+        if (this.isGameNamed()) {
+            SaveGameController saveGameController = this.getControllerFactory()
+                    .getSaveGameController();
+            saveGameController.saveGame();
+            this.savedGame = true;
+            LogManager.getLogger("Bean:" + saveGameController.getClass().getName()).info(
+                    "Partida salvada: " + this.gameName);
+
+        } else {
+            result = "save";
+        }
+        return result;
+    }
+
+    public String openGame() {
+        OpenGameController openGameController = this.getControllerFactory().getOpenGameController();
+        openGameController.openGame(this.gameNameSelected);
+        this.update();
+        LogManager.getLogger("Bean:" + openGameController.getClass().getName()).info("openGame");
+        return null;
+    }
+
+}

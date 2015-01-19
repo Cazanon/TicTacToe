@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"        
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Tic Tac Toe</title>
+</h:head>
+<h:body>
+	<h1>Tic Tac Toe. Game</h1>
+
+	<h:panelGroup rendered="#{gameViewBean.createdGame}">
+		<fieldset>
+			<legend>Board</legend>
+			<h:panelGroup rendered="#{gameViewBean.gameNamed}">
+				<h:outputText value="Game: " />
+				<h:outputText value="#{gameViewBean.gameName}" />
+			</h:panelGroup>
+			<h:dataTable border="1" value="#{gameViewBean.fichas}" var="fila">
+				<h:column>#{fila[0]}</h:column>
+				<h:column>#{fila[1]}</h:column>
+				<h:column>#{fila[2]}</h:column>
+			</h:dataTable>
+			<h:panelGroup rendered="#{!gameViewBean.gameOver}">
+				<h:form id="saveGameViewBean" rendered="#{!gameViewBean.savedGame}">
+					<h:commandButton value="Save game"
+						action="#{gameViewBean.saveGame}" />
+				</h:form>
+				<h:form id="placeCardGameViewBean">
+					<h:panelGrid columns="2">
+						<h:outputText value="Turn: " />
+						<h:outputText value="#{gameViewBean.turn}" />
+						<h:outputText value="Valid source coordinates: "
+							rendered="#{gameViewBean.fullBoard}" />
+						<h:selectOneMenu value="#{gameViewBean.selectedSourceCoordinate}"
+							rendered="#{gameViewBean.fullBoard}">
+							<f:selectItems value="#{gameViewBean.validSourceCoordinates}" />
+						</h:selectOneMenu>
+						<h:outputText value="Valid destination coordinates: " />
+						<h:selectOneMenu
+							value="#{gameViewBean.selectedDestinationCoordinate}">
+							<f:selectItems
+								value="#{gameViewBean.validDestinationCoordinates}" />
+						</h:selectOneMenu>
+						<h:outputText value="" />
+						<h:commandButton value="Place card"
+							action="#{gameViewBean.placeCard}" />
+					</h:panelGrid>
+				</h:form>
+			</h:panelGroup>
+
+			<h:panelGroup rendered="#{gameViewBean.gameOver}">
+				<h:outputText value="The winner is : " />
+				<h:outputText value="#{gameViewBean.winner}" />
+			</h:panelGroup>
+
+		</fieldset>
+	</h:panelGroup>
+
+	<fieldset>
+		<legend>Start game</legend>
+		<h:form id="startGame">
+			<h:commandButton value="New game" action="#{gameViewBean.createGame}" />
+			<h:panelGroup rendered="#{!gameViewBean.zeroGameNames}">
+				<h:selectOneMenu value="#{gameViewBean.gameNameSelected}">
+					<f:selectItems value="#{gameViewBean.gameNames}" />
+				</h:selectOneMenu>
+				<h:commandButton value="Open game" action="#{gameViewBean.openGame}" />
+			</h:panelGroup>
+		</h:form>
+	</fieldset>
+
+	<h:form id="logout">
+		<h:commandButton value="Logout" action="#{gameViewBean.logout}" />
+	</h:form>
+
+</h:body>
+</html>

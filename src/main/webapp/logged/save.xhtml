@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"        
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Tic Tac Toe</title>
+</h:head>
+<h:body>
+	<h1>Tic Tac Toe. Save</h1>
+
+	<h:selectOneListbox readonly="true"
+		rendered="#{!saveViewBean.zeroGameNames}">
+		<f:selectItems value="#{saveViewBean.gameNames}" />
+	</h:selectOneListbox>
+	<h:form id="save" rendered="#{!saveViewBean.overWrite}">
+		<h:panelGrid columns="1">
+			<h:inputText id="gameName" value="#{saveViewBean.gameName}" />
+			<h:commandButton value="Save game" action="#{saveViewBean.saveGame}" />
+			<h:commandButton value="Cancel" action="game.jsf" />
+		</h:panelGrid>
+	</h:form>
+	<h:form id="over" rendered="#{saveViewBean.overWrite}">
+		<h:inputHidden value="#{saveViewBean.gameName}" />
+		<h:panelGrid columns="1">
+			<h:message for="over" style="color:red" />
+			<h:commandButton value="Over write"
+				action="#{saveViewBean.overWriteGame}" />
+			<h:commandButton value="Cancel" action="save.jsf" />
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>
