@@ -70,5 +70,10 @@ public class SessionEntity {
     public void setSaved(boolean saved) {
         this.saved = saved;
     }
+
+    @Override
+    public String toString() {
+        return "SessionEntity[" + id + "]";
+    }
     
 }

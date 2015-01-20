@@ -21,7 +21,7 @@ public class SessionResource {
     protected static final String PATH = "/sessions";
 
     protected void info(String msg) {
-        LogManager.getLogger(this.getClass()).info(PATH + msg);
+        LogManager.getLogger(this.getClass()).info(PATH + ":" + msg);
     }
 
     protected SessionEntity readSessionEntity(Integer id) {
@@ -47,7 +47,7 @@ public class SessionResource {
         DAOFactory.getFactory().getContextDAO().create(sessionEntity);
         this.info("POST/ session_id: " + sessionEntity.getId());
         return Response.created(URI.create(PATH + "/" + sessionEntity.getId()))
-                .entity(sessionEntity.getId()).build();
+                .entity(new Integer(sessionEntity.getId())).build();
     }
 
     @Path("/{id}/logged")
@@ -62,7 +62,6 @@ public class SessionResource {
 
     @Path("/{id}/state")
     @GET
-    @Produces(MediaType.APPLICATION_XML)
     public TicTacToeStateModel state(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         TicTacToeStateModel result = sessionEntity.getTicTacToeStateModel();
@@ -72,7 +71,6 @@ public class SessionResource {
 
     @Path("/{id}/savedGame")
     @GET
-    @Produces(MediaType.APPLICATION_XML)
     public String savedGame(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         Boolean result = sessionEntity.isSavedGame();

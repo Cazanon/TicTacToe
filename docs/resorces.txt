@@ -7,7 +7,7 @@ SessionResource: /sessions
 SessionPlayerResource: /sessions/id/player
     /POST Logea a un usuario en la sesión
     /DELETE realiza un logout, borra el usuario asociado a la sesión
-    /nameGames Devuelve una lista de los nombres de partidas del usuario
+    /nameGames /GET Devuelve una lista de los nombres de partidas del usuario
     
 SessionGameResource: /sessions/id/game
     ?name /POST Crea un juego nuevo o abre uno ya existente si se le pasa el nombre
