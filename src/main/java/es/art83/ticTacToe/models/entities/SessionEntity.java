@@ -11,7 +11,7 @@ import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
 @Entity
-public class ContextEntity {
+public class SessionEntity {
     @Id
     @GeneratedValue
     private int id;
@@ -28,7 +28,7 @@ public class ContextEntity {
 
     private boolean saved;
 
-    public ContextEntity() {
+    public SessionEntity() {
         this.ticTacToeStateModel = TicTacToeStateModel.INITIAL;
         this.player = null;
         this.game = null;

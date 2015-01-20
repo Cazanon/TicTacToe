@@ -1,0 +1,33 @@
+SessionResource: /sessions
+    /POST  Crea una sesión
+    /id/logged /GET Si está logeado
+    /id/state /GET Estado de la aplicación
+    /id/savedGame /GET Si el la sesión está salvada
+
+SessionPlayerResource: /sessions/id/player
+    /POST Logea a un usuario en la sesión
+    /DELETE realiza un logout, borra el usuario asociado a la sesión
+    /nameGames Devuelve una lista de los nombres de partidas del usuario
+    
+SessionGameResource: /sessions/id/game
+    ?name /POST Crea un juego nuevo o abre uno ya existente si se le pasa el nombre
+    /gameOver /GET Si existe tres en raya
+    /name /GET nombre del juego, o null si no existe
+    /fullBoard /GET Si el tablero está lleno
+    /allPieces /GET Devuelve todas las fichas
+    /winner /GET Color del ganador
+    /turn /GET Color del turno 
+    /validSourceCoordinates /GET coordenadas fuentes válidas
+    /validDestinationCoordinates /GET coordenadas destino válidas
+    /id /GET Identificador del juego
+    /piece /POST Coloca ficha en el tablero
+    /piece;row;column /DELETE Borra ficha del tablero
+    
+PlayerResource: /players
+    /POST crea un jugador
+    /user /DELETE  Borra un usuario
+    
+GameResource: /games
+    /POST Crea un juego nuevo en la BD
+    /id /DELETE Borra un juego de la BD
+    /PUT actualiza un juego

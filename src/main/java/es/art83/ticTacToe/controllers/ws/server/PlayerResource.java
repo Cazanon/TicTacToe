@@ -3,8 +3,10 @@ package es.art83.ticTacToe.controllers.ws.server;
 import java.net.URI;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -29,4 +31,11 @@ public class PlayerResource {
         }
         return result;
     }
+    
+    @Path("/{user}")
+    @DELETE
+    public void delete(@PathParam("user") String user){
+        DAOFactory.getFactory().getPlayerDAO().deleteByID(user);
+    }
+    
 }

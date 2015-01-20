@@ -1,13 +1,13 @@
 package es.art83.ticTacToe.models.daos.jpa;
 
 import es.art83.ticTacToe.models.daos.ContextDAO;
-import es.art83.ticTacToe.models.entities.ContextEntity;
+import es.art83.ticTacToe.models.entities.SessionEntity;
 
-public class ContextDAOJPA extends TransactionGenericDAOJPA<ContextEntity, Integer> implements
+public class ContextDAOJPA extends TransactionGenericDAOJPA<SessionEntity, Integer> implements
         ContextDAO {
 
     public ContextDAOJPA() {
-        super(ContextEntity.class);
+        super(SessionEntity.class);
     }
 
 
