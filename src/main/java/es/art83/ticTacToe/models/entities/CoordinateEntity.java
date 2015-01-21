@@ -4,35 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.Embeddable;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import es.art83.ticTacToe.models.utils.DirectionModel;
 
 @XmlRootElement
-@Entity
+@Embeddable
 public class CoordinateEntity {
     public static final int MIN = 0;
 
     public static final int MAX = 2;
-
-    @Id
-    @GeneratedValue
-    private int id;
 
     private int row;
 
     @Column(name = "colum")
     // Colisiona con SQL
     private int column;
-
-    @OneToOne
-    @JoinColumn
-    private PieceEntity piece;
 
     public CoordinateEntity(int row, int column) {
         this.setRow(row);
@@ -49,10 +37,6 @@ public class CoordinateEntity {
         this(0, 0);
     }
     
-    public int getId() {
-        return id;
-    }
-
     public int getRow() {
         return this.row;
     }
@@ -67,15 +51,6 @@ public class CoordinateEntity {
 
     public void setColumn(int column) {
         this.column = column;
-    }
-
-    //JPA
-    public PieceEntity getPiece() {
-        return piece;
-    }
-
-    public void setPiece(PieceEntity piece) {
-        this.piece = piece;
     }
 
     public static List<CoordinateEntity> allCoordinates() {

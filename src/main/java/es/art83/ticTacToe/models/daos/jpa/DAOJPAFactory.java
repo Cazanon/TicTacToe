@@ -1,6 +1,6 @@
 package es.art83.ticTacToe.models.daos.jpa;
 
-import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,19 +13,15 @@ import es.art83.ticTacToe.models.daos.PlayerDAO;
 public class DAOJPAFactory extends DAOFactory {
     private static final String PERSISTENCE_UNIT = "tictactoe";
 
-    private EntityManager em;
+    private static EntityManagerFactory emf = Persistence
+            .createEntityManagerFactory(PERSISTENCE_UNIT);
 
     public DAOJPAFactory() {
-        this.em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT).createEntityManager();
-        LogManager.getLogger(DAOJPAFactory.class).info("createEntityManager");
+        LogManager.getLogger(DAOJPAFactory.class).info("create Entity Manager Factory");
     }
 
-    public EntityManager getEm() {
-        if (!em.isOpen()) {
-            em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT).createEntityManager();
-            LogManager.getLogger(DAOJPAFactory.class).info("createEntityManager");
-        }
-        return em;
+    public static EntityManagerFactory getEmf() {
+        return emf;
     }
 
     @Override

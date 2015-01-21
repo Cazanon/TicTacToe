@@ -2,6 +2,7 @@ package es.art83.ticTacToe.models.daos.jpa;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -12,7 +13,7 @@ import es.art83.ticTacToe.models.daos.GameDAO;
 import es.art83.ticTacToe.models.entities.GameEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 
-public class GameDAOJPA extends TransactionGenericDAOJPA<GameEntity, Integer> implements GameDAO {
+public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements GameDAO {
 
     public GameDAOJPA() {
         super(GameEntity.class);
@@ -20,6 +21,7 @@ public class GameDAOJPA extends TransactionGenericDAOJPA<GameEntity, Integer> im
 
     @Override
     public List<String> findPlayerGameNames(PlayerEntity player) {
+        EntityManager entityManager = DAOJPAFactory.getEmf().createEntityManager();
         // Se crea un criterio de consulta
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<String> query = builder.createQuery(String.class);
@@ -35,11 +37,14 @@ public class GameDAOJPA extends TransactionGenericDAOJPA<GameEntity, Integer> im
         TypedQuery<String> tq = entityManager.createQuery(query);
         tq.setFirstResult(0);
         tq.setMaxResults(0); // Se buscan todos
-        return tq.getResultList();
+        List<String> result = tq.getResultList();
+        entityManager.close();
+        return result;
     }
 
     @Override
     public GameEntity findGame(PlayerEntity player, String gameName) {
+        EntityManager entityManager = DAOJPAFactory.getEmf().createEntityManager();
         // Se crea un criterio de consulta
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<GameEntity> query = builder.createQuery(GameEntity.class);
@@ -55,7 +60,9 @@ public class GameDAOJPA extends TransactionGenericDAOJPA<GameEntity, Integer> im
         query.where(predicate);
         // Se crea el resultado
         TypedQuery<GameEntity> tq = entityManager.createQuery(query);
-        return tq.getSingleResult();
+        GameEntity gameEntity = tq.getSingleResult();
+        entityManager.close();
+        return gameEntity;
     }
 
 }

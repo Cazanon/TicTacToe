@@ -3,13 +3,10 @@ package es.art83.ticTacToe.models.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import es.art83.ticTacToe.models.utils.ColorModel;
 import es.art83.ticTacToe.models.utils.DirectionModel;
@@ -17,20 +14,15 @@ import es.art83.ticTacToe.models.utils.DirectionModel;
 @Entity
 public class BoardEntity {
     private static final int FULL_BOARD = 6;
+
     private static final int TIC_TAC_TOE = FULL_BOARD / 2;
-    
+
     @Id
     @GeneratedValue
     private int id;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "board")
+
+    @OneToMany
     private List<PieceEntity> pieces;
-    
-    @OneToOne
-    @JoinColumn
-    private GameEntity game;
-
-
 
     public BoardEntity() {
         this(new ArrayList<>());
@@ -47,16 +39,6 @@ public class BoardEntity {
     public void setPieces(List<PieceEntity> pieces) {
         this.pieces = pieces;
     }
-    
-    //JPA
-    public GameEntity getGame() {
-        return this.game;
-    }
-
-    public void setGame(GameEntity game) {
-        this.game = game;
-    }
-    
 
     public List<CoordinateEntity> validDestinationCoordinates() {
         List<CoordinateEntity> coordinates = CoordinateEntity.allCoordinates();
@@ -65,7 +47,6 @@ public class BoardEntity {
         }
         return coordinates;
     }
-
 
     public List<CoordinateEntity> coordinatesColor(ColorModel color) {
         List<CoordinateEntity> coordenadas = new ArrayList<>();

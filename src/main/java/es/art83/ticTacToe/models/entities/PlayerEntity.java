@@ -1,11 +1,7 @@
 package es.art83.ticTacToe.models.entities;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -15,9 +11,6 @@ public class PlayerEntity {
     private String user;
 
     private String password;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
-    private List<GameEntity> games;
 
     public PlayerEntity(String user, String password) {
         this.user = user;

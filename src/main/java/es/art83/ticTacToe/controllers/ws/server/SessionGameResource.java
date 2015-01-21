@@ -45,8 +45,7 @@ public class SessionGameResource extends SessionResource {
             sessionEntity.setSaved(true);
             DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
             this.info("POST/" + sessionEntity.getId() + "/game");
-            return Response.created(URI.create(PATH + sessionEntity.getId() + "/game"))
-                    .build();
+            return Response.created(URI.create(PATH + sessionEntity.getId() + "/game")).build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
@@ -83,7 +82,6 @@ public class SessionGameResource extends SessionResource {
                 "GET/" + sessionEntity.getId() + "/fullBoard " + result);
         return Boolean.toString(result);
     }
-
 
     @Path("allPieces")
     @GET
@@ -144,7 +142,7 @@ public class SessionGameResource extends SessionResource {
         this.info("GET/" + sessionEntity.getId() + "/game/id " + result);
         return result;
     }
-    
+
     @Path("/piece")
     @POST
     @Consumes(MediaType.APPLICATION_XML)
@@ -159,9 +157,8 @@ public class SessionGameResource extends SessionResource {
         }
         DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
         this.info("POST/" + sessionEntity.getId() + "/piece");
-        return Response.created(
-                URI.create("/contexts/" + sessionEntity.getId() + "/piece/"
-                        + coordinateEntity.getId())).build();
+        return Response.created(URI.create("/contexts/" + sessionEntity.getId() + "/piece/"))
+                .build();
     }
 
     @Path("/piece")
@@ -173,6 +170,5 @@ public class SessionGameResource extends SessionResource {
         sessionEntity.getGame().deleteCard(new CoordinateEntity(row, column));
         this.info("DELETE/" + sessionEntity.getId() + "/piece");
     }
-
 
 }

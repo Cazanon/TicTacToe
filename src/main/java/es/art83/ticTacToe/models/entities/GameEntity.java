@@ -3,10 +3,10 @@ package es.art83.ticTacToe.models.entities;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -16,19 +16,20 @@ import es.art83.ticTacToe.models.utils.ColorModel;
 public class GameEntity {
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
     
     private String name;
 
-    @ManyToOne
-    @JoinColumn
+    @Embedded
+    private TurnEntity turn;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private BoardEntity board;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     private PlayerEntity player;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "game")
-    private BoardEntity board;
     
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "game")
-    private TurnEntity turn;
 
     public GameEntity(String name, PlayerEntity playerEntity, BoardEntity boardClone,
             TurnEntity turnClone) {

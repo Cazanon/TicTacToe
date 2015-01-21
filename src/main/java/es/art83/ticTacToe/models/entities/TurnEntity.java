@@ -1,24 +1,12 @@
 package es.art83.ticTacToe.models.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.Embeddable;
 
 import es.art83.ticTacToe.models.utils.ColorModel;
 
-@Entity
+@Embeddable
 public class TurnEntity {
-    @Id
-    @GeneratedValue
-    private int id;
-
     private ColorModel color;
-
-    @OneToOne
-    @JoinColumn
-    private GameEntity game;
 
     public TurnEntity(ColorModel color) {
         this.setColor(color);
@@ -36,15 +24,6 @@ public class TurnEntity {
         this.color = color;
     }
 
-    // JPA
-    public GameEntity getGame() {
-        return game;
-    }
-
-    public void setGame(GameEntity game) {
-        this.game = game;
-    }
-
     public ColorModel getColorChanged() {
         if (this.color == ColorModel.X) {
             return ColorModel.O;
@@ -54,11 +33,7 @@ public class TurnEntity {
     }
 
     public void change() {
-        if (this.color == ColorModel.X) {
-            this.color = ColorModel.O;
-        } else {
-            this.color = ColorModel.X;
-        }
+        this.color = this.getColorChanged();
     }
 
     public void update(TurnEntity turn) {

@@ -1,9 +1,11 @@
 package es.art83.ticTacToe.models.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import es.art83.ticTacToe.models.entities.GameEntity;
@@ -16,17 +18,16 @@ public class SessionEntity {
     @GeneratedValue
     private int id;
 
+    @Enumerated(EnumType.STRING)
     private TicTacToeStateModel ticTacToeStateModel;
 
-    @OneToOne
-    @JoinColumn
+    private boolean saved;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private PlayerEntity player;
 
-    @OneToOne
-    @JoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
     private GameEntity game;
-
-    private boolean saved;
 
     public SessionEntity() {
         this.ticTacToeStateModel = TicTacToeStateModel.INITIAL;
@@ -75,5 +76,5 @@ public class SessionEntity {
     public String toString() {
         return "SessionEntity[" + id + "]";
     }
-    
+
 }
