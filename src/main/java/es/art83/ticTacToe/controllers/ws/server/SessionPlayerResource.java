@@ -31,7 +31,7 @@ public class SessionPlayerResource extends SessionResource {
             SessionEntity sessionEntity = this.readSessionEntity(id);
             sessionEntity.setPlayer(playerEntityBD);
             sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);
-            DAOFactory.getFactory().getContextDAO().update(sessionEntity);
+            DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
             this.info("POST/" + sessionEntity.getId() + "/player");
             return Response.created(URI.create(PATH + sessionEntity.getId() + "/player"))
                     .build();
@@ -47,7 +47,7 @@ public class SessionPlayerResource extends SessionResource {
         sessionEntity.setGame(null);
         sessionEntity.setSaved(true);
         sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.FINAL);
-        DAOFactory.getFactory().getContextDAO().update(sessionEntity);
+        DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
         this.info("DELETE/" + sessionEntity.getId() + "/player...");
     }
 

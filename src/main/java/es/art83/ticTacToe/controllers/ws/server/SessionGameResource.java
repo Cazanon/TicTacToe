@@ -43,7 +43,7 @@ public class SessionGameResource extends SessionResource {
             sessionEntity.setGame(gameEntity);
             sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.OPENED_GAME);
             sessionEntity.setSaved(true);
-            DAOFactory.getFactory().getContextDAO().update(sessionEntity);
+            DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
             this.info("POST/" + sessionEntity.getId() + "/game");
             return Response.created(URI.create(PATH + sessionEntity.getId() + "/game"))
                     .build();
@@ -157,7 +157,7 @@ public class SessionGameResource extends SessionResource {
         } else {
             sessionEntity.setSaved(false);
         }
-        DAOFactory.getFactory().getContextDAO().update(sessionEntity);
+        DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
         this.info("POST/" + sessionEntity.getId() + "/piece");
         return Response.created(
                 URI.create("/contexts/" + sessionEntity.getId() + "/piece/"

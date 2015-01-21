@@ -12,8 +12,8 @@ import javax.persistence.criteria.Root;
 
 import org.apache.logging.log4j.LogManager;
 
+import es.art83.ticTacToe.models.daos.DAOFactory;
 import es.art83.ticTacToe.models.daos.TransactionGenericDAO;
-
 
 public class TransactionGenericDAOJPA<T, ID> implements TransactionGenericDAO<T, ID> {
     private Class<T> persistentClass;
@@ -22,19 +22,22 @@ public class TransactionGenericDAOJPA<T, ID> implements TransactionGenericDAO<T,
 
     public TransactionGenericDAOJPA(Class<T> persistentClass) {
         this.persistentClass = persistentClass;
-        this.entityManager = ((DAOJPAFactory) DAOJPAFactory.getFactory()).getEm();
+        this.entityManager = ((DAOJPAFactory) DAOFactory.getFactory()).getEm();
     }
 
     @Override
     public void create(T entity) {
-        LogManager.getLogger(TransactionGenericDAOJPA.class).info("create: " + entity);
-        if (entityManager.getTransaction().isActive())
+        if (entityManager.getTransaction().isActive()) {
             entityManager.persist(entity);
-        else {
+            LogManager.getLogger(TransactionGenericDAOJPA.class).info(
+                    "create(Transaccion abierta): " + entity);
+        } else {
             entityManager.getTransaction().begin();
             try {
                 entityManager.persist(entity);
                 entityManager.getTransaction().commit();
+                LogManager.getLogger(TransactionGenericDAOJPA.class).info(
+                        "create(Transaccion cerrada): " + entity);
             } catch (Exception e) {
                 LogManager.getLogger(TransactionGenericDAOJPA.class).error("create: " + e);
                 if (entityManager.getTransaction().isActive())
@@ -69,14 +72,17 @@ public class TransactionGenericDAOJPA<T, ID> implements TransactionGenericDAO<T,
     // entity debe estar en estado de "Managed"
     @Override
     public void delete(T entity) {
-        LogManager.getLogger(TransactionGenericDAOJPA.class).info("delete: " + entity);
-        if (entityManager.getTransaction().isActive())
+        if (entityManager.getTransaction().isActive()) {
             entityManager.remove(entity);
-        else {
+            LogManager.getLogger(TransactionGenericDAOJPA.class).info(
+                    "delete(Transaccion abierta): " + entity);
+        } else {
             entityManager.getTransaction().begin();
             try {
                 entityManager.remove(entity);
                 entityManager.getTransaction().commit();
+                LogManager.getLogger(TransactionGenericDAOJPA.class).info(
+                        "delete(Transaccion cerrada): " + entity);
             } catch (Exception e) {
                 LogManager.getLogger(TransactionGenericDAOJPA.class).error("delete: " + e);
                 if (entityManager.getTransaction().isActive())
@@ -166,14 +172,18 @@ public class TransactionGenericDAOJPA<T, ID> implements TransactionGenericDAO<T,
 
     @Override
     public void begin() {
-        if (!entityManager.getTransaction().isActive())
+        if (!entityManager.getTransaction().isActive()) {
             entityManager.getTransaction().begin();
+            LogManager.getLogger(TransactionGenericDAOJPA.class).info("Transaccion abierta");
+        }
     }
 
     @Override
     public void commit() {
-        if (entityManager.getTransaction().isActive())
+        if (entityManager.getTransaction().isActive()) {
             entityManager.getTransaction().commit();
+            LogManager.getLogger(TransactionGenericDAOJPA.class).info("Transaccion cerrada");
+        }
     }
 
     @Override

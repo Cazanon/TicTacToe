@@ -3,7 +3,9 @@ package es.art83.ticTacToe.models.daos.jpa;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
-import es.art83.ticTacToe.models.daos.ContextDAO;
+import org.apache.logging.log4j.LogManager;
+
+import es.art83.ticTacToe.models.daos.SessionDAO;
 import es.art83.ticTacToe.models.daos.DAOFactory;
 import es.art83.ticTacToe.models.daos.GameDAO;
 import es.art83.ticTacToe.models.daos.PlayerDAO;
@@ -15,12 +17,13 @@ public class DAOJPAFactory extends DAOFactory {
 
     public DAOJPAFactory() {
         this.em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT).createEntityManager();
+        LogManager.getLogger(DAOJPAFactory.class).info("createEntityManager");
     }
 
     public EntityManager getEm() {
         if (!em.isOpen()) {
-            this.em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT)
-                    .createEntityManager();
+            em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT).createEntityManager();
+            LogManager.getLogger(DAOJPAFactory.class).info("createEntityManager");
         }
         return em;
     }
@@ -36,8 +39,8 @@ public class DAOJPAFactory extends DAOFactory {
     }
 
     @Override
-    public ContextDAO getContextDAO() {
-        return new ContextDAOJPA();
+    public SessionDAO getSessionDAO() {
+        return new SessionDAOJPA();
     }
 
 }

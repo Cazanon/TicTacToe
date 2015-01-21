@@ -25,7 +25,7 @@ public class SessionResource {
     }
 
     protected SessionEntity readSessionEntity(Integer id) {
-        SessionEntity sessionEntity = DAOFactory.getFactory().getContextDAO().read(id);
+        SessionEntity sessionEntity = DAOFactory.getFactory().getSessionDAO().read(id);
         if (sessionEntity != null) {
             return sessionEntity;
         } else {
@@ -44,7 +44,7 @@ public class SessionResource {
     @POST
     public Response create() {
         SessionEntity sessionEntity = new SessionEntity();
-        DAOFactory.getFactory().getContextDAO().create(sessionEntity);
+        DAOFactory.getFactory().getSessionDAO().create(sessionEntity);
         this.info("POST/ session_id: " + sessionEntity.getId());
         return Response.created(URI.create(PATH + "/" + sessionEntity.getId()))
                 .entity(new Integer(sessionEntity.getId())).build();

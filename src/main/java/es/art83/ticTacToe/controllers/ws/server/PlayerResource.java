@@ -17,25 +17,30 @@ import es.art83.ticTacToe.models.entities.PlayerEntity;
 
 @Path("/players")
 public class PlayerResource {
-    
-    //LoginController ---------- ---------- ---------- ---------- ---------- ----------
+
     @POST
     @Consumes(MediaType.APPLICATION_XML)
-    public Response create(PlayerEntity playerEntity){
-        Response result = Response.status(Response.Status.CONFLICT).build();
-        PlayerEntity playerEntityBD = DAOFactory.getFactory().getPlayerDAO().read(playerEntity.getUser());
+    public Response create(PlayerEntity playerEntity) {
+        Response result;
+        PlayerEntity playerEntityBD = DAOFactory.getFactory().getPlayerDAO()
+                .read(playerEntity.getUser());
         if (playerEntityBD == null) {
             DAOFactory.getFactory().getPlayerDAO().create(playerEntity);
-            result = Response.created(URI.create("/players/"+playerEntity.getUser())).entity(playerEntity).build();;
-            LogManager.getLogger(PlayerResource.class).info("POST/players/id: " + playerEntity.getUser());
+            result = Response.created(URI.create("/players/" + playerEntity.getUser())).build();
+            LogManager.getLogger(PlayerResource.class).info(
+                    "POST/players/id: " + playerEntity.getUser());
+        } else {
+            result = Response.status(Response.Status.CONFLICT).build();
+            LogManager.getLogger(PlayerResource.class).info(
+                    "POST/players/id: CONFLICT Usuario ya existente: " + playerEntityBD.toString());
         }
         return result;
     }
-    
+
     @Path("/{user}")
     @DELETE
-    public void delete(@PathParam("user") String user){
+    public void delete(@PathParam("user") String user) {
         DAOFactory.getFactory().getPlayerDAO().deleteByID(user);
     }
-    
+
 }
