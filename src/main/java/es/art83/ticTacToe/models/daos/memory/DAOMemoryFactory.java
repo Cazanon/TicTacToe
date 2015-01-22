@@ -1,5 +1,6 @@
 package es.art83.ticTacToe.models.daos.memory;
 
+import es.art83.ticTacToe.models.daos.PieceDAO;
 import es.art83.ticTacToe.models.daos.SessionDAO;
 import es.art83.ticTacToe.models.daos.DAOFactory;
 
@@ -25,6 +26,12 @@ public class DAOMemoryFactory extends DAOFactory {
 
     @Override
     public SessionDAO getSessionDAO() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public PieceDAO getPieceDAO() {
         // TODO Auto-generated method stub
         return null;
     }

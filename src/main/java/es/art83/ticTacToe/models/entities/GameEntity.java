@@ -26,7 +26,7 @@ public class GameEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private BoardEntity board;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private PlayerEntity player;
 
     

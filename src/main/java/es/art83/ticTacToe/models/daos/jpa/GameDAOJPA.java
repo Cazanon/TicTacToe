@@ -18,7 +18,7 @@ public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements Ga
     public GameDAOJPA() {
         super(GameEntity.class);
     }
-
+    
     @Override
     public List<String> findPlayerGameNames(PlayerEntity player) {
         EntityManager entityManager = DAOJPAFactory.getEmf().createEntityManager();

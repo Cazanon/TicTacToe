@@ -44,6 +44,8 @@ public class GenericDAOJPA<T, ID> implements GenericDAO<T, ID> {
         return entity;
     }
 
+    // Cuando en una relación de colección se elimina un miembro de la
+    // colección, se debe borrar de la tabla explicitamente
     @Override
     public void update(T entity) {
         EntityManager entityManager = DAOJPAFactory.getEmf().createEntityManager();
@@ -64,27 +66,27 @@ public class GenericDAOJPA<T, ID> implements GenericDAO<T, ID> {
     // entity debe estar en estado de "Managed"
     @Override
     public void delete(T entity) {
-        EntityManager entityManager = DAOJPAFactory.getEmf().createEntityManager();
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.remove(entity);
-            entityManager.getTransaction().commit();
-            LogManager.getLogger(GenericDAOJPA.class).info("delete: " + entity);
-        } catch (Exception e) {
-            LogManager.getLogger(GenericDAOJPA.class).error("delete: " + e);
-            if (entityManager.getTransaction().isActive())
-                entityManager.getTransaction().rollback();
-        } finally {
-            entityManager.close();
-        }
-
+        throw new UnsupportedOperationException("Operación no implementada");
     }
 
     @Override
     public void deleteByID(ID id) {
-        T entity = this.read(id);
-        if (entity != null)
-            this.delete(entity);
+        EntityManager entityManager = DAOJPAFactory.getEmf().createEntityManager();
+        T entity = entityManager.find(persistentClass, id);
+        if (entity != null) {
+            try {
+                entityManager.getTransaction().begin();
+                entityManager.remove(entity);
+                entityManager.getTransaction().commit();
+                LogManager.getLogger(GenericDAOJPA.class).info("delete: " + entity);
+            } catch (Exception e) {
+                LogManager.getLogger(GenericDAOJPA.class).error("delete: " + e);
+                if (entityManager.getTransaction().isActive())
+                    entityManager.getTransaction().rollback();
+            } finally {
+                entityManager.close();
+            }
+        }
     }
 
     @Override

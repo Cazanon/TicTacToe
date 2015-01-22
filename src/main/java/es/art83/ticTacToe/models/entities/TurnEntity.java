@@ -1,11 +1,14 @@
 package es.art83.ticTacToe.models.entities;
 
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 import es.art83.ticTacToe.models.utils.ColorModel;
 
 @Embeddable
 public class TurnEntity {
+    @Enumerated(EnumType.STRING)
     private ColorModel color;
 
     public TurnEntity(ColorModel color) {

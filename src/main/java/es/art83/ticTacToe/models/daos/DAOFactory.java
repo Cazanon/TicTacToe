@@ -22,4 +22,6 @@ public abstract class DAOFactory {
     
     public abstract SessionDAO getSessionDAO();
     
+    public abstract PieceDAO getPieceDAO();
+    
 }

@@ -18,7 +18,7 @@ public class CoordinateEntity {
 
     private int row;
 
-    @Column(name = "colum")
+    @Column(name = "COLUM")
     // Colisiona con SQL
     private int column;
 

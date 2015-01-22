@@ -30,6 +30,10 @@ public class PieceEntity {
         this(null, null);
     }
 
+    public int getId() {
+        return id;
+    }
+
     public ColorModel getColor() {
         return color;
     }

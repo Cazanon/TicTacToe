@@ -168,6 +168,7 @@ public class SessionGameResource extends SessionResource {
             @MatrixParam("column") int column) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         sessionEntity.getGame().deleteCard(new CoordinateEntity(row, column));
+        DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
         this.info("DELETE/" + sessionEntity.getId() + "/piece");
     }
 

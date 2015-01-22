@@ -5,6 +5,7 @@ import javax.persistence.Persistence;
 
 import org.apache.logging.log4j.LogManager;
 
+import es.art83.ticTacToe.models.daos.PieceDAO;
 import es.art83.ticTacToe.models.daos.SessionDAO;
 import es.art83.ticTacToe.models.daos.DAOFactory;
 import es.art83.ticTacToe.models.daos.GameDAO;
@@ -37,6 +38,11 @@ public class DAOJPAFactory extends DAOFactory {
     @Override
     public SessionDAO getSessionDAO() {
         return new SessionDAOJPA();
+    }
+
+    @Override
+    public PieceDAO getPieceDAO() {
+        return new PieceDAOJPA();
     }
 
 }
