@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.models.daos;
+package es.art83.ticTacToe.controllers.ws.server;
 
 
 import static org.junit.Assert.*;
@@ -11,7 +11,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.art83.ticTacToe.models.daos.DAOFactory;
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
 public class SessionResourceTest {
@@ -61,7 +60,7 @@ public class SessionResourceTest {
 
     @After
     public void after() {
-        DAOFactory.getFactory().getSessionDAO().deleteByID(this.id);
+        this.getWebTarget().path(String.valueOf(this.id)).request().delete();
     }
 
 }

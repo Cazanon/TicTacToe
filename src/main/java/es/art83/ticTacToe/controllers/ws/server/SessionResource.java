@@ -1,6 +1,8 @@
 package es.art83.ticTacToe.controllers.ws.server;
 
 import java.net.URI;
+
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
@@ -78,5 +80,12 @@ public class SessionResource {
                 "GET/" + sessionEntity.getId() + "/savedGame " + result);
         return Boolean.toString(result);
     }
+    
+    @Path("/{id}")
+    @DELETE
+    public void delete(@PathParam("id") Integer id) {
+        DAOFactory.getFactory().getSessionDAO().deleteByID(id);
+    }
+
 
 }
