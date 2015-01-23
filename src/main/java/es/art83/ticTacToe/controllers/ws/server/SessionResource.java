@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import org.apache.logging.log4j.LogManager;
 
 import es.art83.ticTacToe.models.daos.DAOFactory;
+import es.art83.ticTacToe.models.daos.SessionDAO;
 import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
@@ -80,12 +81,15 @@ public class SessionResource {
                 "GET/" + sessionEntity.getId() + "/savedGame " + result);
         return Boolean.toString(result);
     }
-    
+
     @Path("/{id}")
     @DELETE
     public void delete(@PathParam("id") Integer id) {
-        DAOFactory.getFactory().getSessionDAO().deleteByID(id);
+        SessionDAO sessionDAO = DAOFactory.getFactory().getSessionDAO();
+        SessionEntity sessionEntity = sessionDAO.read(id);
+        assert (sessionEntity.getGame() == null);
+        assert (sessionEntity.getPlayer() == null);
+        sessionDAO.deleteByID(id);
     }
-
 
 }

@@ -30,7 +30,7 @@ public class SessionGameResource extends SessionResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
-    public Response createGame(@PathParam("id") Integer id, @QueryParam("start") String name) {
+    public Response createGame(@PathParam("id") Integer id, @QueryParam("name") String name) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         if (sessionEntity.getPlayer() != null) {
             GameEntity gameEntity;
@@ -39,6 +39,7 @@ public class SessionGameResource extends SessionResource {
                         .findGame(sessionEntity.getPlayer(), name);
             } else {
                 gameEntity = new GameEntity(sessionEntity.getPlayer());
+                DAOFactory.getFactory().getGameDAO().create(gameEntity);
             }
             sessionEntity.setGame(gameEntity);
             sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.OPENED_GAME);
@@ -135,7 +136,6 @@ public class SessionGameResource extends SessionResource {
 
     @Path("/id")
     @GET
-    @Produces(MediaType.APPLICATION_XML)
     public Integer gameId(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         Integer result = sessionEntity.getGame().getId();

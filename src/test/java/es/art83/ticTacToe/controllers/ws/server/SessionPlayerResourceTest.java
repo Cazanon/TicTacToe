@@ -1,66 +1,62 @@
 package es.art83.ticTacToe.controllers.ws.server;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-import static org.junit.Assert.*;
-
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
+import es.art83.ticTacToe.models.entities.PlayerEntity;
 
-public class SessionPlayerResourceTest extends SessionResourceTest{
-    private Response response;
-
-    private Integer id;
-
-    protected WebTarget getWebTarget() {
-        return ClientBuilder.newClient().target("http://localhost:8080/TicTacToe").path("rest")
-                .path("sessions");
-    }
+public class SessionPlayerResourceTest {
+    private SessionPlayerClient sessionPlayerClient;
 
     @Before
     public void before() {
-        this.response = this.getWebTarget().request().post(null);
-        this.id = this.response.readEntity(Integer.class);
+        this.sessionPlayerClient = new SessionPlayerClient();
     }
 
     @Test
-    public void testCreate() {
-        assertEquals(Response.Status.Family.SUCCESSFUL, response.getStatusInfo().getFamily());
-        assertNotNull(this.id);
-        assertNotEquals(new Integer(0), this.id);
+    public void testLoginPlayerExist() {
+        this.sessionPlayerClient.login();
+        assertEquals(Response.Status.Family.SUCCESSFUL, this.sessionPlayerClient.getResponse()
+                .getStatusInfo().getFamily());
     }
 
     @Test
-    public void testLoggedOut() {
-        Response response = this.getWebTarget().path(String.valueOf(this.id)).path("logged")
-                .request().get();
-        assertFalse(Boolean.valueOf(response.readEntity(String.class)));
+    public void testLoginPlayerNotExist() {
+        this.sessionPlayerClient.login(new PlayerEntity("u2", "upass"));
+        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), this.sessionPlayerClient
+                .getResponse().getStatus());
     }
 
     @Test
-    public void testState() {
-        Response response = this.getWebTarget().path(String.valueOf(this.id)).path("state")
-                .request().get();
-        TicTacToeStateModel state = response.readEntity(TicTacToeStateModel.class);
-        assertEquals(TicTacToeStateModel.INITIAL, state);
+    public void testLoginPlayerNotPass() {
+        PlayerEntity playerEntity = new PlayerEntity(this.sessionPlayerClient.playerEntity()
+                .getUser(), "no");
+        this.sessionPlayerClient.login(playerEntity);
+        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), this.sessionPlayerClient
+                .getResponse().getStatus());
     }
 
     @Test
-    public void testSavedGame() {
-        Response response = this.getWebTarget().path(String.valueOf(this.id)).path("savedGame")
-                .request().get();
-        assertTrue(Boolean.valueOf(response.readEntity(String.class)));
+    public void testLogoutPlayer() {
+        this.sessionPlayerClient.login();
+        this.sessionPlayerClient.logout();
+        fail("No implementado");
+    }
+
+    @Test
+    public void testGameNames() {
+        fail("No implementado");
     }
 
     @After
     public void after() {
-        this.getWebTarget().path(String.valueOf(this.id)).request().delete();
+        this.sessionPlayerClient.close();
     }
 
 }
