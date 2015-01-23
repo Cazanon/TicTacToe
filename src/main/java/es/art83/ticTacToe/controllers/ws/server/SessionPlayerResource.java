@@ -51,7 +51,7 @@ public class SessionPlayerResource extends SessionResource {
         this.info("DELETE/" + sessionEntity.getId() + "/player...");
     }
 
-    @Path("/nameGames")
+    @Path("/gameNames")
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public List<String> nameGames(@PathParam("id") Integer id) {

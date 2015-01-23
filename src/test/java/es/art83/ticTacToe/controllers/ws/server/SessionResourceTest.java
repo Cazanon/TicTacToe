@@ -18,14 +18,34 @@ public class SessionResourceTest {
 
     private Integer id;
 
-    protected WebTarget getWebTarget() {
+    protected WebTarget getTarget() {
         return ClientBuilder.newClient().target("http://localhost:8080/TicTacToe").path("rest")
                 .path("sessions");
     }
 
+    protected Response getResponse() {
+        return response;
+    }
+
+
+    protected void setResponse(Response response) {
+        this.response = response;
+    }
+
+
+    protected Integer getId() {
+        return id;
+    }
+
+
+    protected void setId(Integer id) {
+        this.id = id;
+    }
+
+
     @Before
     public void before() {
-        this.response = this.getWebTarget().request().post(null);
+        this.response = this.getTarget().request().post(null);
         this.id = this.response.readEntity(Integer.class);
     }
 
@@ -38,14 +58,14 @@ public class SessionResourceTest {
 
     @Test
     public void testLoggedOut() {
-        Response response = this.getWebTarget().path(String.valueOf(this.id)).path("logged")
+        Response response = this.getTarget().path(String.valueOf(this.id)).path("logged")
                 .request().get();
         assertFalse(Boolean.valueOf(response.readEntity(String.class)));
     }
 
     @Test
     public void testState() {
-        Response response = this.getWebTarget().path(String.valueOf(this.id)).path("state")
+        Response response = this.getTarget().path(String.valueOf(this.id)).path("state")
                 .request().get();
         TicTacToeStateModel state = response.readEntity(TicTacToeStateModel.class);
         assertEquals(TicTacToeStateModel.INITIAL, state);
@@ -53,14 +73,14 @@ public class SessionResourceTest {
 
     @Test
     public void testSavedGame() {
-        Response response = this.getWebTarget().path(String.valueOf(this.id)).path("savedGame")
+        Response response = this.getTarget().path(String.valueOf(this.id)).path("savedGame")
                 .request().get();
         assertTrue(Boolean.valueOf(response.readEntity(String.class)));
     }
 
     @After
     public void after() {
-        this.getWebTarget().path(String.valueOf(this.id)).request().delete();
+        this.getTarget().path(String.valueOf(this.id)).request().delete();
     }
 
 }
