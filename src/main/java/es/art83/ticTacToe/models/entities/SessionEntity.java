@@ -73,7 +73,9 @@ public class SessionEntity {
 
     @Override
     public String toString() {
-        return "SessionEntity[" + id + "]";
+        return "SessionEntity[" + id + ":" + ticTacToeStateModel
+                + "," + saved + ";player:" + player + ";game:" + game + "]";
     }
+
 
 }

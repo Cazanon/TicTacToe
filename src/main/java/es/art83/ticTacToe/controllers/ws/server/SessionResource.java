@@ -16,7 +16,6 @@ import org.apache.logging.log4j.LogManager;
 
 import es.art83.ticTacToe.models.daos.DAOFactory;
 import es.art83.ticTacToe.models.daos.SessionDAO;
-import es.art83.ticTacToe.models.entities.GameEntity;
 import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
@@ -88,14 +87,8 @@ public class SessionResource {
     public void delete(@PathParam("id") Integer id) {
         SessionDAO sessionDAO = DAOFactory.getFactory().getSessionDAO();
         SessionEntity sessionEntity = sessionDAO.read(id);
-        GameEntity gameEntity = sessionEntity.getGame();
-        if (gameEntity != null) {
-            Integer gameId= gameEntity.getId();
-            sessionEntity.setGame(null);
-            sessionDAO.update(sessionEntity);
-            DAOFactory.getFactory().getGameDAO().deleteByID(gameId);
-            sessionDAO.deleteByID(sessionEntity.getId());
-        }
+        assert (sessionEntity.getGame() == null);
+        assert (sessionEntity.getPlayer() == null);
         sessionDAO.deleteByID(id);
     }
 

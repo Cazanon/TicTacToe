@@ -17,7 +17,7 @@ public class GameEntity {
     @Id
     @GeneratedValue
     private Integer id;
-    
+
     private String name;
 
     @Embedded
@@ -28,8 +28,6 @@ public class GameEntity {
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     private PlayerEntity player;
-
-    
 
     public GameEntity(String name, PlayerEntity playerEntity, BoardEntity boardClone,
             TurnEntity turnClone) {
@@ -90,8 +88,8 @@ public class GameEntity {
     public boolean isGameOver() {
         return this.board.existTicTacToe();
     }
-    
-    public List<PieceEntity> allPieces(){
+
+    public List<PieceEntity> allPieces() {
         return this.board.getPieces();
     }
 
@@ -128,8 +126,8 @@ public class GameEntity {
         this.board.remove(source);
         this.placeCard(destination);
     }
-    
-    public void deleteCard(CoordinateEntity source){
+
+    public void deleteCard(CoordinateEntity source) {
         this.board.remove(source);
     }
 
@@ -142,7 +140,7 @@ public class GameEntity {
 
     @Override
     public String toString() {
-        return "GameEntity[" + name + "," + player + "," + turn + "," + board + "]";
+        return "GameEntity[" + id + ":" + name + "," + player + "," + turn + "," + board + "]";
     }
 
     @Override

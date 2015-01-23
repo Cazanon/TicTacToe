@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.MediaType;
 
 import es.art83.ticTacToe.models.daos.DAOFactory;
+import es.art83.ticTacToe.models.entities.GameEntity;
 import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
@@ -33,8 +34,7 @@ public class SessionPlayerResource extends SessionResource {
             sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);
             DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
             this.info("POST/" + sessionEntity.getId() + "/player");
-            return Response.created(URI.create(PATH + sessionEntity.getId() + "/player"))
-                    .build();
+            return Response.created(URI.create(PATH + sessionEntity.getId() + "/player")).build();
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
@@ -44,10 +44,17 @@ public class SessionPlayerResource extends SessionResource {
     public void deletePlayer(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         sessionEntity.setPlayer(null);
-        sessionEntity.setGame(null);
         sessionEntity.setSaved(true);
         sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.FINAL);
-        DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
+        GameEntity gameEntity = sessionEntity.getGame();
+        if (gameEntity != null) {
+            Integer gameId = gameEntity.getId();
+            sessionEntity.setGame(null);
+            DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
+            DAOFactory.getFactory().getGameDAO().deleteByID(gameId);
+        } else {
+            DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
+        }
         this.info("DELETE/" + sessionEntity.getId() + "/player...");
     }
 
