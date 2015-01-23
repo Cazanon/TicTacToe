@@ -69,7 +69,7 @@ public class BoardEntity {
         } else {
             CoordinateEntity primera = posiciones.get(0);
             posiciones.remove(primera);
-            return DirectionModel.SIN_DIRECION != primera.direction(posiciones
+            return DirectionModel.WITHOUT_DIRECTION != primera.direction(posiciones
                     .toArray(new CoordinateEntity[0]));
         }
     }

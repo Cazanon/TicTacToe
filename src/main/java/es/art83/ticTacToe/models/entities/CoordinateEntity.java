@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import es.art83.ticTacToe.models.utils.ClosedInterval;
 import es.art83.ticTacToe.models.utils.DirectionModel;
 
 @XmlRootElement
@@ -23,20 +24,28 @@ public class CoordinateEntity {
     private int column;
 
     public CoordinateEntity(int row, int column) {
+        final ClosedInterval LIMITS = new ClosedInterval(CoordinateEntity.MIN, CoordinateEntity.MAX);
+        assert (LIMITS.include(row));
+        assert (LIMITS.include(column));
         this.setRow(row);
         this.setColumn(column);
     }
 
+    // LUIS debería irse a la vista: a un Bean o un CoordinateFormater
     public CoordinateEntity(String coordenada) {
         String[] campos = coordenada.split("-");
-        this.row = Integer.valueOf(campos[0]);
-        this.column = Integer.valueOf(campos[1]);
+        try {
+            this.row = Integer.valueOf(campos[0]);
+            this.column = Integer.valueOf(campos[1]);
+        } catch (NumberFormatException ex) {
+            assert false;
+        }
     }
 
     public CoordinateEntity() {
-        this(0, 0);
+        this(CoordinateEntity.MIN, CoordinateEntity.MIN);
     }
-    
+
     public int getRow() {
         return this.row;
     }
@@ -54,52 +63,67 @@ public class CoordinateEntity {
     }
 
     public static List<CoordinateEntity> allCoordinates() {
-        List<CoordinateEntity> coordenadas = new ArrayList<>();
+        List<CoordinateEntity> coordinates = new ArrayList<>();
         for (int i = MIN; i < MAX + 1; i++) {
             for (int j = MIN; j < MAX + 1; j++) {
-                coordenadas.add(new CoordinateEntity(i, j));
+                coordinates.add(new CoordinateEntity(i, j));
             }
         }
-        return coordenadas;
+        return coordinates;
     }
 
-    public DirectionModel direction(CoordinateEntity otra) {
-        if (this.getRow() == otra.getRow()) {
-            return DirectionModel.EN_FILA;
-        } else if (this.getColumn() == otra.getColumn()) {
-            return DirectionModel.EN_COLUMNA;
-        } else if (this.getColumn() == this.getRow() && otra.getColumn() == otra.getColumn()) {
-            return DirectionModel.EN_DIAGONAL_PRINCIPAL;
-        } else if (this.getColumn() + this.getRow() == MAX
-                && otra.getColumn() + otra.getRow() == MAX) {
-            return DirectionModel.EN_DIAGONAL_SECUNDARIA;
+    public DirectionModel direction(CoordinateEntity coordinate) {
+        if (this.inRow(coordinate)) {
+            return DirectionModel.IN_ROW;
+        } else if (this.inColumn(coordinate)) {
+            return DirectionModel.IN_CLOLUMN;
+        } else if (this.inMainDiagonal() && coordinate.inMainDiagonal()) {
+            return DirectionModel.IN_MAIN_DIAGONAL;
+        } else if (this.inSecondaryDiagonal() && coordinate.inSecondaryDiagonal()) {
+            return DirectionModel.IN_SECONDARY_DIAGONAL;
         } else {
-            return DirectionModel.SIN_DIRECION;
+            return DirectionModel.WITHOUT_DIRECTION;
         }
     }
-
-    public DirectionModel direction(CoordinateEntity[] coordenadas) {
-        DirectionModel dir = this.direction(coordenadas[0]);
-        for (CoordinateEntity coor : coordenadas) {
-            if (dir != this.direction(coor))
-                return DirectionModel.SIN_DIRECION;
+    
+    private boolean inMainDiagonal(){
+        return this.getRow() - this.getColumn() == MIN;
+    }
+    
+    private boolean inSecondaryDiagonal(){
+        return this.getRow() + this.getColumn() == MAX;
+    }
+    
+    private boolean inRow(CoordinateEntity coordinate){
+        return this.getRow() == coordinate.getRow();
+    }
+    
+    private boolean inColumn(CoordinateEntity coordinate){
+        return this.getColumn() == coordinate.getColumn();
+    }
+    
+    public DirectionModel direction(CoordinateEntity[] coordinates) {
+        DirectionModel direction = this.direction(coordinates[0]);
+        for (CoordinateEntity coordinate : coordinates) {
+            if (direction != this.direction(coordinate))
+                return DirectionModel.WITHOUT_DIRECTION;
         }
-        return dir;
+        return direction;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        assert obj != null;
-        CoordinateEntity other = (CoordinateEntity) obj;
-        return this.column == other.column && this.row == other.row;
+    public boolean equals(Object object) {
+        assert object != null;
+        CoordinateEntity coordinate = (CoordinateEntity) object;
+        return this.inRow(coordinate) && this.inColumn(coordinate);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
+        final int PRIME = 31;
         int result = 1;
-        result = prime * result + this.getColumn();
-        result = prime * result + this.getRow();
+        result = PRIME * result + this.getColumn();
+        result = PRIME * result + this.getRow();
         return result;
     }
 
