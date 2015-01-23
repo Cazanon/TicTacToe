@@ -21,13 +21,13 @@ public class SessionPlayerResourceTest {
 
     @Test
     public void testLoginPlayerExist() {
+        this.sessionPlayerClient.login();
         assertEquals(Response.Status.Family.SUCCESSFUL, this.sessionPlayerClient.getResponse()
                 .getStatusInfo().getFamily());
     }
 
     @Test
     public void testLoginPlayerNotExist() {
-        this.sessionPlayerClient.logout();
         this.sessionPlayerClient.login(new PlayerEntity("u2", "upass"));
         assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), this.sessionPlayerClient
                 .getResponse().getStatus());
@@ -37,7 +37,6 @@ public class SessionPlayerResourceTest {
     public void testLoginPlayerNotPass() {
         PlayerEntity playerEntity = new PlayerEntity(this.sessionPlayerClient.playerEntity()
                 .getUser(), "no");
-        this.sessionPlayerClient.logout();
         this.sessionPlayerClient.login(playerEntity);
         assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), this.sessionPlayerClient
                 .getResponse().getStatus());
@@ -45,6 +44,7 @@ public class SessionPlayerResourceTest {
 
     @Test
     public void testLogoutPlayer() {
+        this.sessionPlayerClient.login();
         this.sessionPlayerClient.logout();
         fail("No implementado");
     }

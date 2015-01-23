@@ -11,7 +11,6 @@ public class SessionGameClient {
 
     public SessionGameClient() {
         this.sessionPlayerClient = new SessionPlayerClient();
-        this.responde = this.resource().request().post(null);
     }
 
     public Response getResponse() {
@@ -22,6 +21,14 @@ public class SessionGameClient {
         return this.sessionPlayerClient.resourceId().path("game");
     }
 
+    public void login(){
+        this.sessionPlayerClient.login();
+    }
+    
+    public void createNewGame(){
+        this.responde = this.resource().request().post(null);
+    }
+    
     public void close() {
         this.sessionPlayerClient.close();
     }

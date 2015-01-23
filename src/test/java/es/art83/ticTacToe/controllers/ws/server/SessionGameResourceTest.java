@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class SessionGameResourceTest {
-    
+
     private SessionGameClient sessionGameClient;
 
     @Before
@@ -19,8 +19,17 @@ public class SessionGameResourceTest {
 
     @Test
     public void testCreateGameLogged() {
+        this.sessionGameClient.login();
+        this.sessionGameClient.createNewGame();
         Response response = this.sessionGameClient.getResponse();
         assertEquals(Response.Status.Family.SUCCESSFUL, response.getStatusInfo().getFamily());
+    }
+
+    @Test
+    public void testCreateGameNotLogged() {
+        this.sessionGameClient.createNewGame();
+        Response response = this.sessionGameClient.getResponse();
+        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), response.getStatus());
     }
 
     @After

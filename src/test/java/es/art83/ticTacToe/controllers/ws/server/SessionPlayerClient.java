@@ -20,7 +20,6 @@ public class SessionPlayerClient {
     public SessionPlayerClient() {
         this.sessionClient = new SessionClient();
         this.playerClient = new PlayerClient();
-        this.login();
     }
 
     public Response getResponse() {
