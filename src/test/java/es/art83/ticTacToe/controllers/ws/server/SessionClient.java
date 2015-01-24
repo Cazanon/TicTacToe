@@ -13,7 +13,7 @@ public class SessionClient {
 
     public SessionClient() {
         this.response = this.resource().request().post(null);
-        this.id = this.response.readEntity(Integer.class);
+        this.id = Integer.valueOf(this.response.readEntity(String.class));
     }
 
     public WebTarget resource() {

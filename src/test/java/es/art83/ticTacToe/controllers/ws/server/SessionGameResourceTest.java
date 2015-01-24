@@ -49,6 +49,16 @@ public class SessionGameResourceTest {
         Response response = this.sessionGameClient.getResponse();
         assertEquals(ColorModel.X, response.readEntity(ColorModel.class));
     }
+    
+    @Test
+    public void testTurnChanged() {
+        this.sessionGameClient.login();
+        this.sessionGameClient.createNewGame();
+        this.sessionGameClient.post("piece", new CoordinateEntity(0, 0));
+        this.sessionGameClient.get("turn");
+        Response response = this.sessionGameClient.getResponse();
+        assertEquals(ColorModel.O, response.readEntity(ColorModel.class));
+    }
 
     @Test
     public void testNotGameOver() {
@@ -67,12 +77,12 @@ public class SessionGameResourceTest {
         this.sessionGameClient.post("piece", new CoordinateEntity(1, 0));
         this.sessionGameClient.post("piece", new CoordinateEntity(0, 1));
         this.sessionGameClient.post("piece", new CoordinateEntity(2, 0));
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 2));        
+        this.sessionGameClient.post("piece", new CoordinateEntity(0, 2));
         this.sessionGameClient.get("gameOver");
         Response response = this.sessionGameClient.getResponse();
         assertTrue(Boolean.valueOf(response.readEntity(String.class)));
     }
-    
+
     @Test
     public void testNotName() {
         this.sessionGameClient.login();
@@ -90,12 +100,12 @@ public class SessionGameResourceTest {
         this.sessionGameClient.post("piece", new CoordinateEntity(0, 1));
         this.sessionGameClient.post("piece", new CoordinateEntity(0, 2));
         this.sessionGameClient.post("piece", new CoordinateEntity(1, 0));
-        this.sessionGameClient.post("piece", new CoordinateEntity(1, 1));        
+        this.sessionGameClient.post("piece", new CoordinateEntity(1, 1));
         this.sessionGameClient.get("fullBoard");
         Response response = this.sessionGameClient.getResponse();
         assertFalse(Boolean.valueOf(response.readEntity(String.class)));
     }
-    
+
     @Test
     public void testfullBoard() {
         this.sessionGameClient.login();
@@ -104,8 +114,8 @@ public class SessionGameResourceTest {
         this.sessionGameClient.post("piece", new CoordinateEntity(0, 1));
         this.sessionGameClient.post("piece", new CoordinateEntity(0, 2));
         this.sessionGameClient.post("piece", new CoordinateEntity(1, 0));
-        this.sessionGameClient.post("piece", new CoordinateEntity(1, 1));        
-        this.sessionGameClient.post("piece", new CoordinateEntity(1, 2));        
+        this.sessionGameClient.post("piece", new CoordinateEntity(1, 1));
+        this.sessionGameClient.post("piece", new CoordinateEntity(1, 2));
         this.sessionGameClient.get("fullBoard");
         Response response = this.sessionGameClient.getResponse();
         assertTrue(Boolean.valueOf(response.readEntity(String.class)));
@@ -119,12 +129,28 @@ public class SessionGameResourceTest {
         this.sessionGameClient.post("piece", new CoordinateEntity(0, 1));
         this.sessionGameClient.get("allPieces");
         Response response = this.sessionGameClient.getResponse();
-        List<PieceEntity> pieces = response.readEntity(new GenericType<List<PieceEntity>>() {});
+        List<PieceEntity> pieces = response.readEntity(new GenericType<List<PieceEntity>>() {
+        });
         assertEquals(2, pieces.size());
         assertTrue(pieces.contains(new PieceEntity(ColorModel.X, new CoordinateEntity(0, 0))));
-        assertTrue(pieces.contains(new PieceEntity(ColorModel.O,new CoordinateEntity(0, 1))));
+        assertTrue(pieces.contains(new PieceEntity(ColorModel.O, new CoordinateEntity(0, 1))));
     }
 
+    @Test
+    public void testWinner() {
+        this.sessionGameClient.login();
+        this.sessionGameClient.createNewGame();
+        this.sessionGameClient.post("piece", new CoordinateEntity(0, 0));
+        this.sessionGameClient.post("piece", new CoordinateEntity(1, 0));
+        this.sessionGameClient.post("piece", new CoordinateEntity(0, 1));
+        this.sessionGameClient.post("piece", new CoordinateEntity(2, 0));
+        this.sessionGameClient.post("piece", new CoordinateEntity(0, 2));
+        this.sessionGameClient.get("winner");
+        Response response = this.sessionGameClient.getResponse();
+        assertEquals(ColorModel.X, response.readEntity(ColorModel.class));
+    }
+
+    
     
     @Test
     public void testPlacePiece() {

@@ -50,7 +50,7 @@ public class SessionResource {
         DAOFactory.getFactory().getSessionDAO().create(sessionEntity);
         this.info("POST/ session_id: " + sessionEntity.getId());
         return Response.created(URI.create(PATH + "/" + sessionEntity.getId()))
-                .entity(new Integer(sessionEntity.getId())).build();
+                .entity(String.valueOf(sessionEntity.getId())).build();
     }
 
     @Path("/{id}/logged")
