@@ -59,11 +59,11 @@ public class SessionGameResource extends SessionResource {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         Boolean result = sessionEntity.getGame().isGameOver();
         LogManager.getLogger(SessionResource.class).info(
-                "GET/" + sessionEntity.getId() + "/gameOver " + result);
+                "GET/" + sessionEntity.getId() + "/game/gameOver " + result);
         return Boolean.toString(result);
     }
 
-    @Path("/name")
+    @Path("name")
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public String gameName(@PathParam("id") Integer id) {
@@ -73,14 +73,14 @@ public class SessionGameResource extends SessionResource {
         return result;
     }
 
-    @Path("/fullBoard")
+    @Path("fullBoard")
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public String isFullBoard(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         Boolean result = sessionEntity.getGame().isFullBoard();
         LogManager.getLogger(SessionResource.class).info(
-                "GET/" + sessionEntity.getId() + "/fullBoard " + result);
+                "GET/" + sessionEntity.getId() + "/game/fullBoard " + result);
         return Boolean.toString(result);
     }
 
@@ -90,7 +90,7 @@ public class SessionGameResource extends SessionResource {
     public List<PieceEntity> allPieces(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         List<PieceEntity> result = sessionEntity.getGame().allPieces();
-        this.info("GET/" + sessionEntity.getId() + "/game/allPieces " + result);
+        this.info("GET/" + sessionEntity.getId() + "/game/allPieces " + result.toString());
         return result;
     }
 
@@ -157,8 +157,8 @@ public class SessionGameResource extends SessionResource {
         }
         DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
         DAOFactory.getFactory().getGameDAO().update(sessionEntity.getGame());
-        this.info("POST/" + sessionEntity.getId() + "/piece");
-        return Response.created(URI.create("/contexts/" + sessionEntity.getId() + "/piece/"))
+        this.info("POST/" + sessionEntity.getId() + "/game/piece: " + coordinateEntity);
+        return Response.created(URI.create("/sessions/" + sessionEntity.getId() + "game/piece/"))
                 .build();
     }
 
@@ -172,7 +172,7 @@ public class SessionGameResource extends SessionResource {
         sessionEntity.getGame().deleteCard(coordinate);
         DAOFactory.getFactory().getGameDAO().update(sessionEntity.getGame());
         DAOFactory.getFactory().getPieceDAO().deleteByCoordinate(coordinate);
-        this.info("DELETE/" + sessionEntity.getId() + "/piece"
+        this.info("DELETE/" + sessionEntity.getId() + "game/piece"
                 + sessionEntity.getGame().allPieces());
     }
 }

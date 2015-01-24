@@ -6,9 +6,11 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import es.art83.ticTacToe.models.utils.ColorModel;
 
+@XmlRootElement
 @Entity
 public class PieceEntity {
     @Id
@@ -48,6 +50,22 @@ public class PieceEntity {
 
     public void setCoordinate(CoordinateEntity coordinate) {
         this.coordinate = coordinate;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((color == null) ? 0 : color.hashCode());
+        result = prime * result + ((coordinate == null) ? 0 : coordinate.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        assert object != null;
+        PieceEntity piece = (PieceEntity) object;
+        return this.color.equals(piece.color) && this.coordinate.equals(piece.coordinate);
     }
 
     @Override
