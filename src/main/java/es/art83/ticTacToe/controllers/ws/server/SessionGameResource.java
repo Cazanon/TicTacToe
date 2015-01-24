@@ -100,7 +100,7 @@ public class SessionGameResource extends SessionResource {
     public ColorModel gameWinner(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         ColorModel result = sessionEntity.getGame().winner();
-        this.info("GET/" + sessionEntity.getId() + "/game/name " + result);
+        this.info("GET/" + sessionEntity.getId() + "/game/winer " + result);
         return result;
     }
 
@@ -156,6 +156,7 @@ public class SessionGameResource extends SessionResource {
             sessionEntity.setSaved(false);
         }
         DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
+        DAOFactory.getFactory().getGameDAO().update(sessionEntity.getGame());
         this.info("POST/" + sessionEntity.getId() + "/piece");
         return Response.created(URI.create("/contexts/" + sessionEntity.getId() + "/piece/"))
                 .build();
@@ -167,9 +168,11 @@ public class SessionGameResource extends SessionResource {
     public void deletePiece(@PathParam("id") Integer id, @MatrixParam("row") int row,
             @MatrixParam("column") int column) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        sessionEntity.getGame().deleteCard(new CoordinateEntity(row, column));
-        DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
-        this.info("DELETE/" + sessionEntity.getId() + "/piece");
+        CoordinateEntity coordinate = new CoordinateEntity(row, column);
+        sessionEntity.getGame().deleteCard(coordinate);
+        DAOFactory.getFactory().getGameDAO().update(sessionEntity.getGame());
+        DAOFactory.getFactory().getPieceDAO().deleteByCoordinate(coordinate);
+        this.info("DELETE/" + sessionEntity.getId() + "/piece"
+                + sessionEntity.getGame().allPieces());
     }
-
 }
