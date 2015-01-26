@@ -27,7 +27,7 @@ public class GameViewBean extends ViewBean {
 
     private String gameName;
 
-    private ColorModel[][] fichas;
+    private ColorModel[][] colors;
 
     private boolean gameOver;
 
@@ -37,7 +37,7 @@ public class GameViewBean extends ViewBean {
 
     private ColorModel turn;
 
-    private boolean fullBoard;
+    private boolean hasAllPieces;
 
     private List<CoordinateEntity> validSourceCoordinates;
 
@@ -52,21 +52,19 @@ public class GameViewBean extends ViewBean {
         ShowGameController showGameController = this.getControllerFactory().getShowGameController();
         this.createdGame = showGameController.createdGame();
         if (this.createdGame) {
-            this.gameName = this.getControllerFactory().getShowGameController().getNameGame();
-            this.fichas = this.getControllerFactory().getShowGameController().completeBoard();
-            this.gameOver = this.getControllerFactory().getShowGameController().isGameOver();
+            this.gameName = showGameController.getNameGame();
+            this.colors = showGameController.colors();
+            this.gameOver = showGameController.isGameOver();
             if (this.gameOver) {
-                this.winner = this.getControllerFactory().getShowGameController().winner();
+                this.winner = showGameController.winner();
             } else {
-                this.savedGame = this.getControllerFactory().getShowGameController().isSavedGame();
-                this.turn = this.getControllerFactory().getShowGameController().turnColor();
-                this.fullBoard = this.getControllerFactory().getShowGameController().isFullBoard();
-                if (this.fullBoard) {
-                    this.validSourceCoordinates = this.getControllerFactory()
-                            .getShowGameController().validSourceCoordinates();
+                this.savedGame = showGameController.isSavedGame();
+                this.turn = showGameController.turnColor();
+                this.hasAllPieces = showGameController.hasAllPieces();
+                if (this.hasAllPieces) {
+                    this.validSourceCoordinates = showGameController.validSourceCoordinates();
                 }
-                this.validDestinationCoordinates = this.getControllerFactory()
-                        .getShowGameController().validDestinationCoordinates();
+                this.validDestinationCoordinates = showGameController.validDestinationCoordinates();
             }
         }
         this.gameNames = this.getControllerFactory().getStartGameController().readGameNames();
@@ -101,7 +99,7 @@ public class GameViewBean extends ViewBean {
     }
 
     public ColorModel[][] getFichas() {
-        return fichas;
+        return colors;
     }
 
     public boolean isGameOver() {
@@ -121,7 +119,7 @@ public class GameViewBean extends ViewBean {
     }
 
     public boolean isFullBoard() {
-        return fullBoard;
+        return hasAllPieces;
     }
 
     public List<CoordinateEntity> getValidSourceCoordinates() {
@@ -155,7 +153,7 @@ public class GameViewBean extends ViewBean {
         createGameController.createGame();
         this.update();
         LogManager.getLogger("Bean:" + createGameController.getClass().getName()).info(
-                "Creado game");
+                "Created game");
         return null;
     }
 
@@ -166,7 +164,8 @@ public class GameViewBean extends ViewBean {
             next = "logout";
         } else {
             logoutController.logout();
-            LogManager.getLogger("Bean:" + logoutController.getClass().getName()).info("Usuario cerrado");
+            LogManager.getLogger("Bean:" + logoutController.getClass().getName()).info(
+                    "Usuario cerrado");
             next = "/login";
         }
         return next;
@@ -175,7 +174,7 @@ public class GameViewBean extends ViewBean {
     public String placeCard() {
         PlaceCardController placeCardController = this.getControllerFactory()
                 .getPlaceCardController();
-        if (this.fullBoard) {
+        if (this.hasAllPieces) {
             placeCardController.placeCard(new CoordinateEntity(this.selectedSourceCoordinate),
                     new CoordinateEntity(this.selectedDestinationCoordinate));
         } else {

@@ -76,9 +76,9 @@ public class SessionGameResource extends SessionResource {
     @Path("fullBoard")
     @GET
     @Produces(MediaType.APPLICATION_XML)
-    public String isFullBoard(@PathParam("id") Integer id) {
+    public String hasAllPieces(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        Boolean result = sessionEntity.getGame().isFullBoard();
+        Boolean result = sessionEntity.getGame().hasAllPieces();
         LogManager.getLogger(SessionResource.class).info(
                 "GET/" + sessionEntity.getId() + "/game/fullBoard " + result);
         return Boolean.toString(result);

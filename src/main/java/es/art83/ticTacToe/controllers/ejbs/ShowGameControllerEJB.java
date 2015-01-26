@@ -19,8 +19,8 @@ public class ShowGameControllerEJB extends ControllerEJB implements ShowGameCont
     }
 
     @Override
-    public ColorModel[][] completeBoard() {
-        return this.getTicTacToeContext().getGame().completeBoard();
+    public ColorModel[][] colors() {
+        return this.getTicTacToeContext().getGame().colors();
     }
 
     @Override
@@ -44,8 +44,8 @@ public class ShowGameControllerEJB extends ControllerEJB implements ShowGameCont
     }
 
     @Override
-    public boolean isFullBoard() {
-        return this.getTicTacToeContext().getGame().isFullBoard();
+    public boolean hasAllPieces() {
+        return this.getTicTacToeContext().getGame().hasAllPieces();
     }
 
     @Override

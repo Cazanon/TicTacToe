@@ -26,7 +26,7 @@ public class ShowGameControllerWSClient extends ControllerWSClient implements Sh
     }
 
     @Override
-    public ColorModel[][] completeBoard() {
+    public ColorModel[][] colors() {
         WebTarget target = this.webTargetContext().path("game").path("allPieces");
         Response response = target.request(MediaType.APPLICATION_XML).get();
         List<PieceEntity> allPieces= response.readEntity(new GenericType<List<PieceEntity>>() {
@@ -69,7 +69,7 @@ public class ShowGameControllerWSClient extends ControllerWSClient implements Sh
     }
 
     @Override
-    public boolean isFullBoard() {
+    public boolean hasAllPieces() {
         WebTarget target = this.webTargetContext().path("fullBoard");
         Response response = target.request(MediaType.APPLICATION_XML).get();
         return Boolean.valueOf(response.readEntity(String.class)); // response.close()
