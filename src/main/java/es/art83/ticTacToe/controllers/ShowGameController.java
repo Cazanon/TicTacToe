@@ -9,7 +9,7 @@ public interface ShowGameController {
 
     String getNameGame();
 
-    ColorModel[][] completeBoard();
+    ColorModel[][] colors();
 
     boolean isGameOver();
 
@@ -19,7 +19,7 @@ public interface ShowGameController {
 
     ColorModel turnColor();
 
-    boolean isFullBoard();
+    boolean hasAllPieces();
 
     List<CoordinateEntity> validSourceCoordinates();
 

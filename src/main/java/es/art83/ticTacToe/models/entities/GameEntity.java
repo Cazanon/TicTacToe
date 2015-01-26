@@ -93,8 +93,8 @@ public class GameEntity {
         return this.board.getPieces();
     }
 
-    public ColorModel[][] completeBoard() {
-        return this.board.completeBoard();
+    public ColorModel[][] colors() {
+        return this.board.colors();
     }
 
     public ColorModel winner() {
@@ -105,8 +105,8 @@ public class GameEntity {
         return this.turn.getColor();
     }
 
-    public boolean isFullBoard() {
-        return this.board.fullBoard();
+    public boolean hasAllPieces() {
+        return this.board.hasAllPieces();
     }
 
     public List<CoordinateEntity> validSourceCoordinates() {

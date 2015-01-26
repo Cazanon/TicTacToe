@@ -14,10 +14,7 @@ import es.art83.ticTacToe.models.utils.DirectionModel;
 
 @Entity
 public class BoardEntity {
-    private static final int FULL_BOARD = 6;
-
-    private static final int TIC_TAC_TOE = FULL_BOARD / 2;
-
+        
     @Id
     @GeneratedValue
     private int id;
@@ -37,10 +34,21 @@ public class BoardEntity {
         return this.pieces;
     }
 
-    public void setPieces(List<PieceEntity> pieces) {
+    private void setPieces(List<PieceEntity> pieces) {
+        assert pieces != null;
         this.pieces = pieces;
     }
 
+    public List<CoordinateEntity> coordinates(ColorModel color) {
+        assert color != null;
+        List<CoordinateEntity> coordinates = new ArrayList<>();
+        for (PieceEntity ficha : pieces) {
+            if (ficha.getColor() == color)
+                coordinates.add(ficha.getCoordinate());
+        }
+        return coordinates;
+    }
+    
     public List<CoordinateEntity> validDestinationCoordinates() {
         List<CoordinateEntity> coordinates = CoordinateEntity.allCoordinates();
         for (PieceEntity ficha : pieces) {
@@ -49,29 +57,8 @@ public class BoardEntity {
         return coordinates;
     }
 
-    public List<CoordinateEntity> coordinatesColor(ColorModel color) {
-        List<CoordinateEntity> coordenadas = new ArrayList<>();
-        for (PieceEntity ficha : this.pieces) {
-            if (ficha.getColor().equals(color))
-                coordenadas.add(ficha.getCoordinate());
-        }
-        return coordenadas;
-    }
-
-    public void put(PieceEntity ficha) {
-        this.pieces.add(ficha);
-    }
-
-    public boolean existTicTacToe(ColorModel color) {
-        List<CoordinateEntity> posiciones = this.coordinatesColor(color);
-        if (posiciones.size() < TIC_TAC_TOE) {
-            return false;
-        } else {
-            CoordinateEntity primera = posiciones.get(0);
-            posiciones.remove(primera);
-            return DirectionModel.WITHOUT_DIRECTION != primera.direction(posiciones
-                    .toArray(new CoordinateEntity[0]));
-        }
+    public boolean hasAllPieces() {
+        return this.pieces.size() == CoordinateEntity.DIMENSION * 2;
     }
 
     public boolean existTicTacToe() {
@@ -81,34 +68,21 @@ public class BoardEntity {
         }
         return false;
     }
-
-    public boolean fullBoard() {
-        return this.pieces.size() == FULL_BOARD;
-    }
-
-    public void remove(CoordinateEntity coordenada) {
-        for (PieceEntity ficha : pieces) {
-            if (ficha.getCoordinate().equals(coordenada)) {
-                this.pieces.remove(ficha);
-                break;
-            }
+    
+    private boolean existTicTacToe(ColorModel color) {
+        assert color != null;
+        List<CoordinateEntity> coordinates = this.coordinates(color);
+        if (coordinates.size() < CoordinateEntity.DIMENSION) {
+            return false;
+        } else {
+            CoordinateEntity firstCoordinate = coordinates.get(0);
+            coordinates.remove(firstCoordinate);
+            return DirectionModel.WITHOUT_DIRECTION != firstCoordinate.inDirection(coordinates);
         }
     }
 
-    public List<CoordinateEntity> coordinates(ColorModel color) {
-        List<CoordinateEntity> corrdenadasColor = new ArrayList<>();
-        for (PieceEntity ficha : pieces) {
-            if (ficha.getColor() == color)
-                corrdenadasColor.add(ficha.getCoordinate());
-        }
-        return corrdenadasColor;
-    }
-
-    public void clear() {
-        this.pieces.clear();
-    }
-
-    public ColorModel[][] completeBoard() {
+    //LUIS debería irse al bean que lo necesite y él pide getPieces
+    public ColorModel[][] colors() {
         ColorModel[][] matriz = new ColorModel[3][3];
         for (PieceEntity ficha : pieces) {
             matriz[ficha.getCoordinate().getRow()][ficha.getCoordinate().getColumn()] = ficha
@@ -117,6 +91,25 @@ public class BoardEntity {
         return matriz;
     }
 
+    public void put(PieceEntity ficha) {
+        this.pieces.add(ficha);
+    }
+    
+    public void remove(CoordinateEntity coordinate) {
+        assert coordinate != null;
+        for (PieceEntity ficha : pieces) {
+            if (ficha.getCoordinate().equals(coordinate)) {
+                this.pieces.remove(ficha);
+                break;
+            }
+        }
+        assert false;
+    }
+
+    public void clear() {
+        this.pieces.clear();
+    }
+    
     public void update(BoardEntity board) {
         List<PieceEntity> pieces = new ArrayList<>(board.pieces);
         this.setPieces(pieces);
