@@ -8,8 +8,8 @@ import es.art83.ticTacToe.controllers.LogoutController;
 
 public class LogoutControllerWSClient extends ControllerWSClient implements LogoutController {
 
-    public LogoutControllerWSClient(Integer contextId) {
-        super(contextId);
+    public LogoutControllerWSClient(String sessionId) {
+        super(sessionId);
     }
 
     @Override

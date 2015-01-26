@@ -14,8 +14,8 @@ import es.art83.ticTacToe.models.utils.ColorModel;
 
 public class ShowGameControllerWSClient extends ControllerWSClient implements ShowGameController {
 
-    public ShowGameControllerWSClient(Integer contextId) {
-        super(contextId);
+    public ShowGameControllerWSClient(String sessionId) {
+        super(sessionId);
     }
 
     @Override

@@ -1,24 +1,17 @@
 package es.art83.ticTacToe.controllers.ws.client;
 
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
 
 public class ControllerWSClient {
-    private Integer contextId = null;
+    private String sessionId = null;
 
-    public ControllerWSClient(Integer contextId) {
-        this.contextId = contextId;
+    public ControllerWSClient(String sessionId) {
+        assert sessionId != null;
+        this.sessionId = sessionId;
     }
 
-    protected Integer getContextId() {
-        return contextId;
+    public String getSessionId() {
+        return sessionId;
     }
+    
 
-    protected static WebTarget webTargetServer() {
-        return ClientBuilder.newClient().target("http://localhost:8080/TicTacToe").path("rest");
-    }
-
-    protected WebTarget webTargetContext() {
-        return webTargetServer().path("contexts").path(String.valueOf(this.getContextId()));
-    }
 }

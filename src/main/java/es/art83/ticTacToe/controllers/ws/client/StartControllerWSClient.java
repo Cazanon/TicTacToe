@@ -7,8 +7,8 @@ import es.art83.ticTacToe.controllers.StartGameController;
 
 public class StartControllerWSClient extends ControllerWSClient implements StartGameController {
 
-    public StartControllerWSClient(Integer contextId) {
-        super(contextId);
+    public StartControllerWSClient(String sessionId) {
+        super(sessionId);
     }
 
     @Override

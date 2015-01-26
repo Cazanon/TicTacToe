@@ -11,8 +11,8 @@ import es.art83.ticTacToe.controllers.NameGameController;
 
 public class NameControllerWSClient extends ControllerWSClient implements NameGameController {
 
-    public NameControllerWSClient(Integer contextId) {
-        super(contextId);
+    public NameControllerWSClient(String sessionId) {
+        super(sessionId);
     }
 
     @Override

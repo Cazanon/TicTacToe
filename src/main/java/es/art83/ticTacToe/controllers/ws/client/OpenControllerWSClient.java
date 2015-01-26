@@ -8,8 +8,8 @@ import es.art83.ticTacToe.controllers.OpenGameController;
 
 public class OpenControllerWSClient extends ControllerWSClient implements OpenGameController {
 
-    public OpenControllerWSClient(Integer contextId) {
-        super(contextId);
+    public OpenControllerWSClient(String sessionId) {
+        super(sessionId);
     }
 
     @Override

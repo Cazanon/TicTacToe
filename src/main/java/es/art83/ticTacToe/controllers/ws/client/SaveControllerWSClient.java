@@ -4,8 +4,8 @@ import es.art83.ticTacToe.controllers.SaveGameController;
 
 public class SaveControllerWSClient extends ControllerWSClient implements SaveGameController {
 
-    public SaveControllerWSClient(Integer contextId) {
-        super(contextId);
+    public SaveControllerWSClient(String sessionId) {
+        super(sessionId);
     }
 
     @Override
