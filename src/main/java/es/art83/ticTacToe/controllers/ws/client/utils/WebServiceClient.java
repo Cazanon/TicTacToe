@@ -43,21 +43,25 @@ public class WebServiceClient {
 
     public boolean create() {
         this.response = this.webTarget.request().post(Entity.xml(this.entity));
+        System.out.println("------>>>> : " + response.toString());
         return this.ok();
     }
 
     public boolean read() {
         this.response = this.webTarget.request().get();
+        System.out.println("------>>>> : " + response.toString());
         return this.ok();
     }
 
     public boolean update() {
         this.response = this.webTarget.request().put(Entity.xml(this.entity));
+        System.out.println("------>>>> : " + response.toString());
         return this.ok();
     }
 
     public boolean delete() {
         this.response = this.webTarget.request().delete();
+        System.out.println("------>>>> : " + response.toString());
         return this.ok();
     }
 

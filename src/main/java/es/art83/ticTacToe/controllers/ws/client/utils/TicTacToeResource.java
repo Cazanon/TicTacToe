@@ -7,7 +7,7 @@ public class TicTacToeResource {
 
     public static final int PORT = 8080;
 
-    public static final String WEB = "/TicTacToe";
+    public static final String WEB = "/TicTacToe/rest";
 
     public static final String URI = PROTOCOL + "://" + HOST + ":" + PORT + WEB;
 

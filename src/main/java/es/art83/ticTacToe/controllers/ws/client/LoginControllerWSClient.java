@@ -13,10 +13,9 @@ public class LoginControllerWSClient extends ControllerWSClient implements Login
 
     @Override
     public boolean login(PlayerEntity playerEntity) {
-        WebServiceClient webServiceClient = new WebServiceClient(TicTacToeResource.PATH_SESSIONS,
-                this.getSessionId(), TicTacToeResource.PATH_PLAYER);
-        webServiceClient.create();
-        return webServiceClient.ok();
+        WebServiceClient webServiceClient = new WebServiceClient(playerEntity,
+                TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_PLAYER);
+        return webServiceClient.create();
     }
 
     @Override
