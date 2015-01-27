@@ -42,9 +42,9 @@ public class ControllerFactoryWSClient extends ControllerFactory {
         String sessionId = null;
         // Crear peticion rest para crear contexto. Almacenar la referencia del
         // contexto en el servidor
-        WebServiceClient webServiceClient = new WebServiceClient(TicTacToeResource.PATH_SESSIONS);
+        WebServiceClient<String> webServiceClient = new WebServiceClient<>(TicTacToeResource.PATH_SESSIONS);
         webServiceClient.create();
-        sessionId = webServiceClient.entityString();
+        sessionId = webServiceClient.entity(String.class);
 
         // Pasarle la referencia a todos los controladores
         this.loginController = new LoginControllerWSClient(sessionId);

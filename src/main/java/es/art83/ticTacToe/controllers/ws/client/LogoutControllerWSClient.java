@@ -13,27 +13,27 @@ public class LogoutControllerWSClient extends ControllerWSClient implements Logo
 
     @Override
     public void logout() {
-        WebServiceClient webServiceClient = new WebServiceClient(TicTacToeResource.PATH_SESSIONS,
-                this.getSessionId(), TicTacToeResource.PATH_PLAYER);
+        WebServiceClient<?> webServiceClient = new WebServiceClient<>(
+                TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_PLAYER);
         webServiceClient.delete();
     }
 
     @Override
     public boolean isBye() {
-        WebServiceClient webServiceClient = new WebServiceClient(TicTacToeResource.PATH_SESSIONS,
-                this.getSessionId(), TicTacToeResource.PATH_STATE);
+        WebServiceClient<TicTacToeStateModel> webServiceClient = new WebServiceClient<>(
+                TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_STATE);
         webServiceClient.read();
-        TicTacToeStateModel state = (TicTacToeStateModel) webServiceClient
-                .entityObject(TicTacToeStateModel.class);
+        TicTacToeStateModel state = webServiceClient.entity(TicTacToeStateModel.class);
         return state.equals(TicTacToeStateModel.FINAL);
     }
 
     @Override
     public boolean isSavedGame() {
-        WebServiceClient webServiceClient = new WebServiceClient(TicTacToeResource.PATH_SESSIONS,
-                this.getSessionId(), TicTacToeResource.PATH_SAVED_GAME);
+        WebServiceClient<Boolean> webServiceClient = new WebServiceClient<>(
+                TicTacToeResource.PATH_SESSIONS, this.getSessionId(),
+                TicTacToeResource.PATH_SAVED_GAME);
         webServiceClient.read();
-        return webServiceClient.entityBoolean();
+        return webServiceClient.entity(Boolean.class);
     }
 
 }

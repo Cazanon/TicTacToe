@@ -8,6 +8,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import es.art83.ticTacToe.controllers.ShowGameController;
+import es.art83.ticTacToe.controllers.ws.client.utils.TicTacToeResource;
+import es.art83.ticTacToe.controllers.ws.client.utils.WebServiceClient;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
@@ -20,18 +22,21 @@ public class ShowGameControllerWSClient extends ControllerWSClient implements Sh
 
     @Override
     public String getNameGame() {
-        WebTarget target = this.webTargetContext().path("game").path("name");
-        Response response = target.request(MediaType.APPLICATION_XML).get();
-        return response.readEntity(String.class); // response.close()
+        WebServiceClient webServiceClient = new WebServiceClient(TicTacToeResource.PATH_SESSIONS,
+                this.getSessionId(), TicTacToeResource.PATH_GAME, TicTacToeResource.PATH_NAME);
+        webServiceClient.read();
+        return webServiceClient.entityString();
     }
 
     @Override
     public ColorModel[][] colors() {
-        WebTarget target = this.webTargetContext().path("game").path("allPieces");
-        Response response = target.request(MediaType.APPLICATION_XML).get();
-        List<PieceEntity> allPieces= response.readEntity(new GenericType<List<PieceEntity>>() {
-        });
+        WebServiceClient webServiceClient = new WebServiceClient(TicTacToeResource.PATH_SESSIONS,
+                this.getSessionId(), TicTacToeResource.PATH_GAME, TicTacToeResource.PATH_ALL_PIECES);
+        webServiceClient.read();
         
+        List<PieceEntity> allPieces = webServiceClient.readEntity(new GenericType<List<PieceEntity>>() {
+        });
+
         ColorModel[][] matriz = new ColorModel[3][3];
         for (PieceEntity ficha : allPieces) {
             matriz[ficha.getCoordinate().getRow()][ficha.getCoordinate().getColumn()] = ficha

@@ -13,17 +13,17 @@ public class LoginControllerWSClient extends ControllerWSClient implements Login
 
     @Override
     public boolean login(PlayerEntity playerEntity) {
-        WebServiceClient webServiceClient = new WebServiceClient(playerEntity,
+        WebServiceClient<?> webServiceClient = new WebServiceClient<>(
                 TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_PLAYER);
-        return webServiceClient.create();
+        return webServiceClient.create(playerEntity);
     }
 
     @Override
     public boolean register(PlayerEntity playerEntity) {
         boolean result = false;
-        WebServiceClient webServiceClient = new WebServiceClient(playerEntity,
+        WebServiceClient<?> webServiceClient = new WebServiceClient<>(
                 TicTacToeResource.PATH_PLAYERS);
-        if (webServiceClient.create()) {
+        if (webServiceClient.create(playerEntity)) {
             result = this.login(playerEntity);
         }
         return result;
@@ -31,10 +31,10 @@ public class LoginControllerWSClient extends ControllerWSClient implements Login
 
     @Override
     public boolean logged() {
-        WebServiceClient webServiceClient = new WebServiceClient(TicTacToeResource.PATH_SESSIONS,
-                this.getSessionId(), TicTacToeResource.PATH_LOGGED);
+        WebServiceClient<Boolean> webServiceClient = new WebServiceClient<>(
+                TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_LOGGED);
         webServiceClient.read();
-        return webServiceClient.entityBoolean();
+        return webServiceClient.entity(Boolean.class);
     }
 
 }

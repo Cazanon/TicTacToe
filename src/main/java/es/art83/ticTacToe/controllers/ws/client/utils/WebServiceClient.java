@@ -1,31 +1,23 @@
 package es.art83.ticTacToe.controllers.ws.client.utils;
 
+import java.util.List;
+
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
-public class WebServiceClient {
+public class WebServiceClient<T> {
     private WebTarget webTarget;
-
-    private Object entity;
 
     private Response response;
 
-    public WebServiceClient(Object entity, String... paths) {
+    public WebServiceClient(String... paths) {
         this.webTarget = ClientBuilder.newClient().target(TicTacToeResource.URI);
         for (String path : paths) {
             this.webTarget = this.webTarget.path(path);
         }
-        this.entity = entity;
-    }
-
-    public WebServiceClient(String... paths) {
-        this(null, paths);
-    }
-
-    public WebServiceClient() {
-        this.entity = null;
     }
 
     public void addPath(String path) {
@@ -36,15 +28,14 @@ public class WebServiceClient {
         this.webTarget = this.webTarget.queryParam(name, value);
     }
 
-    // entity debe contener @XmlRootElement
-    public void setEntity(Object entity) {
-        this.entity = entity;
+    public boolean create(Object entity) {
+        this.response = this.webTarget.request().post(Entity.xml(entity));
+        System.out.println("------>>>> : " + response.toString());
+        return this.ok();
     }
 
     public boolean create() {
-        this.response = this.webTarget.request().post(Entity.xml(this.entity));
-        System.out.println("------>>>> : " + response.toString());
-        return this.ok();
+        return this.create(null);
     }
 
     public boolean read() {
@@ -53,10 +44,14 @@ public class WebServiceClient {
         return this.ok();
     }
 
-    public boolean update() {
-        this.response = this.webTarget.request().put(Entity.xml(this.entity));
+    public boolean update(Object entity) {
+        this.response = this.webTarget.request().put(Entity.xml(entity));
         System.out.println("------>>>> : " + response.toString());
         return this.ok();
+    }
+
+    public boolean update() {
+        return this.update(null);
     }
 
     public boolean delete() {
@@ -69,34 +64,18 @@ public class WebServiceClient {
         return Response.Status.Family.SUCCESSFUL.equals(response.getStatusInfo().getFamily());
     }
 
-    public Boolean entityBoolean() {
-        Boolean result = null;
-        if (this.response.hasEntity()) {
-            result = Boolean.valueOf(this.response.readEntity(String.class));
-        }
-        return result;
-    }
-
-    public Integer entityInteger() {
-        Integer result = null;
-        if (this.response.hasEntity()) {
-            result = Integer.valueOf(this.response.readEntity(String.class));
-        }
-        return result;
-    }
-
-    public String entityString() {
-        String result = null;
-        if (this.response.hasEntity()) {
-            result = this.response.readEntity(String.class);
-        }
-        return result;
-    }
-
-    public Object entityObject(Class<?> clazz) {
-        Object result = null;
+    public T entity(Class<T> clazz) {
+        T result = null;
         if (this.response.hasEntity()) {
             result = this.response.readEntity(clazz);
+        }
+        return result;
+    }
+
+    public List<T> entities(Class<T> clazz) {
+        List<T> result = null;
+        if (this.response.hasEntity()) {
+            result = this.response.readEntity(new GenericType<List<T>>() {});
         }
         return result;
     }
