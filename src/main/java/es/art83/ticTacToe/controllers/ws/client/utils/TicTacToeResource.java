@@ -28,4 +28,18 @@ public class TicTacToeResource {
     public static final String PATH_NAME = "/name";
 
     public static final String PATH_ALL_PIECES = "/allPieces";
+
+    public static final String PATH_GAME_OVER = "/gameOver";
+
+    public static final String PATH_WINNER = "/winner";
+
+    public static final String PATH_TURN = "/turn";
+
+    public static final String PATH_HAS_ALL_PIECES = "/hasAllPieces";
+
+    public static final String PATH_VALID_SOURCE_COORDINATES = "/validSourceCoordinate";
+
+    public static final String PATH_VALID_DESTINATION_COORDINATES = "/validDestinationCoordinate";
+
+    public static final String PATH_CREATED_GAME = "/createdGame";
 }

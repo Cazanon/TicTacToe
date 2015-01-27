@@ -33,7 +33,7 @@ public class LogoutControllerWSClient extends ControllerWSClient implements Logo
                 TicTacToeResource.PATH_SESSIONS, this.getSessionId(),
                 TicTacToeResource.PATH_SAVED_GAME);
         webServiceClient.read();
-        return webServiceClient.entity(Boolean.class);
+        return webServiceClient.entityBoolean();
     }
 
 }

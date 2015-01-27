@@ -48,7 +48,7 @@ public class LoginControllerWSClientTest {
 
     @After
     public void after() {
-        new WebServiceClient(TicTacToeResource.PATH_SESSIONS, this.login.getSessionId()).delete();
-        new WebServiceClient(TicTacToeResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
+        new WebServiceClient<>(TicTacToeResource.PATH_SESSIONS, this.login.getSessionId()).delete();
+        new WebServiceClient<>(TicTacToeResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
     }
 }

@@ -34,7 +34,7 @@ public class LoginControllerWSClient extends ControllerWSClient implements Login
         WebServiceClient<Boolean> webServiceClient = new WebServiceClient<>(
                 TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_LOGGED);
         webServiceClient.read();
-        return webServiceClient.entity(Boolean.class);
+        return webServiceClient.entityBoolean();
     }
 
 }

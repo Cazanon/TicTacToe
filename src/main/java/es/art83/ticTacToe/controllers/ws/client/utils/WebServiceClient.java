@@ -71,11 +71,20 @@ public class WebServiceClient<T> {
         }
         return result;
     }
-
-    public List<T> entities(Class<T> clazz) {
+    
+    public Boolean entityBoolean(){
+        Boolean result = null;
+        if (this.response.hasEntity()) {
+            result = Boolean.valueOf(this.response.readEntity(String.class));
+        }
+        return result;
+    }
+    
+    public List<T> entities() {
         List<T> result = null;
         if (this.response.hasEntity()) {
-            result = this.response.readEntity(new GenericType<List<T>>() {});
+            result = this.response.readEntity(new GenericType<List<T>>() {
+            });
         }
         return result;
     }

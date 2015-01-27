@@ -35,8 +35,8 @@ public class CreateControllerWSClientTest {
 
     @After
     public void after() {
-        new WebServiceClient(TicTacToeResource.PATH_SESSIONS, this.login.getSessionId()).delete();
+        new WebServiceClient<>(TicTacToeResource.PATH_SESSIONS, this.login.getSessionId()).delete();
         //Falta eliminar el juego...????
-        new WebServiceClient(TicTacToeResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
+        new WebServiceClient<>(TicTacToeResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
     }
 }
