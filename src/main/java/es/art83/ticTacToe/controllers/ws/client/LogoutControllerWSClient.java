@@ -1,10 +1,9 @@
 package es.art83.ticTacToe.controllers.ws.client;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import es.art83.ticTacToe.controllers.LogoutController;
+import es.art83.ticTacToe.controllers.ws.client.utils.TicTacToeResource;
+import es.art83.ticTacToe.controllers.ws.client.utils.WebServiceClient;
+import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
 public class LogoutControllerWSClient extends ControllerWSClient implements LogoutController {
 
@@ -14,23 +13,27 @@ public class LogoutControllerWSClient extends ControllerWSClient implements Logo
 
     @Override
     public void logout() {
-        WebTarget target = this.webTargetContext().path("player");
-        Response response = target.request().delete();
-        response.close();
+        WebServiceClient webServiceClient = new WebServiceClient(TicTacToeResource.PATH_SESSIONS,
+                this.getSessionId(), TicTacToeResource.PATH_PLAYER);
+        webServiceClient.delete();
     }
 
     @Override
     public boolean isBye() {
-        WebTarget target = this.webTargetContext().path("isBye");
-        Response response = target.request(MediaType.APPLICATION_XML).get();
-        return Boolean.valueOf(response.readEntity(String.class)); // response.close()
+        WebServiceClient webServiceClient = new WebServiceClient(TicTacToeResource.PATH_SESSIONS,
+                this.getSessionId(), TicTacToeResource.PATH_STATE);
+        webServiceClient.read();
+        TicTacToeStateModel state = (TicTacToeStateModel) webServiceClient
+                .entityObject(TicTacToeStateModel.class);
+        return state.equals(TicTacToeStateModel.FINAL);
     }
 
     @Override
     public boolean isSavedGame() {
-        WebTarget target = this.webTargetContext().path("savedGame");
-        Response response = target.request(MediaType.APPLICATION_XML).get();
-        return Boolean.valueOf(response.readEntity(String.class)); // response.close()
+        WebServiceClient webServiceClient = new WebServiceClient(TicTacToeResource.PATH_SESSIONS,
+                this.getSessionId(), TicTacToeResource.PATH_SAVED_GAME);
+        webServiceClient.read();
+        return webServiceClient.entityBoolean();
     }
 
 }

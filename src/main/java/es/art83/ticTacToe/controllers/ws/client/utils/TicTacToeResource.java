@@ -18,4 +18,8 @@ public class TicTacToeResource {
     public static final String PATH_PLAYERS = "/players";
 
     public static final String PATH_PLAYER = "/player";
+
+    public static final String PATH_STATE = "/state";
+
+    public static final String PATH_SAVED_GAME = "/savedGame";
 }
