@@ -73,7 +73,7 @@ public class SessionGameResource extends SessionResource {
         return result;
     }
 
-    @Path("fullBoard")
+    @Path("hasAllPieces")
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public String hasAllPieces(@PathParam("id") Integer id) {
@@ -175,4 +175,5 @@ public class SessionGameResource extends SessionResource {
         this.info("DELETE/" + sessionEntity.getId() + "game/piece"
                 + sessionEntity.getGame().allPieces());
     }
+    
 }

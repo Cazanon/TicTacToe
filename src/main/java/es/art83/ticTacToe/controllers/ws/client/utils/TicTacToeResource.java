@@ -37,9 +37,9 @@ public class TicTacToeResource {
 
     public static final String PATH_HAS_ALL_PIECES = "/hasAllPieces";
 
-    public static final String PATH_VALID_SOURCE_COORDINATES = "/validSourceCoordinate";
+    public static final String PATH_VALID_SOURCE_COORDINATES = "/validSourceCoordinates";
 
-    public static final String PATH_VALID_DESTINATION_COORDINATES = "/validDestinationCoordinate";
+    public static final String PATH_VALID_DESTINATION_COORDINATES = "/validDestinationCoordinates";
 
     public static final String PATH_CREATED_GAME = "/createdGame";
 }

@@ -6,16 +6,17 @@ import es.art83.ticTacToe.controllers.ws.client.utils.WebServiceClient;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 
 public class LoginControllerWSClient extends ControllerWSClient implements LoginController {
+    private final String pathSessionsId;
 
     public LoginControllerWSClient(String sessionId) {
         super(sessionId);
+        this.pathSessionsId = TicTacToeResource.PATH_SESSIONS + "/" + this.getSessionId();
     }
 
     @Override
     public boolean login(PlayerEntity playerEntity) {
-        WebServiceClient<?> webServiceClient = new WebServiceClient<>(
-                TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_PLAYER);
-        return webServiceClient.create(playerEntity);
+        return new WebServiceClient<>(pathSessionsId, TicTacToeResource.PATH_PLAYER)
+                .create(playerEntity);
     }
 
     @Override
@@ -31,10 +32,8 @@ public class LoginControllerWSClient extends ControllerWSClient implements Login
 
     @Override
     public boolean logged() {
-        WebServiceClient<Boolean> webServiceClient = new WebServiceClient<>(
-                TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_LOGGED);
-        webServiceClient.read();
-        return webServiceClient.entityBoolean();
+       return new WebServiceClient<Boolean>(
+               pathSessionsId, TicTacToeResource.PATH_LOGGED).entityBoolean();
     }
 
 }

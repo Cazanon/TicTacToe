@@ -2,6 +2,8 @@ package es.art83.ticTacToe.controllers.ws.client;
 
 import java.util.List;
 
+import javax.ws.rs.core.GenericType;
+
 import es.art83.ticTacToe.controllers.ShowGameController;
 import es.art83.ticTacToe.controllers.ws.client.utils.TicTacToeResource;
 import es.art83.ticTacToe.controllers.ws.client.utils.WebServiceClient;
@@ -10,27 +12,26 @@ import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
 
 public class ShowGameControllerWSClient extends ControllerWSClient implements ShowGameController {
+    private final String pathSessionsIdGame;
 
     public ShowGameControllerWSClient(String sessionId) {
         super(sessionId);
+        this.pathSessionsIdGame = TicTacToeResource.PATH_SESSIONS + "/" + this.getSessionId()
+                + TicTacToeResource.PATH_GAME;
     }
 
     @Override
     public String getNameGame() {
-        WebServiceClient<String> webServiceClient = new WebServiceClient<>(
-                TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_GAME,
-                TicTacToeResource.PATH_NAME);
-        webServiceClient.read();
-        return webServiceClient.entity(String.class);
+        return new WebServiceClient<String>(pathSessionsIdGame, TicTacToeResource.PATH_NAME)
+                .entity(String.class);
     }
 
     @Override
     public ColorModel[][] colors() {
-        WebServiceClient<PieceEntity> webServiceClient = new WebServiceClient<>(
-                TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_GAME,
-                TicTacToeResource.PATH_ALL_PIECES);
-        webServiceClient.read();
-        List<PieceEntity> allPieces = webServiceClient.entities();
+        GenericType<List<PieceEntity>> gerericType = new GenericType<List<PieceEntity>>() {
+        };
+        List<PieceEntity> allPieces = new WebServiceClient<PieceEntity>(pathSessionsIdGame,
+                TicTacToeResource.PATH_ALL_PIECES).entities(gerericType);
         ColorModel[][] matriz = new ColorModel[3][3];
         for (PieceEntity ficha : allPieces) {
             matriz[ficha.getCoordinate().getRow()][ficha.getCoordinate().getColumn()] = ficha
@@ -41,74 +42,54 @@ public class ShowGameControllerWSClient extends ControllerWSClient implements Sh
 
     @Override
     public boolean isGameOver() {
-        WebServiceClient<Boolean> webServiceClient = new WebServiceClient<>(
-                TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_GAME,
-                TicTacToeResource.PATH_GAME_OVER);
-        webServiceClient.read();
-        return webServiceClient.entityBoolean();
+        return new WebServiceClient<Boolean>(pathSessionsIdGame, TicTacToeResource.PATH_GAME_OVER)
+                .entityBoolean();
     }
 
     @Override
     public ColorModel winner() {
-        WebServiceClient<ColorModel> webServiceClient = new WebServiceClient<>(
-                TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_GAME,
-                TicTacToeResource.PATH_WINNER);
-        webServiceClient.read();
-        return webServiceClient.entity(ColorModel.class);
+        return new WebServiceClient<ColorModel>(pathSessionsIdGame, TicTacToeResource.PATH_WINNER)
+                .entity(ColorModel.class);
     }
 
     @Override
     public boolean isSavedGame() {
-        WebServiceClient<Boolean> webServiceClient = new WebServiceClient<>(
-                TicTacToeResource.PATH_SESSIONS, this.getSessionId(),
-                TicTacToeResource.PATH_SAVED_GAME);
-        webServiceClient.read();
-        return webServiceClient.entityBoolean();
+        return new WebServiceClient<Boolean>(TicTacToeResource.PATH_SESSIONS, this.getSessionId(),
+                TicTacToeResource.PATH_SAVED_GAME).entityBoolean();
     }
 
     @Override
     public ColorModel turnColor() {
-        WebServiceClient<ColorModel> webServiceClient = new WebServiceClient<>(
-                TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_GAME,
-                TicTacToeResource.PATH_TURN);
-        webServiceClient.read();
-        return webServiceClient.entity(ColorModel.class);
+        return new WebServiceClient<ColorModel>(pathSessionsIdGame, TicTacToeResource.PATH_TURN)
+                .entity(ColorModel.class);
     }
 
     @Override
     public boolean hasAllPieces() {
-        WebServiceClient<Boolean> webServiceClient = new WebServiceClient<>(
-                TicTacToeResource.PATH_SESSIONS, this.getSessionId(),
-                TicTacToeResource.PATH_HAS_ALL_PIECES);
-        webServiceClient.read();
-        return webServiceClient.entityBoolean();
+        return new WebServiceClient<Boolean>(pathSessionsIdGame,
+                TicTacToeResource.PATH_HAS_ALL_PIECES).entityBoolean();
     }
 
     @Override
     public List<CoordinateEntity> validSourceCoordinates() {
-        WebServiceClient<CoordinateEntity> webServiceClient = new WebServiceClient<>(
-                TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_GAME,
-                TicTacToeResource.PATH_VALID_SOURCE_COORDINATES);
-        webServiceClient.read();
-        return webServiceClient.entities();
+        GenericType<List<CoordinateEntity>> gerericType = new GenericType<List<CoordinateEntity>>() {
+        };
+        return new WebServiceClient<CoordinateEntity>(pathSessionsIdGame,
+                TicTacToeResource.PATH_VALID_SOURCE_COORDINATES).entities(gerericType);
     }
 
     @Override
     public List<CoordinateEntity> validDestinationCoordinates() {
-        WebServiceClient<CoordinateEntity> webServiceClient = new WebServiceClient<>(
-                TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_GAME,
-                TicTacToeResource.PATH_VALID_DESTINATION_COORDINATES);
-        webServiceClient.read();
-        return webServiceClient.entities();
+        GenericType<List<CoordinateEntity>> gerericType = new GenericType<List<CoordinateEntity>>() {
+        };
+        return new WebServiceClient<CoordinateEntity>(pathSessionsIdGame,
+                TicTacToeResource.PATH_VALID_DESTINATION_COORDINATES).entities(gerericType);
     }
 
     @Override
     public boolean createdGame() {
-        WebServiceClient<Boolean> webServiceClient = new WebServiceClient<>(
-                TicTacToeResource.PATH_SESSIONS, this.getSessionId(),
-                TicTacToeResource.PATH_CREATED_GAME);
-        webServiceClient.read();
-        return webServiceClient.entityBoolean();
+        return new WebServiceClient<Boolean>(TicTacToeResource.PATH_SESSIONS, this.getSessionId(),
+                TicTacToeResource.PATH_CREATED_GAME).entityBoolean();
     }
 
 }

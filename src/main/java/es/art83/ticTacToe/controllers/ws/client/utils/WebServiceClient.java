@@ -8,6 +8,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
+import org.apache.logging.log4j.LogManager;
+
 public class WebServiceClient<T> {
     private WebTarget webTarget;
 
@@ -18,6 +20,14 @@ public class WebServiceClient<T> {
         for (String path : paths) {
             this.webTarget = this.webTarget.path(path);
         }
+        this.response = null;
+    }
+
+    private Response getResponse() {
+        if (this.response == null) {
+            this.read();
+        }
+        return this.response;
     }
 
     public void addPath(String path) {
@@ -30,7 +40,7 @@ public class WebServiceClient<T> {
 
     public boolean create(Object entity) {
         this.response = this.webTarget.request().post(Entity.xml(entity));
-        System.out.println("------>>>> : " + response.toString());
+        this.log();
         return this.ok();
     }
 
@@ -40,13 +50,13 @@ public class WebServiceClient<T> {
 
     public boolean read() {
         this.response = this.webTarget.request().get();
-        System.out.println("------>>>> : " + response.toString());
+        this.log();
         return this.ok();
     }
 
     public boolean update(Object entity) {
         this.response = this.webTarget.request().put(Entity.xml(entity));
-        System.out.println("------>>>> : " + response.toString());
+        this.log();
         return this.ok();
     }
 
@@ -56,7 +66,7 @@ public class WebServiceClient<T> {
 
     public boolean delete() {
         this.response = this.webTarget.request().delete();
-        System.out.println("------>>>> : " + response.toString());
+        this.log();
         return this.ok();
     }
 
@@ -66,26 +76,45 @@ public class WebServiceClient<T> {
 
     public T entity(Class<T> clazz) {
         T result = null;
-        if (this.response.hasEntity()) {
-            result = this.response.readEntity(clazz);
+        if (this.getResponse().hasEntity()) {
+            result = this.getResponse().readEntity(clazz);
         }
         return result;
     }
-    
-    public Boolean entityBoolean(){
+
+    public Boolean entityBoolean() {
         Boolean result = null;
-        if (this.response.hasEntity()) {
-            result = Boolean.valueOf(this.response.readEntity(String.class));
+        if (this.getResponse().hasEntity()) {
+            result = Boolean.valueOf(this.getResponse().readEntity(String.class));
         }
         return result;
     }
-    
-    public List<T> entities() {
+
+    public List<T> entities(GenericType<List<T>> genericType) {
         List<T> result = null;
-        if (this.response.hasEntity()) {
-            result = this.response.readEntity(new GenericType<List<T>>() {
-            });
+        if (this.getResponse().hasEntity()) {
+            result = this.getResponse().readEntity(genericType);
         }
+        return result;
+    }
+
+    private void log() {
+        if (this.response.getStatusInfo().getFamily().equals(Response.Status.Family.CLIENT_ERROR)) {
+            LogManager.getLogger(this.getClass()).error(this.logMsg());
+        } else if (this.response.getStatusInfo().getFamily()
+                .equals(Response.Status.Family.SERVER_ERROR)) {
+            LogManager.getLogger(this.getClass()).fatal(this.logMsg());
+        } else if (this.response.getStatusInfo().getFamily()
+                .equals(Response.Status.Family.SUCCESSFUL)) {
+            LogManager.getLogger(this.getClass()).info(this.logMsg());
+        } else {
+            LogManager.getLogger(this.getClass()).warn(this.logMsg());
+        }
+    }
+
+    private String logMsg() {
+        String result = "";
+        result += this.response.toString();
         return result;
     }
 
