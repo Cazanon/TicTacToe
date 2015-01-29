@@ -19,6 +19,7 @@ public class BoardEntity implements Cloneable {
     @GeneratedValue
     private int id;
 
+    //TODO debería ser un set porque no hay orden de secuencia por ningún criterio
     @OneToMany(cascade = CascadeType.ALL)
     private List<PieceEntity> pieces;
 
@@ -98,16 +99,17 @@ public class BoardEntity implements Cloneable {
     
     public void remove(CoordinateEntity coordinate) {
         assert coordinate != null: "parametro null";
-        //TODO revisar que no borra copias o no sé qué pasa!!!
-//        System.out.println(coordinate);
-//        System.out.println(pieces);
-        for (PieceEntity ficha : pieces) {
-            if (ficha.getCoordinate().equals(coordinate)) {
-                this.pieces.remove(ficha);
-                break;
+        System.out.println("----");
+        System.out.println(coordinate);
+        System.out.println(pieces);
+        for (PieceEntity piece : pieces) {
+            if (piece.getCoordinate().equals(coordinate)) {
+                this.pieces.remove(piece);
+                System.out.println("salgo");
+                return;
             }
         }
-        assert false;
+        assert false:"Se intentó borrar un elemento que no existe";
     }
 
     public void clear() {
