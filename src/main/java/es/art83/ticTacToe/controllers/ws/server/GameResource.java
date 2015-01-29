@@ -5,7 +5,6 @@ import java.net.URI;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
@@ -27,8 +26,10 @@ public class GameResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
-    public Response create(GameEntity gameEntity) {
+    public Response create(Integer sessionId) {
         Response result;
+        Integer gameId= DAOFactory.getFactory().getSessionDAO().read(sessionId).getGame().getId();
+        GameEntity gameEntity =  DAOFactory.getFactory().getGameDAO().read(gameId);
         DAOFactory.getFactory().getGameDAO().create(gameEntity);
         result = Response.created(URI.create("/games/" + gameEntity.getId())).build();
         LogManager.getLogger(PlayerResource.class).info("POST/games/id: " + gameEntity.getId());
@@ -39,13 +40,7 @@ public class GameResource {
     @DELETE
     public void delete(@PathParam("id") Integer id) {
         DAOFactory.getFactory().getGameDAO().deleteByID(id);
-    }
-
-    @PUT
-    @Consumes(MediaType.APPLICATION_XML)
-    public void update(GameEntity gameEntity) {
-        DAOFactory.getFactory().getGameDAO().update(gameEntity);
-        LogManager.getLogger(PlayerResource.class).info("PUT/games/id: " + gameEntity.getId());
+        LogManager.getLogger(PlayerResource.class).info("DELETE/games/id: " + id);
     }
 
 }

@@ -37,6 +37,7 @@ public class SessionGameResource extends SessionResource {
             if (name != null) {
                 gameEntity = DAOFactory.getFactory().getGameDAO()
                         .findGame(sessionEntity.getPlayer(), name);
+                DAOFactory.getFactory().getGameDAO().create(gameEntity);
             } else {
                 gameEntity = new GameEntity(sessionEntity.getPlayer());
                 DAOFactory.getFactory().getGameDAO().create(gameEntity);

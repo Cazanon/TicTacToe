@@ -8,10 +8,20 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.art83.ticTacToe.controllers.ws.client.utils.TicTacToeResource;
+import es.art83.ticTacToe.controllers.ws.client.utils.WebServiceClient;
+import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
 public class SessionResourceTest {
+
+    public boolean login(PlayerEntity playerEntity) {
+        return new WebServiceClient<>(pathSessionsId, TicTacToeResource.PATH_PLAYER)
+                .create(playerEntity);
+    }
+
     private SessionClient sessionClient;
+    private String sessionId;
 
     @Before
     public void createSession() {
@@ -20,9 +30,9 @@ public class SessionResourceTest {
 
     @Test
     public void testCreate() {
-        assertEquals(Response.Status.Family.SUCCESSFUL, this.sessionClient.getResponse()
-                .getStatusInfo().getFamily());
-        assertNotNull(sessionClient.getId());
+        WebServiceClient<String> webService = new WebServiceClient<>(TicTacToeResource.PATH_SESSIONS);
+        assertTrue(webService.create());
+        this.sessionId= webService.entity(String.class);
     }
 
     @Test
