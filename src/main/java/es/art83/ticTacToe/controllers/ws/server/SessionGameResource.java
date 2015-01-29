@@ -37,6 +37,7 @@ public class SessionGameResource extends SessionResource {
             if (name != null) {
                 gameEntity = DAOFactory.getFactory().getGameDAO()
                         .findGame(sessionEntity.getPlayer(), name);
+                DAOFactory.getFactory().getGameDAO().create(gameEntity);
             } else {
                 gameEntity = new GameEntity(sessionEntity.getPlayer());
                 DAOFactory.getFactory().getGameDAO().create(gameEntity);
@@ -73,7 +74,7 @@ public class SessionGameResource extends SessionResource {
         return result;
     }
 
-    @Path("fullBoard")
+    @Path("hasAllPieces")
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public String hasAllPieces(@PathParam("id") Integer id) {
@@ -175,4 +176,5 @@ public class SessionGameResource extends SessionResource {
         this.info("DELETE/" + sessionEntity.getId() + "game/piece"
                 + sessionEntity.getGame().pieces());
     }
+    
 }

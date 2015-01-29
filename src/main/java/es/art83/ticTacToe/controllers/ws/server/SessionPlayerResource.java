@@ -17,6 +17,7 @@ import es.art83.ticTacToe.models.daos.DAOFactory;
 import es.art83.ticTacToe.models.entities.GameEntity;
 import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
+import es.art83.ticTacToe.models.utils.ListStringWrapper;
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
 @Path("/sessions/{id}/player")
@@ -61,12 +62,12 @@ public class SessionPlayerResource extends SessionResource {
     @Path("/gameNames")
     @GET
     @Produces(MediaType.APPLICATION_XML)
-    public List<String> nameGames(@PathParam("id") Integer id) {
+    public ListStringWrapper nameGames(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         List<String> result = DAOFactory.getFactory().getGameDAO()
                 .findPlayerGameNames(sessionEntity.getPlayer());
-        this.info("GET/" + sessionEntity.getId() + "/createdGame " + result);
-        return result;
+        this.info("GET/" + sessionEntity.getId() + "/gameNames " + result + (result.size()));
+        return new ListStringWrapper(result);
     }
 
 }

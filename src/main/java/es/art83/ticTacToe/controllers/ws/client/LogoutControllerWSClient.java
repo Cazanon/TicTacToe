@@ -1,36 +1,34 @@
 package es.art83.ticTacToe.controllers.ws.client;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import es.art83.ticTacToe.controllers.LogoutController;
+import es.art83.ticTacToe.controllers.ws.client.utils.TicTacToeResource;
+import es.art83.ticTacToe.controllers.ws.client.utils.WebServiceClient;
+import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
 public class LogoutControllerWSClient extends ControllerWSClient implements LogoutController {
+    private final String pathSessionsId;
 
-    public LogoutControllerWSClient(Integer contextId) {
-        super(contextId);
+    public LogoutControllerWSClient(String sessionId) {
+        super(sessionId);
+        this.pathSessionsId = TicTacToeResource.PATH_SESSIONS + "/" + this.getSessionId();
     }
 
     @Override
     public void logout() {
-        WebTarget target = this.webTargetContext().path("player");
-        Response response = target.request().delete();
-        response.close();
+        new WebServiceClient<>(pathSessionsId, TicTacToeResource.PATH_PLAYER).delete();
     }
 
     @Override
     public boolean isBye() {
-        WebTarget target = this.webTargetContext().path("isBye");
-        Response response = target.request(MediaType.APPLICATION_XML).get();
-        return Boolean.valueOf(response.readEntity(String.class)); // response.close()
+        return new WebServiceClient<TicTacToeStateModel>(pathSessionsId,
+                TicTacToeResource.PATH_STATE).entity(TicTacToeStateModel.class).equals(
+                TicTacToeStateModel.FINAL);
     }
 
     @Override
     public boolean isSavedGame() {
-        WebTarget target = this.webTargetContext().path("savedGame");
-        Response response = target.request(MediaType.APPLICATION_XML).get();
-        return Boolean.valueOf(response.readEntity(String.class)); // response.close()
+        return new WebServiceClient<Boolean>(pathSessionsId, TicTacToeResource.PATH_SAVED_GAME)
+                .entityBoolean();
     }
 
 }

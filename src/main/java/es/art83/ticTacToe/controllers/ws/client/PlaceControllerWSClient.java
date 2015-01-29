@@ -8,8 +8,8 @@ import es.art83.ticTacToe.models.entities.CoordinateEntity;
 
 public class PlaceControllerWSClient extends ControllerWSClient implements PlaceCardController {
 
-    public PlaceControllerWSClient(Integer contextId) {
-        super(contextId);
+    public PlaceControllerWSClient(String sessionId) {
+        super(sessionId);
     }
 
     @Override

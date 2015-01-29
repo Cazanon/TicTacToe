@@ -92,4 +92,14 @@ public class SessionResource {
         sessionDAO.deleteByID(id);
     }
 
+    @Path("/{id}/createdGame")
+    @GET
+    public String createdGame(@PathParam("id") Integer id) {
+        SessionEntity sessionEntity = this.readSessionEntity(id);
+        Boolean result = sessionEntity.getGame() != null;
+        LogManager.getLogger(SessionResource.class).info(
+                "GET/" + sessionEntity.getId() + "/createdGame " + result);
+        return Boolean.toString(result);
+    }
+
 }
