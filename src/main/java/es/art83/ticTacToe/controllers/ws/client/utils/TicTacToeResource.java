@@ -42,4 +42,6 @@ public class TicTacToeResource {
     public static final String PATH_VALID_DESTINATION_COORDINATES = "/validDestinationCoordinates";
 
     public static final String PATH_CREATED_GAME = "/createdGame";
+
+    public static final String PATH_GAME_NAMES = "/gameNames";
 }

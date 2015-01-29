@@ -1,26 +1,33 @@
 package es.art83.ticTacToe.controllers.ws.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import es.art83.ticTacToe.controllers.NameGameController;
+import es.art83.ticTacToe.controllers.ws.client.utils.TicTacToeResource;
+import es.art83.ticTacToe.controllers.ws.client.utils.WebServiceClient;
+import es.art83.ticTacToe.models.utils.ListStringWrapper;
 
 public class NameControllerWSClient extends ControllerWSClient implements NameGameController {
 
+    private String pathSessionsIdPlayer;
+
     public NameControllerWSClient(String sessionId) {
         super(sessionId);
+        this.pathSessionsIdPlayer = TicTacToeResource.PATH_SESSIONS + "/" + this.getSessionId()
+                + TicTacToeResource.PATH_PLAYER;
     }
 
     @Override
     public List<String> gameNames() {
-        WebTarget target = this.webTargetContext().path("gameNames");
-        Response response = target.request(MediaType.APPLICATION_XML).get();
-        return response.readEntity(new GenericType<List<String>>() {
-        });
+        ListStringWrapper listStringWrapper = new WebServiceClient<ListStringWrapper>(
+                pathSessionsIdPlayer, TicTacToeResource.PATH_GAME_NAMES)
+                .entity(ListStringWrapper.class);
+        List<String> list = listStringWrapper.getListString();
+        if (list == null) {
+            list = new ArrayList<String>();
+        }
+        return list;
     }
 
 }
