@@ -12,7 +12,7 @@ import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
 @Entity
-public class SessionEntity {
+public class SessionEntity implements Cloneable {
     @Id
     @GeneratedValue
     private int id;

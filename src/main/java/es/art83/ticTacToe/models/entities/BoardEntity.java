@@ -13,7 +13,7 @@ import es.art83.ticTacToe.models.utils.ColorModel;
 import es.art83.ticTacToe.models.utils.DirectionModel;
 
 @Entity
-public class BoardEntity {
+public class BoardEntity implements Cloneable {
         
     @Id
     @GeneratedValue
@@ -61,6 +61,7 @@ public class BoardEntity {
         return this.pieces.size() == CoordinateEntity.DIMENSION * 2;
     }
 
+    //TODO se debería quitar, no se usa y es redundante
     public boolean existTicTacToe() {
         for (ColorModel color : ColorModel.values()) {
             if (existTicTacToe(color))
@@ -69,7 +70,7 @@ public class BoardEntity {
         return false;
     }
     
-    private boolean existTicTacToe(ColorModel color) {
+    public boolean existTicTacToe(ColorModel color) {
         assert color != null;
         List<CoordinateEntity> coordinates = this.coordinates(color);
         if (coordinates.size() < CoordinateEntity.DIMENSION) {
@@ -96,7 +97,10 @@ public class BoardEntity {
     }
     
     public void remove(CoordinateEntity coordinate) {
-        assert coordinate != null;
+        assert coordinate != null: "parametro null";
+        //TODO revisar que no borra copias o no sé qué pasa!!!
+//        System.out.println(coordinate);
+//        System.out.println(pieces);
         for (PieceEntity ficha : pieces) {
             if (ficha.getCoordinate().equals(coordinate)) {
                 this.pieces.remove(ficha);

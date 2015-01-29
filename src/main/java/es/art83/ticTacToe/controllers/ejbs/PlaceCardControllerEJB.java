@@ -12,7 +12,7 @@ public class PlaceCardControllerEJB extends ControllerEJB implements PlaceCardCo
     
    private void changeSate(){
         assert this.getTicTacToeContext().getTicTacToeStateModel() == TicTacToeStateModel.OPENED_GAME;
-        if (this.getTicTacToeContext().getGame().isGameOver()){
+        if (this.getTicTacToeContext().getGame().existTicTacToe()){
             this.getTicTacToeContext().setSaved(true);
             this.getTicTacToeContext().setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);        
         }else{
@@ -22,13 +22,13 @@ public class PlaceCardControllerEJB extends ControllerEJB implements PlaceCardCo
 
     @Override
     public void placeCard(CoordinateEntity coordinate) {
-        this.getTicTacToeContext().getGame().placeCard(coordinate);
+        this.getTicTacToeContext().getGame().placePiece(coordinate);
         this.changeSate();
     }
 
     @Override
     public void placeCard(CoordinateEntity source, CoordinateEntity destination) {
-        this.getTicTacToeContext().getGame().placeCard(source,destination);
+        this.getTicTacToeContext().getGame().placePiece(source,destination);
         this.changeSate();
     }
 

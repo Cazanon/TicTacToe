@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
-public class PlayerEntity {
+public class PlayerEntity implements Cloneable {
     @Id
     private String user;
 

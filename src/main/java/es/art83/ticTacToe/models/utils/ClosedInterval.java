@@ -1,6 +1,6 @@
 package es.art83.ticTacToe.models.utils;
 
-public class ClosedInterval {
+public class ClosedInterval implements Cloneable {
     private int minimum;
 
     private int maximum;

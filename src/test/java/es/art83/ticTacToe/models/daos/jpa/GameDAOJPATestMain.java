@@ -18,9 +18,9 @@ public class GameDAOJPATestMain {
     public void createTest() {
         GameDAO dao = DAOJPAFactory.getFactory().getGameDAO();
         this.game = new GameEntity("partida", p);
-        game.placeCard(new CoordinateEntity(0, 0));
-        game.placeCard(new CoordinateEntity(0, 1));
-        game.placeCard(new CoordinateEntity(0, 2));
+        game.placePiece(new CoordinateEntity(0, 0));
+        game.placePiece(new CoordinateEntity(0, 1));
+        game.placePiece(new CoordinateEntity(0, 2));
         dao.create(game);
     }
 
@@ -31,8 +31,8 @@ public class GameDAOJPATestMain {
     public void updateTest() {
         this.game.setName("other name");
         CoordinateEntity coor = new CoordinateEntity(0, 0);
-        this.game.deleteCard(coor);
-        this.game.placeCard(new CoordinateEntity(1, 1));
+        this.game.deletePiece(coor);
+        this.game.placePiece(new CoordinateEntity(1, 1));
         DAOJPAFactory.getFactory().getGameDAO().update(this.game);
         DAOJPAFactory.getFactory().getPieceDAO().deleteByCoordinate(coor);;
     }

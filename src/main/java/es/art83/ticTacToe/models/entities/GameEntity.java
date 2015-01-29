@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import es.art83.ticTacToe.models.utils.ColorModel;
 
 @Entity
-public class GameEntity {
+public class GameEntity implements Cloneable {
     @Id
     @GeneratedValue
     private Integer id;
@@ -29,20 +29,19 @@ public class GameEntity {
     @ManyToOne(cascade = CascadeType.REFRESH)
     private PlayerEntity player;
 
-    public GameEntity(String name, PlayerEntity playerEntity, BoardEntity boardClone,
-            TurnEntity turnClone) {
+    public GameEntity(String name, PlayerEntity player, BoardEntity board, TurnEntity turn) {
         this.setName(name);
-        this.setPlayer(playerEntity);
-        this.setBoardEntity(boardClone);
-        this.setTurn(turnClone);
+        this.setPlayer(player);
+        this.setBoardEntity(board);
+        this.setTurn(turn);
     }
 
-    public GameEntity(String name, PlayerEntity playerEntity) {
-        this(name, playerEntity, new BoardEntity(), new TurnEntity());
+    public GameEntity(String name, PlayerEntity player) {
+        this(name, player, new BoardEntity(), new TurnEntity());
     }
 
-    public GameEntity(PlayerEntity playerEntity) {
-        this(null, playerEntity);
+    public GameEntity(PlayerEntity player) {
+        this(null, player);
     }
 
     public GameEntity() {
@@ -65,31 +64,28 @@ public class GameEntity {
         return this.player;
     }
 
-    public void setPlayer(PlayerEntity player) {
+    private void setPlayer(PlayerEntity player) {
         this.player = player;
     }
 
-    public TurnEntity getTurn() {
+    private TurnEntity getTurn() {
         return this.turn;
     }
 
-    public void setTurn(TurnEntity turn) {
+    private void setTurn(TurnEntity turn) {
         this.turn = turn;
     }
 
-    public BoardEntity getBoard() {
-        return board;
-    }
-
-    public void setBoardEntity(BoardEntity board) {
+    private void setBoardEntity(BoardEntity board) {
         this.board = board;
     }
 
-    public boolean isGameOver() {
-        return this.board.existTicTacToe();
+    //TODO que devuelva ColorModel del que gana
+    public boolean existTicTacToe() {
+        return this.board.existTicTacToe(this.turn.getColorChanged());
     }
 
-    public List<PieceEntity> allPieces() {
+    public List<PieceEntity> pieces() {
         return this.board.getPieces();
     }
 
@@ -97,6 +93,7 @@ public class GameEntity {
         return this.board.colors();
     }
 
+    //TODO esto no es correcto del todo, siempre daría un ganador! Se arregla con lo que devuelva existTitTacToe
     public ColorModel winner() {
         return this.turn.getColorChanged();
     }
@@ -115,19 +112,20 @@ public class GameEntity {
 
     public List<CoordinateEntity> validDestinationCoordinates() {
         return this.board.validDestinationCoordinates();
-    }
+    } 
 
-    public void placeCard(CoordinateEntity coordinate) {
+    public void placePiece(CoordinateEntity coordinate) {
         this.board.put(new PieceEntity(this.getTurn().getColor(), coordinate));
         this.turn.change();
     }
 
-    public void placeCard(CoordinateEntity source, CoordinateEntity destination) {
+    public void placePiece(CoordinateEntity source, CoordinateEntity destination) {
         this.board.remove(source);
-        this.placeCard(destination);
+        this.placePiece(destination);
     }
 
-    public void deleteCard(CoordinateEntity source) {
+    //TODO hay que quitarlo, solo se usa en pruebas
+    public void deletePiece(CoordinateEntity source) {
         this.board.remove(source);
     }
 
@@ -170,7 +168,6 @@ public class GameEntity {
         } else {
             result = other.name != null && this.name.equals(other.name);
         }
-
         return result && this.player.equals(other.player);
     }
 

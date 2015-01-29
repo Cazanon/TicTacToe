@@ -3,112 +3,134 @@ package es.art83.ticTacToe.models.entities;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import es.art83.ticTacToe.models.entities.data.BoardEntityTestData;
 import es.art83.ticTacToe.models.utils.ColorModel;
 
 public class BoardEntityTest {
 
+    private BoardEntityTestData data;
+
+    @Before
+    public void init() {
+        data = new BoardEntityTestData();
+    }
+
     @Test
     public void testBoardEntity() {
-        assertEquals(0, new BoardEntity().getPieces().size());
+        assertEquals(data.message(), 0, new BoardEntity().getPieces().size());
     }
 
     @Test
     public void testBoardEntityListOfPieceEntity() {
-
-        List<List<PieceEntity>> piecesBoardSet = new TestBoardEntityListOfPieceEntityData()
-                .getPiecesBoardSet();
-        for (List<PieceEntity> piecesBoard : piecesBoardSet) {
-            BoardEntity board = new BoardEntity(piecesBoard);
-            for (PieceEntity piece : new ArrayList<PieceEntity>(piecesBoard)) {
-                board.remove(piece.getCoordinate());
-            }
-            assertEquals(0, board.getPieces().size());
+        while (data.hasNextBoard()) {
+            List<PieceEntity> pieceEntityList = data.getPiecesBoard();
+            BoardEntity board = new BoardEntity(pieceEntityList);
+            assertSame(data.message(), pieceEntityList, board.getPieces());
+            data.nextBoard();
         }
     }
 
     @Test
     public void testClear() {
-        fail("Not yet implemented");
+        while (data.hasNextBoard()) {
+            BoardEntity board = new BoardEntity(data.getPiecesBoard());
+            board.clear();
+            assertEquals(data.message(), 0, new BoardEntity().getPieces().size());
+            data.nextBoard();
+        }
     }
-    
+
     @Test
     public void testHasAllPieces() {
-        fail("Not yet implemented");
+        while (data.hasNextBoard()) {
+            BoardEntity board = new BoardEntity(data.getPiecesBoard());
+            assertEquals(data.message(), data.getHasAllPiecesBoard(), board.hasAllPieces());
+            data.nextBoard();
+        }
     }
 
     // LUIS debería irse al bean
     @Test
     public void testColors() {
-        fail("Not yet implemented");
+        // TODO LUIS debería irse al bean
     }
 
     @Test
     public void testCoordinates() {
-        fail("Not yet implemented");
+        this.testCoordinates(ColorModel.X);
+        this.testCoordinates(ColorModel.X);
     }
-    
+
+    private void testCoordinates(ColorModel x) {
+        while (data.hasNextBoard()) {
+            BoardEntity board = new BoardEntity(data.getPiecesBoard());
+            assertEquals(data.message(), data.getHasAllPiecesBoard(), board.hasAllPieces());
+            data.nextBoard();
+        }
+    }
+
     @Test
     public void testValidDestinationCoordinates() {
-        fail("Not yet implemented");
+        while (data.hasNextBoard()) {
+            BoardEntity board = new BoardEntity(data.getPiecesBoard());
+            assertEquals(data.message(), data.getValidDestinationCoordinatesBoard(),
+                    board.validDestinationCoordinates());
+            data.nextBoard();
+        }
     }
-    
+
     @Test
     public void testPut() {
-        fail("Not yet implemented");
+        //TODO revisar porque depende de remove!!!
+        while (data.hasNextBoard()) {
+            BoardEntity board = new BoardEntity(data.getPiecesBoard());
+            board.put(data.getPutPieceBoard());
+            //System.out.println("antes: " + data.getPutPieceBoard());
+            for (PieceEntity piece : board.getPieces()) {
+                //System.out.println("sin: " + piece);
+                data.getPutPiecesBoard().remove(piece);
+                //System.out.println("queda: " + data.getPutPieceBoard());
+            }
+            //System.out.println("final: " + data.getPutPieceBoard());
+            //System.out.println("vacio: " + new ArrayList<PieceEntity>());
+            assertEquals(data.message(), new ArrayList<PieceEntity>(), data.getPutPieceBoard());
+            data.nextBoard();
+        }
     }
 
     @Test
     public void testRemove() {
-        fail("Not yet implemented");
+        while (data.hasNextBoard()) {
+            data.message();
+            BoardEntity board = new BoardEntity(data.getPiecesBoard());
+            if (data.getRemovePieceBoard() != null) {
+                board.remove(data.getRemovePieceBoard().getCoordinate());
+            }
+            assertEquals(data.message(), data.getRemovePiecesBoard(), board.getPieces());
+            data.nextBoard();
+        }
     }
 
     @Test
     public void testExistTicTacToe() {
-
-        TestExistTicTacToeData gamesSetDataTest = new TestExistTicTacToeData();
-        Iterator<List<PieceEntity>> putPieceGamesIterator = gamesSetDataTest.getPutPieceGamesSet()
-                .iterator();
-        Iterator<List<CoordinateEntity>> removeCoordinateGamesIterator = gamesSetDataTest
-                .getRemoveCoordinatesGamesSet().iterator();
-        Iterator<List<Boolean>> ticTacToesGamesIterator = gamesSetDataTest.getTicTacToesGamesSet()
-                .iterator();
-        int juego = 1;
-        while (putPieceGamesIterator.hasNext()) {
-            System.out.println("Game!!!!!!!!!!!!!!!!!!!!!!! " + juego++);
-            BoardEntity board = new BoardEntity();
-            Iterator<PieceEntity> putPieceIterator = putPieceGamesIterator.next().iterator();
-            Iterator<CoordinateEntity> removeCoordinateIterator = removeCoordinateGamesIterator
-                    .next().iterator();
-            Iterator<Boolean> ticTacToeIterator = ticTacToesGamesIterator.next().iterator();
-            int i = 0;
-            while (putPieceIterator.hasNext()) {
-                if (i >= CoordinateEntity.DIMENSION * 2) {
-                    CoordinateEntity coordinate = removeCoordinateIterator.next();
-                    System.out.println("remove: " + coordinate);
-                    board.remove(coordinate);
-                }
-                PieceEntity piece = putPieceIterator.next();
-                System.out.println("put: " + piece);
-                board.put(piece);
-                System.out.println(board);
-                boolean ticTacToe = ticTacToeIterator.next();
-                System.out.println(ticTacToe);
-                System.out.println(board.existTicTacToe());
-                assertEquals(ticTacToe, board.existTicTacToe());
-                i++;
-            }
-            System.out.println(board);
+        while (data.hasNextBoard()) {
+            BoardEntity board = new BoardEntity(data.getPiecesBoard());
+            assertEquals(data.message(), data.getExistTitTacToeBoard(), board.existTicTacToe());
+            data.nextBoard();
         }
     }
 
     @Test
     public void testUpdate() {
-        fail("Not yet implemented");
+        // TODO No sé qué hacer aquí
     }
 
 }

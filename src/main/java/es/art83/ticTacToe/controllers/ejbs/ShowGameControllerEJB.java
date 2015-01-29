@@ -25,7 +25,7 @@ public class ShowGameControllerEJB extends ControllerEJB implements ShowGameCont
 
     @Override
     public boolean isGameOver() {
-        return this.getTicTacToeContext().getGame().isGameOver();
+        return this.getTicTacToeContext().getGame().existTicTacToe();
     }
 
     @Override

@@ -57,7 +57,7 @@ public class SessionGameResource extends SessionResource {
     @Produces(MediaType.APPLICATION_XML)
     public String isGameOver(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        Boolean result = sessionEntity.getGame().isGameOver();
+        Boolean result = sessionEntity.getGame().existTicTacToe();
         LogManager.getLogger(SessionResource.class).info(
                 "GET/" + sessionEntity.getId() + "/game/gameOver " + result);
         return Boolean.toString(result);
@@ -89,7 +89,7 @@ public class SessionGameResource extends SessionResource {
     @Produces(MediaType.APPLICATION_XML)
     public List<PieceEntity> allPieces(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        List<PieceEntity> result = sessionEntity.getGame().allPieces();
+        List<PieceEntity> result = sessionEntity.getGame().pieces();
         this.info("GET/" + sessionEntity.getId() + "/game/allPieces " + result.toString());
         return result;
     }
@@ -148,8 +148,8 @@ public class SessionGameResource extends SessionResource {
     @Consumes(MediaType.APPLICATION_XML)
     public Response createPiece(@PathParam("id") Integer id, CoordinateEntity coordinateEntity) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        sessionEntity.getGame().placeCard(coordinateEntity);
-        if (sessionEntity.getGame().isGameOver()) {
+        sessionEntity.getGame().placePiece(coordinateEntity);
+        if (sessionEntity.getGame().existTicTacToe()) {
             sessionEntity.setSaved(true);
             sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);
         } else {
@@ -169,10 +169,10 @@ public class SessionGameResource extends SessionResource {
             @MatrixParam("column") int column) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         CoordinateEntity coordinate = new CoordinateEntity(row, column);
-        sessionEntity.getGame().deleteCard(coordinate);
+        sessionEntity.getGame().deletePiece(coordinate);
         DAOFactory.getFactory().getGameDAO().update(sessionEntity.getGame());
         DAOFactory.getFactory().getPieceDAO().deleteByCoordinate(coordinate);
         this.info("DELETE/" + sessionEntity.getId() + "game/piece"
-                + sessionEntity.getGame().allPieces());
+                + sessionEntity.getGame().pieces());
     }
 }

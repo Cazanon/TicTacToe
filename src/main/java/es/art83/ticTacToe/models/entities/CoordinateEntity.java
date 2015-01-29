@@ -12,7 +12,7 @@ import es.art83.ticTacToe.models.utils.DirectionModel;
 
 @XmlRootElement
 @Embeddable
-public class CoordinateEntity {
+public class CoordinateEntity implements Cloneable {
     public static final int DIMENSION = 3;
 
     public static final int MIN = 0;
@@ -77,6 +77,7 @@ public class CoordinateEntity {
     }
 
     public DirectionModel inDirection(CoordinateEntity coordinate) {
+        assert(!this.equals(coordinate));
         if (this.inRow(coordinate)) {
             return DirectionModel.IN_ROW;
         } else if (this.inColumn(coordinate)) {
@@ -137,6 +138,11 @@ public class CoordinateEntity {
     @Override
     public String toString() {
         return row + "-" + column;
+    }
+    
+    @Override
+    public Object clone() {
+        return new CoordinateEntity(row, column);
     }
 
 }

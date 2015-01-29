@@ -12,7 +12,7 @@ import es.art83.ticTacToe.models.utils.ColorModel;
 
 @XmlRootElement
 @Entity
-public class PieceEntity {
+public class PieceEntity implements Cloneable {
     @Id
     @GeneratedValue
     private int id;
@@ -71,6 +71,11 @@ public class PieceEntity {
     @Override
     public String toString() {
         return "Piece[" + color + "-" + coordinate + "]";
+    }
+    
+    @Override
+    public Object clone() {
+        return new PieceEntity(color, (CoordinateEntity) coordinate.clone());
     }
 
 }
