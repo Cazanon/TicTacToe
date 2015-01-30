@@ -7,7 +7,7 @@ import javax.persistence.Enumerated;
 import es.art83.ticTacToe.models.utils.ColorModel;
 
 @Embeddable
-public class TurnEntity implements Cloneable {
+public class TurnEntity {
     @Enumerated(EnumType.STRING)
     private ColorModel color;
 

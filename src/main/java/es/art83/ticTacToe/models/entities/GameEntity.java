@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import es.art83.ticTacToe.models.utils.ColorModel;
 
 @Entity
-public class GameEntity implements Cloneable {
+public class GameEntity {
     @Id
     @GeneratedValue
     private Integer id;

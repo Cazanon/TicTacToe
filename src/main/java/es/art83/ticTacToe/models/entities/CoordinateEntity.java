@@ -12,7 +12,7 @@ import es.art83.ticTacToe.models.utils.DirectionModel;
 
 @XmlRootElement
 @Embeddable
-public class CoordinateEntity implements Cloneable {
+public class CoordinateEntity {
     public static final int DIMENSION = 3;
 
     public static final int MIN = 0;

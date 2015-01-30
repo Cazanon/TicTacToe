@@ -8,6 +8,7 @@ import java.util.List;
 
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.utils.DirectionModel;
+import es.art83.ticTacToe.utils.ArrayToListTransformer;
 
 public class CoordinateEntityTestData {
 

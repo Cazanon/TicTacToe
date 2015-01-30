@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.models.entities.data;
+package es.art83.ticTacToe.utils;
 
 import java.util.ArrayList;
 import java.util.Iterator;

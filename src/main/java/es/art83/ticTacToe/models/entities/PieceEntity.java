@@ -12,7 +12,7 @@ import es.art83.ticTacToe.models.utils.ColorModel;
 
 @XmlRootElement
 @Entity
-public class PieceEntity implements Cloneable {
+public class PieceEntity {
     @Id
     @GeneratedValue
     private int id;

@@ -13,7 +13,7 @@ import es.art83.ticTacToe.models.utils.ColorModel;
 import es.art83.ticTacToe.models.utils.DirectionModel;
 
 @Entity
-public class BoardEntity implements Cloneable {
+public class BoardEntity {
         
     @Id
     @GeneratedValue

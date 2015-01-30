@@ -8,6 +8,7 @@ import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.entities.TurnEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
+import es.art83.ticTacToe.utils.ArrayToListTransformer;
 
 public class GameEntityTestData {
 
