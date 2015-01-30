@@ -37,6 +37,10 @@ public class WebServiceClient<T> {
     public void addParams(String name, String value) {
         this.webTarget = this.webTarget.queryParam(name, value);
     }
+    
+    public void addMatrixParams(String name, String value) {
+        this.webTarget = this.webTarget.matrixParam(name, value);
+    }
 
     public boolean create(Object entity) {
         this.response = this.webTarget.request().post(Entity.xml(entity));

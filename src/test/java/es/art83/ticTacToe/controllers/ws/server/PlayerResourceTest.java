@@ -1,35 +1,38 @@
 package es.art83.ticTacToe.controllers.ws.server;
 
-import static org.junit.Assert.assertEquals;
-
-import javax.ws.rs.core.Response;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.art83.ticTacToe.controllers.ws.client.utils.TicTacToeResource;
+import es.art83.ticTacToe.controllers.ws.client.utils.WebServiceClient;
+import es.art83.ticTacToe.models.entities.PlayerEntity;
+
 public class PlayerResourceTest {
-    private PlayerClient playerClient;
+    private PlayerEntity player;
 
     @Before
     public void before() {
-        this.playerClient = new PlayerClient();
+        this.player = new PlayerEntity("u", "pass");
     }
 
     @Test
     public void testCreateNoExist() {
-        assertEquals(Response.Status.Family.SUCCESSFUL, this.playerClient.getResponse()
-                .getStatusInfo().getFamily());
+        assertTrue(new WebServiceClient<>(TicTacToeResource.PATH_PLAYERS).create(player));
     }
 
     @Test
     public void testCreateExist() {
-        assertEquals(Response.Status.CONFLICT.getStatusCode(), new PlayerClient().getResponse().getStatus());
+        new WebServiceClient<>(TicTacToeResource.PATH_PLAYERS).create(player);
+        assertFalse(new WebServiceClient<>(TicTacToeResource.PATH_PLAYERS).create(player));
     }
 
     @After
     public void after() {
-        this.playerClient.close();
+        new WebServiceClient<>(TicTacToeResource.PATH_PLAYERS, this.player.getUser()).delete();
     }
 
 }
