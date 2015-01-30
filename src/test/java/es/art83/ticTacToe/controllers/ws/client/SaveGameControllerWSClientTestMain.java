@@ -1,21 +1,15 @@
 package es.art83.ticTacToe.controllers.ws.client;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import es.art83.ticTacToe.controllers.LogoutController;
 import es.art83.ticTacToe.controllers.ws.client.utils.TicTacToeResource;
 import es.art83.ticTacToe.controllers.ws.client.utils.WebServiceClient;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.models.utils.ColorModel;
 
-public class SaveGameControllerWSClientTest {
+public class SaveGameControllerWSClientTestMain {
 
+    
     private PlayerEntity playerEntity;
 
     private LogoutController logout;
@@ -24,7 +18,7 @@ public class SaveGameControllerWSClientTest {
 
     private SaveControllerWSClient saveGameController;
 
-    @Before
+    
     public void before() {
         ControllerFactoryWSClient factory = new ControllerFactoryWSClient();
         this.placeController = (PlaceControllerWSClient) factory.getPlaceCardController();
@@ -35,7 +29,7 @@ public class SaveGameControllerWSClientTest {
         factory.getCreateGameControler().createGame();
     }
 
-    @Test
+    
     public void testSaveGame() {
         this.placeController.placeCard(new CoordinateEntity(0, 0));
         this.placeController.placeCard(new CoordinateEntity(0, 1));
@@ -45,6 +39,7 @@ public class SaveGameControllerWSClientTest {
 
     
     public void after() {
+        //Se deben borrar los juegos del usuario
         this.logout.logout();
         new WebServiceClient<>(TicTacToeResource.PATH_SESSIONS, this.placeController.getSessionId())
                 .delete();
@@ -52,4 +47,10 @@ public class SaveGameControllerWSClientTest {
                 .delete();
     }
 
+    public static void main(String[] args) {
+        SaveGameControllerWSClientTestMain test= new SaveGameControllerWSClientTestMain();
+        test.before();
+        test.testSaveGame();
+        //test.after() // Falta por implementar
+    }
 }

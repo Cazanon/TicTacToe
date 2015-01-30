@@ -38,7 +38,8 @@ public class GameResourceTest {
                 TicTacToeResource.PATH_PLAYER).create(player);
         // Create game
         new WebServiceClient<>(pathSessionsIdGame).create();
-
+        // Se establece nombre de partida
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_NAME).create("partida1");
     }
 
     @Test
@@ -47,6 +48,20 @@ public class GameResourceTest {
                 TicTacToeResource.PATH_GAMES);
         webServiceClient.addParams("sessionId", sessionId);
         assertTrue(webServiceClient.create());
+        this.gameId = webServiceClient.entity(String.class);
+    }
+
+    @Test
+    public void testFindGame() {
+        WebServiceClient<String> webServiceClient = new WebServiceClient<>(
+                TicTacToeResource.PATH_GAMES);
+        webServiceClient.addParams("sessionId", sessionId);
+        webServiceClient.create();
+
+        webServiceClient = new WebServiceClient<String>(TicTacToeResource.PATH_GAMES,
+                TicTacToeResource.PATH_SEARCH);
+        webServiceClient.addParams("sessionId", sessionId);
+        webServiceClient.addParams("name", "partida1");
         this.gameId = webServiceClient.entity(String.class);
     }
 

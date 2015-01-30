@@ -35,8 +35,9 @@ public class SessionGameResource extends SessionResource {
         if (sessionEntity.getPlayer() != null) {
             GameEntity gameEntity;
             if (name != null) {
+                //Solo puede haber uno
                 gameEntity = DAOFactory.getFactory().getGameDAO()
-                        .findGame(sessionEntity.getPlayer(), name);
+                        .findPlayerGames(sessionEntity.getPlayer(), name).get(0);
                 gameEntity = gameEntity.clone();
                 DAOFactory.getFactory().getGameDAO().create(gameEntity.clone());
             } else {

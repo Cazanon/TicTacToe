@@ -18,7 +18,7 @@ public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements Ga
     public GameDAOJPA() {
         super(GameEntity.class);
     }
-    
+
     @Override
     public List<String> findPlayerGameNames(PlayerEntity player) {
         EntityManager entityManager = DAOJPAFactory.getEmf().createEntityManager();
@@ -43,7 +43,7 @@ public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements Ga
     }
 
     @Override
-    public GameEntity findGame(PlayerEntity player, String gameName) {
+    public List<GameEntity> findPlayerGames(PlayerEntity player, String gameName) {
         EntityManager entityManager = DAOJPAFactory.getEmf().createEntityManager();
         // Se crea un criterio de consulta
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
@@ -60,9 +60,10 @@ public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements Ga
         query.where(predicate);
         // Se crea el resultado
         TypedQuery<GameEntity> tq = entityManager.createQuery(query);
-        GameEntity gameEntity = tq.getSingleResult();
+        tq.setFirstResult(0);
+        tq.setMaxResults(0); // Se buscan todos
+        List<GameEntity> result = tq.getResultList();
         entityManager.close();
-        return gameEntity;
+        return result;
     }
-
 }

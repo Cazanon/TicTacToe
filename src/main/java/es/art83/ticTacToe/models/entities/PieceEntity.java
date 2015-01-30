@@ -74,7 +74,7 @@ public class PieceEntity implements Cloneable {
     }
     
     @Override
-    public Object clone() {
+    public PieceEntity clone() {
         return new PieceEntity(color, (CoordinateEntity) coordinate.clone());
     }
 

@@ -141,7 +141,7 @@ public class CoordinateEntity implements Cloneable {
     }
     
     @Override
-    public Object clone() {
+    public CoordinateEntity clone() {
         return new CoordinateEntity(row, column);
     }
 
