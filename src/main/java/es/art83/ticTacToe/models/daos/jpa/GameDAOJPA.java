@@ -18,7 +18,7 @@ public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements Ga
     public GameDAOJPA() {
         super(GameEntity.class);
     }
-    
+
     @Override
     public List<String> findPlayerGameNames(PlayerEntity player) {
         EntityManager entityManager = DAOJPAFactory.getEmf().createEntityManager();
@@ -30,9 +30,10 @@ public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements Ga
         // Se establece la clausula SELECT
         query.select(root.get("name")); // criteriaQuery.multiselect(root.get(atr))
         // Se configura el predicado
-        Predicate predicate = builder.equal(root.get("player").as(PlayerEntity.class), player);
+        Predicate predicate1 = builder.equal(root.get("player").as(PlayerEntity.class), player);
+        Predicate predicate2 = builder.isNotNull(root.get("name").as(PlayerEntity.class));
         // Se establece el WHERE
-        query.where(predicate);
+        query.where(builder.and(predicate1, predicate2));
         // Se crea el resultado
         TypedQuery<String> tq = entityManager.createQuery(query);
         tq.setFirstResult(0);
@@ -43,7 +44,7 @@ public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements Ga
     }
 
     @Override
-    public GameEntity findGame(PlayerEntity player, String gameName) {
+    public List<GameEntity> findPlayerGames(PlayerEntity player, String gameName) {
         EntityManager entityManager = DAOJPAFactory.getEmf().createEntityManager();
         // Se crea un criterio de consulta
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
@@ -60,9 +61,10 @@ public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements Ga
         query.where(predicate);
         // Se crea el resultado
         TypedQuery<GameEntity> tq = entityManager.createQuery(query);
-        GameEntity gameEntity = tq.getSingleResult();
+        tq.setFirstResult(0);
+        tq.setMaxResults(0); // Se buscan todos
+        List<GameEntity> result = tq.getResultList();
         entityManager.close();
-        return gameEntity;
+        return result;
     }
-
 }

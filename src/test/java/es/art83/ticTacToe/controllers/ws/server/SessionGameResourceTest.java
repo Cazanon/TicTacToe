@@ -2,176 +2,190 @@ package es.art83.ticTacToe.controllers.ws.server;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
 import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Response;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.art83.ticTacToe.controllers.ws.client.utils.TicTacToeResource;
+import es.art83.ticTacToe.controllers.ws.client.utils.WebServiceClient;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PieceEntity;
+import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
 
 public class SessionGameResourceTest {
+    private String sessionId;
 
-    private SessionGameClient sessionGameClient;
+    private PlayerEntity player;
+
+    private String pathSessionsIdGame;
+
+    private boolean createGameOk;
 
     @Before
     public void before() {
-        this.sessionGameClient = new SessionGameClient();
+        // Create sessions
+        WebServiceClient<String> webServiceClient = new WebServiceClient<String>(
+                TicTacToeResource.PATH_SESSIONS);
+        webServiceClient.create();
+        this.sessionId = webServiceClient.entity(String.class);
+
+        pathSessionsIdGame = TicTacToeResource.PATH_SESSIONS + "/" + this.sessionId
+                + TicTacToeResource.PATH_GAME;
+
+        // Register player
+        this.player = new PlayerEntity("u", "pass");
+        new WebServiceClient<>(TicTacToeResource.PATH_PLAYERS).create(player);
+        //Login player
+        new WebServiceClient<>(TicTacToeResource.PATH_SESSIONS, this.sessionId,
+                TicTacToeResource.PATH_PLAYER).create(player);
+        // Create game
+        this.createGameOk = new WebServiceClient<>(pathSessionsIdGame).create();
+
     }
 
     @Test
     public void testCreateGameLogged() {
-        this.sessionGameClient.login();
-        this.sessionGameClient.createNewGame();
-        Response response = this.sessionGameClient.getResponse();
-        assertEquals(Response.Status.Family.SUCCESSFUL, response.getStatusInfo().getFamily());
-    }
-
-    @Test
-    public void testCreateGameNotLogged() {
-        this.sessionGameClient.createNewGame();
-        Response response = this.sessionGameClient.getResponse();
-        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), response.getStatus());
+        assertTrue(this.createGameOk);
     }
 
     @Test
     public void testTurnInitial() {
-        this.sessionGameClient.login();
-        this.sessionGameClient.createNewGame();
-        this.sessionGameClient.get("turn");
-        Response response = this.sessionGameClient.getResponse();
-        assertEquals(ColorModel.X, response.readEntity(ColorModel.class));
+        assertEquals(ColorModel.X, new WebServiceClient<ColorModel>(pathSessionsIdGame,
+                TicTacToeResource.PATH_TURN).entity(ColorModel.class));
     }
-    
+
     @Test
     public void testTurnChanged() {
-        this.sessionGameClient.login();
-        this.sessionGameClient.createNewGame();
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 0));
-        this.sessionGameClient.get("turn");
-        Response response = this.sessionGameClient.getResponse();
-        assertEquals(ColorModel.O, response.readEntity(ColorModel.class));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 0));
+        assertEquals(ColorModel.O, new WebServiceClient<ColorModel>(pathSessionsIdGame,
+                TicTacToeResource.PATH_TURN).entity(ColorModel.class));
     }
 
     @Test
     public void testNotGameOver() {
-        this.sessionGameClient.login();
-        this.sessionGameClient.createNewGame();
-        this.sessionGameClient.get("gameOver");
-        Response response = this.sessionGameClient.getResponse();
-        assertFalse(Boolean.valueOf(response.readEntity(String.class)));
+        assertFalse(new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_GAME_OVER)
+                .entityBoolean());
     }
 
     @Test
     public void testGameOver() {
-        this.sessionGameClient.login();
-        this.sessionGameClient.createNewGame();
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 0));
-        this.sessionGameClient.post("piece", new CoordinateEntity(1, 0));
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 1));
-        this.sessionGameClient.post("piece", new CoordinateEntity(2, 0));
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 2));
-        this.sessionGameClient.get("gameOver");
-        Response response = this.sessionGameClient.getResponse();
-        assertTrue(Boolean.valueOf(response.readEntity(String.class)));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 0));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(1, 0));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 1));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(1, 1));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 2));
+        assertTrue(new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_GAME_OVER)
+                .entityBoolean());
     }
 
     @Test
     public void testNotName() {
-        this.sessionGameClient.login();
-        this.sessionGameClient.createNewGame();
-        this.sessionGameClient.get("name");
-        Response response = this.sessionGameClient.getResponse();
-        assertEquals("", response.readEntity(String.class));
+        assertNull(new WebServiceClient<String>(pathSessionsIdGame,
+                TicTacToeResource.PATH_NAME).entity(String.class));
     }
 
     @Test
     public void testNotFullBoard() {
-        this.sessionGameClient.login();
-        this.sessionGameClient.createNewGame();
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 0));
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 1));
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 2));
-        this.sessionGameClient.post("piece", new CoordinateEntity(1, 0));
-        this.sessionGameClient.post("piece", new CoordinateEntity(1, 1));
-        this.sessionGameClient.get("fullBoard");
-        Response response = this.sessionGameClient.getResponse();
-        assertFalse(Boolean.valueOf(response.readEntity(String.class)));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 0));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 1));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 2));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(1, 0));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(1, 1));
+        assertFalse(new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_HAS_ALL_PIECES)
+                .entityBoolean());
     }
 
     @Test
     public void testfullBoard() {
-        this.sessionGameClient.login();
-        this.sessionGameClient.createNewGame();
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 0));
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 1));
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 2));
-        this.sessionGameClient.post("piece", new CoordinateEntity(1, 0));
-        this.sessionGameClient.post("piece", new CoordinateEntity(1, 1));
-        this.sessionGameClient.post("piece", new CoordinateEntity(1, 2));
-        this.sessionGameClient.get("fullBoard");
-        Response response = this.sessionGameClient.getResponse();
-        assertTrue(Boolean.valueOf(response.readEntity(String.class)));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 0));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 1));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 2));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(1, 0));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(1, 1));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(1, 2));
+        assertTrue(new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_HAS_ALL_PIECES)
+                .entityBoolean());
     }
 
     @Test
     public void testAllPieces() {
-        this.sessionGameClient.login();
-        this.sessionGameClient.createNewGame();
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 0));
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 1));
-        this.sessionGameClient.get("allPieces");
-        Response response = this.sessionGameClient.getResponse();
-        List<PieceEntity> pieces = response.readEntity(new GenericType<List<PieceEntity>>() {
-        });
-        assertEquals(2, pieces.size());
-        assertTrue(pieces.contains(new PieceEntity(ColorModel.X, new CoordinateEntity(0, 0))));
-        assertTrue(pieces.contains(new PieceEntity(ColorModel.O, new CoordinateEntity(0, 1))));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 0));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 1));
+        GenericType<List<PieceEntity>> gerericType = new GenericType<List<PieceEntity>>() {
+        };
+        List<PieceEntity> allPieces = new WebServiceClient<PieceEntity>(pathSessionsIdGame,
+                TicTacToeResource.PATH_ALL_PIECES).entities(gerericType);
+        assertEquals(2, allPieces.size());
+        assertTrue(allPieces.contains(new PieceEntity(ColorModel.X, new CoordinateEntity(0, 0))));
+        assertTrue(allPieces.contains(new PieceEntity(ColorModel.O, new CoordinateEntity(0, 1))));
     }
 
     @Test
     public void testWinner() {
-        this.sessionGameClient.login();
-        this.sessionGameClient.createNewGame();
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 0));
-        this.sessionGameClient.post("piece", new CoordinateEntity(1, 0));
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 1));
-        this.sessionGameClient.post("piece", new CoordinateEntity(2, 0));
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 2));
-        this.sessionGameClient.get("winner");
-        Response response = this.sessionGameClient.getResponse();
-        assertEquals(ColorModel.X, response.readEntity(ColorModel.class));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 0));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(1, 0));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 1));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(1, 1));
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 2));
+        assertEquals(ColorModel.X, new WebServiceClient<ColorModel>(pathSessionsIdGame,
+                TicTacToeResource.PATH_WINNER).entity(ColorModel.class));
     }
 
-    
-    
     @Test
     public void testPlacePiece() {
-        this.sessionGameClient.login();
-        this.sessionGameClient.createNewGame();
-        this.sessionGameClient.post("piece", new CoordinateEntity(0, 0));
-        Response response = this.sessionGameClient.getResponse();
-        assertEquals(Response.Status.Family.SUCCESSFUL, response.getStatusInfo().getFamily());
+        assertTrue(new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 0)));
     }
 
     @Test
     public void testDeletePiece() {
-        this.testPlacePiece();
-        this.sessionGameClient.delete("piece", 0, 0);
-        Response response = this.sessionGameClient.getResponse();
-        assertEquals(Response.Status.Family.SUCCESSFUL, response.getStatusInfo().getFamily());
+        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+                .create(new CoordinateEntity(0, 0));
+        WebServiceClient<?> webServiceClient = new WebServiceClient<>(pathSessionsIdGame,
+                TicTacToeResource.PATH_PIECE);
+        webServiceClient.addMatrixParams("row", "0");
+        webServiceClient.addMatrixParams("column", "0");
+        assertTrue(webServiceClient.delete());
     }
 
     @After
     public void after() {
-        this.sessionGameClient.close();
+        new WebServiceClient<>(TicTacToeResource.PATH_SESSIONS, this.sessionId,
+                TicTacToeResource.PATH_PLAYER).delete();
+        new WebServiceClient<>(TicTacToeResource.PATH_SESSIONS, this.sessionId).delete();
+        new WebServiceClient<>(TicTacToeResource.PATH_PLAYERS, this.player.getUser()).delete();
     }
 
 }

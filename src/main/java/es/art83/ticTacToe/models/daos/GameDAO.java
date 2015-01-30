@@ -8,5 +8,5 @@ import es.art83.ticTacToe.models.entities.PlayerEntity;
 public interface GameDAO extends GenericDAO<GameEntity, Integer> {
     List<String> findPlayerGameNames(PlayerEntity playerEntity);
 
-    GameEntity findGame(PlayerEntity player, String nameGame);
+    List<GameEntity> findPlayerGames(PlayerEntity player, String nameGame);
 }

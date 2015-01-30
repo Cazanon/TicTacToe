@@ -1,62 +1,65 @@
 package es.art83.ticTacToe.controllers.ws.server;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import javax.ws.rs.core.Response;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.art83.ticTacToe.controllers.ws.client.utils.TicTacToeResource;
+import es.art83.ticTacToe.controllers.ws.client.utils.WebServiceClient;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 
 public class SessionPlayerResourceTest {
-    private SessionPlayerClient sessionPlayerClient;
+    private String sessionId;
+
+    private PlayerEntity player;
 
     @Before
     public void before() {
-        this.sessionPlayerClient = new SessionPlayerClient();
+        WebServiceClient<String> webService = new WebServiceClient<>(
+                TicTacToeResource.PATH_SESSIONS);
+        webService.create();
+        this.sessionId = webService.entity(String.class);
+
+        this.player = new PlayerEntity("u", "pass");
+        new WebServiceClient<>(TicTacToeResource.PATH_PLAYERS).create(player);
     }
 
     @Test
     public void testLoginPlayerExist() {
-        this.sessionPlayerClient.login();
-        assertEquals(Response.Status.Family.SUCCESSFUL, this.sessionPlayerClient.getResponse()
-                .getStatusInfo().getFamily());
+        assertTrue(new WebServiceClient<>(TicTacToeResource.PATH_SESSIONS, this.sessionId,
+                TicTacToeResource.PATH_PLAYER).create(player));
     }
 
     @Test
     public void testLoginPlayerNotExist() {
-        this.sessionPlayerClient.login(new PlayerEntity("u2", "upass"));
-        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), this.sessionPlayerClient
-                .getResponse().getStatus());
+        PlayerEntity player2 = new PlayerEntity("u2", "upass");
+        assertFalse(new WebServiceClient<>(TicTacToeResource.PATH_SESSIONS, this.sessionId,
+                TicTacToeResource.PATH_PLAYER).create(player2));
     }
 
     @Test
     public void testLoginPlayerNotPass() {
-        PlayerEntity playerEntity = new PlayerEntity(this.sessionPlayerClient.playerEntity()
-                .getUser(), "no");
-        this.sessionPlayerClient.login(playerEntity);
-        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), this.sessionPlayerClient
-                .getResponse().getStatus());
+        PlayerEntity player2 = new PlayerEntity("u", "no");
+        assertFalse(new WebServiceClient<>(TicTacToeResource.PATH_SESSIONS, this.sessionId,
+                TicTacToeResource.PATH_PLAYER).create(player2));
     }
 
-    @Test
     public void testLogoutPlayer() {
-        this.sessionPlayerClient.login();
-        this.sessionPlayerClient.logout();
         fail("No implementado");
     }
 
-    @Test
     public void testGameNames() {
         fail("No implementado");
     }
 
     @After
     public void after() {
-        this.sessionPlayerClient.close();
+        new WebServiceClient<>(TicTacToeResource.PATH_SESSIONS, this.sessionId).delete();
+        new WebServiceClient<>(TicTacToeResource.PATH_PLAYERS, this.player.getUser()).delete();
     }
 
 }

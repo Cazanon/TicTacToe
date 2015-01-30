@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({PlayerResourceTest.class, SessionGameResourceTest.class,
-        SessionPlayerResourceTest.class, SessionResourceTest.class})
+        SessionPlayerResourceTest.class, SessionResourceTest.class, GameResourceTest.class})
 public class AllTests {
 
 }

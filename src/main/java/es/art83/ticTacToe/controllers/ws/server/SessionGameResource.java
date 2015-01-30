@@ -35,9 +35,11 @@ public class SessionGameResource extends SessionResource {
         if (sessionEntity.getPlayer() != null) {
             GameEntity gameEntity;
             if (name != null) {
+                //Solo puede haber uno
                 gameEntity = DAOFactory.getFactory().getGameDAO()
-                        .findGame(sessionEntity.getPlayer(), name);
-                DAOFactory.getFactory().getGameDAO().create(gameEntity);
+                        .findPlayerGames(sessionEntity.getPlayer(), name).get(0);
+                gameEntity = gameEntity.clone();
+                DAOFactory.getFactory().getGameDAO().create(gameEntity.clone());
             } else {
                 gameEntity = new GameEntity(sessionEntity.getPlayer());
                 DAOFactory.getFactory().getGameDAO().create(gameEntity);
@@ -72,6 +74,19 @@ public class SessionGameResource extends SessionResource {
         String result = sessionEntity.getGame().getName();
         this.info("GET/" + sessionEntity.getId() + "/game/name " + result);
         return result;
+    }
+
+    @Path("name")
+    @POST
+    @Produces(MediaType.APPLICATION_XML)
+    public Response setGameName(@PathParam("id") Integer id, String name) {
+        SessionEntity sessionEntity = this.readSessionEntity(id);
+        sessionEntity.getGame().setName(name);
+        DAOFactory.getFactory().getGameDAO().update(sessionEntity.getGame());
+
+        this.info("POST/" + sessionEntity.getId() + "/game/name " + name);
+        return Response.created(URI.create("/sessions/" + sessionEntity.getId() + "game/name/"))
+                .build();
     }
 
     @Path("hasAllPieces")
@@ -176,5 +191,5 @@ public class SessionGameResource extends SessionResource {
         this.info("DELETE/" + sessionEntity.getId() + "game/piece"
                 + sessionEntity.getGame().pieces());
     }
-    
+
 }

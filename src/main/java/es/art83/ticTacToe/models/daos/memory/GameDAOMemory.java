@@ -45,7 +45,7 @@ public class GameDAOMemory extends GenericDAOMemory<GameEntity, Integer> impleme
         return gameNames;
     }
 
-    @Override
+   // viejo método, el problema es que se puede encontrar dos cuando se trabaja con rest
     public GameEntity findGame(PlayerEntity player, String gameName) {
         GameEntity gameBD = null;
         int index = getEntityList().indexOf(new GameEntity(gameName, player));
@@ -53,6 +53,12 @@ public class GameDAOMemory extends GenericDAOMemory<GameEntity, Integer> impleme
             gameBD = getEntityList().get(index).clone();
         }
         return gameBD;
+    }
+
+    @Override
+    public List<GameEntity> findPlayerGames(PlayerEntity player, String nameGame) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

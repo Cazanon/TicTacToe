@@ -14,12 +14,12 @@ import es.art83.ticTacToe.models.utils.DirectionModel;
 
 @Entity
 public class BoardEntity {
-        
     @Id
     @GeneratedValue
     private int id;
 
-    //TODO debería ser un set porque no hay orden de secuencia por ningún criterio
+    // TODO debería ser un set porque no hay orden de secuencia por ningún
+    // criterio
     @OneToMany(cascade = CascadeType.ALL)
     private List<PieceEntity> pieces;
 
@@ -49,7 +49,7 @@ public class BoardEntity {
         }
         return coordinates;
     }
-    
+
     public List<CoordinateEntity> validDestinationCoordinates() {
         List<CoordinateEntity> coordinates = CoordinateEntity.allCoordinates();
         for (PieceEntity ficha : pieces) {
@@ -62,7 +62,7 @@ public class BoardEntity {
         return this.pieces.size() == CoordinateEntity.DIMENSION * 2;
     }
 
-    //TODO se debería quitar, no se usa y es redundante
+    // TODO se debería quitar, no se usa y es redundante
     public boolean existTicTacToe() {
         for (ColorModel color : ColorModel.values()) {
             if (existTicTacToe(color))
@@ -70,7 +70,7 @@ public class BoardEntity {
         }
         return false;
     }
-    
+
     public boolean existTicTacToe(ColorModel color) {
         assert color != null;
         List<CoordinateEntity> coordinates = this.coordinates(color);
@@ -83,7 +83,7 @@ public class BoardEntity {
         }
     }
 
-    //LUIS debería irse al bean que lo necesite y él pide getPieces
+    // LUIS debería irse al bean que lo necesite y él pide getPieces
     public ColorModel[][] colors() {
         ColorModel[][] matriz = new ColorModel[3][3];
         for (PieceEntity ficha : pieces) {
@@ -96,9 +96,9 @@ public class BoardEntity {
     public void put(PieceEntity ficha) {
         this.pieces.add(ficha);
     }
-    
+
     public void remove(CoordinateEntity coordinate) {
-        assert coordinate != null: "parametro null";
+        assert coordinate != null : "parametro null";
         System.out.println("----");
         System.out.println(coordinate);
         System.out.println(pieces);
@@ -109,13 +109,13 @@ public class BoardEntity {
                 return;
             }
         }
-        assert false:"Se intentó borrar un elemento que no existe";
+        assert false : "Se intentó borrar un elemento que no existe";
     }
 
     public void clear() {
         this.pieces.clear();
     }
-    
+
     public void update(BoardEntity board) {
         List<PieceEntity> pieces = new ArrayList<>(board.pieces);
         this.setPieces(pieces);
@@ -128,7 +128,10 @@ public class BoardEntity {
 
     @Override
     public BoardEntity clone() {
-        List<PieceEntity> pieces = new ArrayList<>(this.pieces);
+        List<PieceEntity> pieces = new ArrayList<>();
+        for (PieceEntity pieceEntity : this.pieces) {
+            pieces.add(pieceEntity.clone());
+        }
         return new BoardEntity(pieces);
     }
 
