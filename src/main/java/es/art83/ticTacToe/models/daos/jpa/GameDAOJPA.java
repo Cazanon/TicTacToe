@@ -30,9 +30,10 @@ public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements Ga
         // Se establece la clausula SELECT
         query.select(root.get("name")); // criteriaQuery.multiselect(root.get(atr))
         // Se configura el predicado
-        Predicate predicate = builder.equal(root.get("player").as(PlayerEntity.class), player);
+        Predicate predicate1 = builder.equal(root.get("player").as(PlayerEntity.class), player);
+        Predicate predicate2 = builder.isNotNull(root.get("name").as(PlayerEntity.class));
         // Se establece el WHERE
-        query.where(predicate);
+        query.where(builder.and(predicate1, predicate2));
         // Se crea el resultado
         TypedQuery<String> tq = entityManager.createQuery(query);
         tq.setFirstResult(0);
