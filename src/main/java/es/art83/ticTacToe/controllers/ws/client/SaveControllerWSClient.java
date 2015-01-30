@@ -21,14 +21,23 @@ public class SaveControllerWSClient extends ControllerWSClient implements SaveGa
 
     @Override
     public void overWriteGame(String gameName) {
-        // TODO Auto-generated method stub
+        // Se busca y se borra
+        WebServiceClient<String> webServiceClient = new WebServiceClient<String>(
+                TicTacToeResource.PATH_GAMES, TicTacToeResource.PATH_SEARCH);
+        webServiceClient.addParams("sessionId", this.getSessionId());
+        webServiceClient.addParams("name", gameName);
+        String gameId = webServiceClient.entity(String.class);
+        new WebServiceClient<>(TicTacToeResource.PATH_GAMES, gameId).delete();
 
+        this.saveGame(gameName);
     }
 
     @Override
     public void saveGame() {
-        // TODO Auto-generated method stub
-
+        String gameName = new WebServiceClient<String>(TicTacToeResource.PATH_SESSIONS,
+                this.getSessionId(), TicTacToeResource.PATH_GAME, TicTacToeResource.PATH_NAME)
+                .entity(String.class);
+        this.overWriteGame(gameName);
     }
 
 }
