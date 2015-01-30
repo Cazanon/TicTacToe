@@ -7,6 +7,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -26,12 +27,14 @@ public class GameResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
-    public Response create(Integer sessionId) {
+    public Response create(@QueryParam("sessionId") Integer sessionId) {
         Response result;
-        Integer gameId= DAOFactory.getFactory().getSessionDAO().read(sessionId).getGame().getId();
-        GameEntity gameEntity =  DAOFactory.getFactory().getGameDAO().read(gameId);
-        DAOFactory.getFactory().getGameDAO().create(gameEntity);
-        result = Response.created(URI.create("/games/" + gameEntity.getId())).build();
+        Integer gameId = DAOFactory.getFactory().getSessionDAO().read(sessionId).getGame().getId();
+        GameEntity gameEntity = DAOFactory.getFactory().getGameDAO().read(gameId);
+        GameEntity gameClone = gameEntity.clone();
+        DAOFactory.getFactory().getGameDAO().create(gameClone);
+        result = Response.created(URI.create("/games/" + gameEntity.getId()))
+                .entity(String.valueOf(gameClone.getId())).build();
         LogManager.getLogger(PlayerResource.class).info("POST/games/id: " + gameEntity.getId());
         return result;
     }

@@ -47,4 +47,6 @@ public class TicTacToeResource {
 
     public static final String PATH_PIECE = "/piece";
 
+    public static final String PATH_GAMES = "/games";
+
 }
