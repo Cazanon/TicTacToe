@@ -6,14 +6,14 @@ import org.junit.Test;
 
 import es.art83.ticTacToe.controllers.LogoutController;
 import es.art83.ticTacToe.controllers.webService.ControllerFactoryWebService;
-import es.art83.ticTacToe.controllers.webService.CreateControllerWebService;
+import es.art83.ticTacToe.controllers.webService.CreateGameControllerWebService;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class CreateControllerWSClientTest {
 
-    private CreateControllerWebService create;
+    private CreateGameControllerWebService create;
 
     private PlayerEntity playerEntity;
 
@@ -22,7 +22,7 @@ public class CreateControllerWSClientTest {
     @Before
     public void before() {
         ControllerFactoryWebService factory = new ControllerFactoryWebService();
-        this.create = (CreateControllerWebService) factory.getCreateGameControler();
+        this.create = (CreateGameControllerWebService) factory.getCreateGameControler();
         this.logout = factory.getLogoutController();
         this.playerEntity = new PlayerEntity("u", "pass");
         factory.getLoginController().register(playerEntity);

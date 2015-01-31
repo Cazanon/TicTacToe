@@ -9,7 +9,7 @@ import es.art83.ticTacToe.controllers.LoginController;
 import es.art83.ticTacToe.controllers.LogoutController;
 import es.art83.ticTacToe.controllers.NameGameController;
 import es.art83.ticTacToe.controllers.OpenGameController;
-import es.art83.ticTacToe.controllers.PlaceCardController;
+import es.art83.ticTacToe.controllers.PlacePieceController;
 import es.art83.ticTacToe.controllers.SaveGameController;
 import es.art83.ticTacToe.controllers.ShowGameController;
 import es.art83.ticTacToe.controllers.StartGameController;
@@ -34,7 +34,7 @@ public class ControllerFactoryWebService extends ControllerFactory {
 
     private ShowGameController showGameController;
 
-    private PlaceCardController placeCardController;
+    private PlacePieceController placePieceController;
 
     private SaveGameController saveGameController;
 
@@ -42,20 +42,20 @@ public class ControllerFactoryWebService extends ControllerFactory {
         String sessionId = null;
         // Crear peticion rest para crear contexto. Almacenar la referencia del
         // contexto en el servidor
-        WebServicesManager<String> webServiceClient = new WebServicesManager<>(WS.PATH_SESSIONS);
-        webServiceClient.create();
-        sessionId = webServiceClient.entity(String.class);
+        WebServicesManager<String> webServicesManager = new WebServicesManager<>(WS.PATH_SESSIONS);
+        webServicesManager.create();
+        sessionId = webServicesManager.entity(String.class);
 
         // Pasarle la referencia a todos los controladores
         this.loginController = new LoginControllerWebService(sessionId);
         this.logoutController = new LogoutControllerWebService(sessionId);
-        this.startGameController = new StartControllerWebService(sessionId);
-        this.createGameController = new CreateControllerWebService(sessionId);
-        this.nameGameController = new NameControllerWebService(sessionId);
+        this.startGameController = new StartGameControllerWebService(sessionId);
+        this.createGameController = new CreateGameControllerWebService(sessionId);
+        this.nameGameController = new NameGameControllerWebService(sessionId);
         this.showGameController = new ShowGameControllerWebService(sessionId);
-        this.placeCardController = new PlaceControllerWebService(sessionId);
-        this.saveGameController = new SaveControllerWebService(sessionId);
-        this.openGameController = new OpenControllerWebService(sessionId);
+        this.placePieceController = new PlacePieceControllerWebService(sessionId);
+        this.saveGameController = new SaveGameControllerWebService(sessionId);
+        this.openGameController = new OpenGameControllerWebService(sessionId);
     }
 
     @Override
@@ -94,8 +94,8 @@ public class ControllerFactoryWebService extends ControllerFactory {
     }
 
     @Override
-    public PlaceCardController getPlaceCardController() {
-        return this.placeCardController;
+    public PlacePieceController getPlacePieceController() {
+        return this.placePieceController;
     }
 
     @Override

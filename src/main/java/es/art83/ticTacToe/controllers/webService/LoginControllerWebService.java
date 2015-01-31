@@ -22,9 +22,9 @@ public class LoginControllerWebService extends ControllerWebService implements L
     @Override
     public boolean register(PlayerEntity playerEntity) {
         boolean result = false;
-        WebServicesManager<?> webServiceClient = new WebServicesManager<>(
+        WebServicesManager<?> webServicesManager = new WebServicesManager<>(
                 WS.PATH_PLAYERS);
-        if (webServiceClient.create(playerEntity)) {
+        if (webServicesManager.create(playerEntity)) {
             result = this.login(playerEntity);
         }
         return result;

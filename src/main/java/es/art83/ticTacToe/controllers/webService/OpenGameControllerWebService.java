@@ -4,9 +4,9 @@ import es.art83.ticTacToe.controllers.OpenGameController;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
-public class OpenControllerWebService extends ControllerWebService implements OpenGameController {
+public class OpenGameControllerWebService extends ControllerWebService implements OpenGameController {
 
-    public OpenControllerWebService(String sessionId) {
+    public OpenGameControllerWebService(String sessionId) {
         super(sessionId);
     }
 

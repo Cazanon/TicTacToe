@@ -1,12 +1,12 @@
 package es.art83.ticTacToe.controllers.ejbs;
 
-import es.art83.ticTacToe.controllers.PlaceCardController;
+import es.art83.ticTacToe.controllers.PlacePieceController;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
-public class PlaceCardControllerEJB extends ControllerEJB implements PlaceCardController {
+public class PlacePieceControllerEJB extends ControllerEJB implements PlacePieceController {
 
-    public PlaceCardControllerEJB(TicTacToeSession ticTacToeStatesManager) {
+    public PlacePieceControllerEJB(TicTacToeSession ticTacToeStatesManager) {
         super(ticTacToeStatesManager);
     }
     

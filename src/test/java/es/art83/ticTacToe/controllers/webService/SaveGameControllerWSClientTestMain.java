@@ -3,8 +3,8 @@ package es.art83.ticTacToe.controllers.webService;
 
 import es.art83.ticTacToe.controllers.LogoutController;
 import es.art83.ticTacToe.controllers.webService.ControllerFactoryWebService;
-import es.art83.ticTacToe.controllers.webService.PlaceControllerWebService;
-import es.art83.ticTacToe.controllers.webService.SaveControllerWebService;
+import es.art83.ticTacToe.controllers.webService.PlacePieceControllerWebService;
+import es.art83.ticTacToe.controllers.webService.SaveGameControllerWebService;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.utils.WS;
@@ -17,16 +17,16 @@ public class SaveGameControllerWSClientTestMain {
 
     private LogoutController logout;
 
-    private PlaceControllerWebService placeController;
+    private PlacePieceControllerWebService placeController;
 
-    private SaveControllerWebService saveGameController;
+    private SaveGameControllerWebService saveGameController;
 
     
     public void before() {
         ControllerFactoryWebService factory = new ControllerFactoryWebService();
-        this.placeController = (PlaceControllerWebService) factory.getPlaceCardController();
+        this.placeController = (PlacePieceControllerWebService) factory.getPlacePieceController();
         this.logout = factory.getLogoutController();
-        this.saveGameController = (SaveControllerWebService) factory.getSaveGameController();
+        this.saveGameController = (SaveGameControllerWebService) factory.getSaveGameController();
         this.playerEntity = new PlayerEntity("u", "pass");
         factory.getLoginController().register(playerEntity);
         factory.getCreateGameControler().createGame();

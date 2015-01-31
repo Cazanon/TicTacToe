@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.art83.ticTacToe.controllers.webService.ControllerFactoryWebService;
-import es.art83.ticTacToe.controllers.webService.NameControllerWebService;
+import es.art83.ticTacToe.controllers.webService.NameGameControllerWebService;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
@@ -16,12 +16,12 @@ public class NameControllerWSClientTest {
 
     private PlayerEntity playerEntity;
 
-    private NameControllerWebService name;
+    private NameGameControllerWebService name;
 
     @Before
     public void before() {
         ControllerFactoryWebService factory = new ControllerFactoryWebService();
-        this.name = (NameControllerWebService) factory.getNameGameController();
+        this.name = (NameGameControllerWebService) factory.getNameGameController();
         this.playerEntity = new PlayerEntity("u", "pass");
         factory.getLoginController().register(playerEntity);
     }

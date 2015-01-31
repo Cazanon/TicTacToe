@@ -15,7 +15,7 @@ public abstract class ControllerFactory {
 
     public abstract ShowGameController getShowGameController();
 
-    public abstract PlaceCardController getPlaceCardController();
+    public abstract PlacePieceController getPlacePieceController();
 
     public abstract SaveGameController getSaveGameController();
 }

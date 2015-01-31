@@ -10,7 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import es.art83.ticTacToe.controllers.CreateGameController;
 import es.art83.ticTacToe.controllers.LogoutController;
 import es.art83.ticTacToe.controllers.OpenGameController;
-import es.art83.ticTacToe.controllers.PlaceCardController;
+import es.art83.ticTacToe.controllers.PlacePieceController;
 import es.art83.ticTacToe.controllers.SaveGameController;
 import es.art83.ticTacToe.controllers.ShowGameController;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
@@ -172,8 +172,8 @@ public class GameViewBean extends ViewBean {
     }
 
     public String placeCard() {
-        PlaceCardController placeCardController = this.getControllerFactory()
-                .getPlaceCardController();
+        PlacePieceController placeCardController = this.getControllerFactory()
+                .getPlacePieceController();
         if (this.hasAllPieces) {
             placeCardController.placePiece(new CoordinateEntity(this.selectedSourceCoordinate),
                     new CoordinateEntity(this.selectedDestinationCoordinate));

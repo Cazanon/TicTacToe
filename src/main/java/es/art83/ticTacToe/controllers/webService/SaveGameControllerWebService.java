@@ -4,9 +4,9 @@ import es.art83.ticTacToe.controllers.SaveGameController;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
-public class SaveControllerWebService extends ControllerWebService implements SaveGameController {
+public class SaveGameControllerWebService extends ControllerWebService implements SaveGameController {
 
-    public SaveControllerWebService(String sessionId) {
+    public SaveGameControllerWebService(String sessionId) {
         super(sessionId);
     }
 
@@ -14,19 +14,19 @@ public class SaveControllerWebService extends ControllerWebService implements Sa
     public void saveGame(String gameName) {
         new WebServicesManager<>(WS.PATH_SESSIONS, this.getSessionId(),
                 WS.PATH_GAME, WS.PATH_NAME).create(gameName);
-        WebServicesManager<?> webServiceClient = new WebServicesManager<>(WS.PATH_GAMES);
-        webServiceClient.addParams("sessionId", this.getSessionId());
-        webServiceClient.create();
+        WebServicesManager<?> webServicesManager = new WebServicesManager<>(WS.PATH_GAMES);
+        webServicesManager.addParams("sessionId", this.getSessionId());
+        webServicesManager.create();
     }
 
     @Override
     public void overWriteGame(String gameName) {
         // Se busca y se borra
-        WebServicesManager<String> webServiceClient = new WebServicesManager<String>(
+        WebServicesManager<String> webServicesManager = new WebServicesManager<String>(
                 WS.PATH_GAMES, WS.PATH_SEARCH);
-        webServiceClient.addParams("sessionId", this.getSessionId());
-        webServiceClient.addParams("name", gameName);
-        String gameId = webServiceClient.entity(String.class);
+        webServicesManager.addParams("sessionId", this.getSessionId());
+        webServicesManager.addParams("name", gameName);
+        String gameId = webServicesManager.entity(String.class);
         new WebServicesManager<>(WS.PATH_GAMES, gameId).delete();
 
         this.saveGame(gameName);

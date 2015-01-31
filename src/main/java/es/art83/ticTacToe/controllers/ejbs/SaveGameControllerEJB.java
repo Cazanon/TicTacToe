@@ -14,8 +14,6 @@ public class SaveGameControllerEJB extends ControllerEJB implements SaveGameCont
     public void saveGame(String gameName) {
         GameEntity gameEntity = this.getTicTacToeSession().getGame();
         gameEntity.setName(gameName);
-        
-
         DAOFactory.getFactory().getGameDAO().create(gameEntity);
         this.getTicTacToeSession().setSaved(true);
     }

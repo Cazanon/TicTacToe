@@ -6,8 +6,8 @@ import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
 public class CreateGameControllerEJB extends ControllerEJB implements CreateGameController {
 
-    public CreateGameControllerEJB(TicTacToeSession ticTacToeStatesManager) {
-        super(ticTacToeStatesManager);
+    public CreateGameControllerEJB(TicTacToeSession ticTacToeSession) {
+        super(ticTacToeSession);
     }
 
     @Override

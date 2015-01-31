@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import es.art83.ticTacToe.controllers.LogoutController;
 import es.art83.ticTacToe.controllers.webService.ControllerFactoryWebService;
-import es.art83.ticTacToe.controllers.webService.PlaceControllerWebService;
+import es.art83.ticTacToe.controllers.webService.PlacePieceControllerWebService;
 import es.art83.ticTacToe.controllers.webService.ShowGameControllerWebService;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
@@ -23,14 +23,14 @@ public class PlaceCardControllerWSClientTest {
 
     private LogoutController logout;
 
-    private PlaceControllerWebService placeController;
+    private PlacePieceControllerWebService placeController;
 
     private ShowGameControllerWebService showGameController;
 
     @Before
     public void before() {
         ControllerFactoryWebService factory = new ControllerFactoryWebService();
-        this.placeController = (PlaceControllerWebService) factory.getPlaceCardController();
+        this.placeController = (PlacePieceControllerWebService) factory.getPlacePieceController();
         this.logout = factory.getLogoutController();
         this.showGameController = (ShowGameControllerWebService) factory.getShowGameController();
         this.playerEntity = new PlayerEntity("u", "pass");

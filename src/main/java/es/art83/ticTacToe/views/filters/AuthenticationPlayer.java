@@ -8,6 +8,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,7 +16,7 @@ import org.apache.logging.log4j.LogManager;
 
 import es.art83.ticTacToe.controllers.ControllerFactory;
 
-//@WebFilter("/logged/*")
+@WebFilter("/logged/*")
 public class AuthenticationPlayer implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

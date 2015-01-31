@@ -3,16 +3,16 @@ package es.art83.ticTacToe.controllers.webService;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.art83.ticTacToe.controllers.NameGameController;
+import es.art83.ticTacToe.controllers.StartGameController;
 import es.art83.ticTacToe.models.utils.ListStringWrapper;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
-public class NameControllerWebService extends ControllerWebService implements NameGameController {
+public class StartGameControllerWebService extends ControllerWebService implements StartGameController {
 
     private String pathSessionsIdPlayer;
 
-    public NameControllerWebService(String sessionId) {
+    public StartGameControllerWebService(String sessionId) {
         super(sessionId);
         this.pathSessionsIdPlayer = WS.PATH_SESSIONS + "/" + this.getSessionId()
                 + WS.PATH_PLAYER;
