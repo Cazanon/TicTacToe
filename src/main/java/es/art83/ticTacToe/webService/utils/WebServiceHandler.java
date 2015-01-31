@@ -10,17 +10,39 @@ import javax.ws.rs.core.Response;
 
 import org.apache.logging.log4j.LogManager;
 
-public class WebServiceClient<T> {
+public class WebServiceHandler<T> {
     private WebTarget webTarget;
 
     private Response response;
 
-    public WebServiceClient(String... paths) {
+    public WebServiceHandler(String... paths) {
         this.webTarget = ClientBuilder.newClient().target(WS.URI);
         for (String path : paths) {
             this.webTarget = this.webTarget.path(path);
         }
         this.response = null;
+    }
+
+    private String logMsg(String method) {
+        String result = this.webTarget.getUri().toString();
+        result += " /" + method;
+        result += ": " + this.response.getStatusInfo();
+        result += " (" + this.response.getStatus() + ")";
+        return result;
+    }
+
+    private void log(String method) {
+        if (this.response.getStatusInfo().getFamily().equals(Response.Status.Family.CLIENT_ERROR)) {
+            LogManager.getLogger(this.getClass()).warn(this.logMsg(method));
+        } else if (this.response.getStatusInfo().getFamily()
+                .equals(Response.Status.Family.SERVER_ERROR)) {
+            LogManager.getLogger(this.getClass()).fatal(this.logMsg(method));
+        } else if (this.response.getStatusInfo().getFamily()
+                .equals(Response.Status.Family.SUCCESSFUL)) {
+            LogManager.getLogger(this.getClass()).info(this.logMsg(method));
+        } else {
+            LogManager.getLogger(this.getClass()).error(this.logMsg(method));
+        }
     }
 
     private Response getResponse() {
@@ -37,14 +59,14 @@ public class WebServiceClient<T> {
     public void addParams(String name, String value) {
         this.webTarget = this.webTarget.queryParam(name, value);
     }
-    
+
     public void addMatrixParams(String name, String value) {
         this.webTarget = this.webTarget.matrixParam(name, value);
     }
 
     public boolean create(Object entity) {
         this.response = this.webTarget.request().post(Entity.xml(entity));
-        this.log();
+        this.log("POST");
         return this.ok();
     }
 
@@ -54,13 +76,13 @@ public class WebServiceClient<T> {
 
     public boolean read() {
         this.response = this.webTarget.request().get();
-        this.log();
+        this.log("GET");
         return this.ok();
     }
 
     public boolean update(Object entity) {
         this.response = this.webTarget.request().put(Entity.xml(entity));
-        this.log();
+        this.log("PUT");
         return this.ok();
     }
 
@@ -70,7 +92,7 @@ public class WebServiceClient<T> {
 
     public boolean delete() {
         this.response = this.webTarget.request().delete();
-        this.log();
+        this.log("DELETE");
         return this.ok();
     }
 
@@ -99,26 +121,6 @@ public class WebServiceClient<T> {
         if (this.getResponse().hasEntity()) {
             result = this.getResponse().readEntity(genericType);
         }
-        return result;
-    }
-
-    private void log() {
-        if (this.response.getStatusInfo().getFamily().equals(Response.Status.Family.CLIENT_ERROR)) {
-            LogManager.getLogger(this.getClass()).error(this.logMsg());
-        } else if (this.response.getStatusInfo().getFamily()
-                .equals(Response.Status.Family.SERVER_ERROR)) {
-            LogManager.getLogger(this.getClass()).fatal(this.logMsg());
-        } else if (this.response.getStatusInfo().getFamily()
-                .equals(Response.Status.Family.SUCCESSFUL)) {
-            LogManager.getLogger(this.getClass()).info(this.logMsg());
-        } else {
-            LogManager.getLogger(this.getClass()).warn(this.logMsg());
-        }
-    }
-
-    private String logMsg() {
-        String result = "";
-        result += this.response.toString();
         return result;
     }
 

@@ -10,7 +10,7 @@ import es.art83.ticTacToe.controllers.webService.ControllerFactoryWSClient;
 import es.art83.ticTacToe.controllers.webService.NameControllerWSClient;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.utils.WS;
-import es.art83.ticTacToe.webService.utils.WebServiceClient;
+import es.art83.ticTacToe.webService.utils.WebServiceHandler;
 
 public class NameControllerWSClientTest {
 
@@ -33,8 +33,8 @@ public class NameControllerWSClientTest {
 
     @After
     public void after() {
-        new WebServiceClient<>(WS.PATH_SESSIONS, this.name.getSessionId()).delete();
-        new WebServiceClient<>(WS.PATH_PLAYERS, this.playerEntity.getUser())
+        new WebServiceHandler<>(WS.PATH_SESSIONS, this.name.getSessionId()).delete();
+        new WebServiceHandler<>(WS.PATH_PLAYERS, this.playerEntity.getUser())
                 .delete();
     }
 }

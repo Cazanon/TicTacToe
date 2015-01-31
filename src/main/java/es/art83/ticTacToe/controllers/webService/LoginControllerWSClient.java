@@ -3,7 +3,7 @@ package es.art83.ticTacToe.controllers.webService;
 import es.art83.ticTacToe.controllers.LoginController;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.utils.WS;
-import es.art83.ticTacToe.webService.utils.WebServiceClient;
+import es.art83.ticTacToe.webService.utils.WebServiceHandler;
 
 public class LoginControllerWSClient extends ControllerWSClient implements LoginController {
     private final String pathSessionsId;
@@ -15,14 +15,14 @@ public class LoginControllerWSClient extends ControllerWSClient implements Login
 
     @Override
     public boolean login(PlayerEntity playerEntity) {
-        return new WebServiceClient<>(pathSessionsId, WS.PATH_PLAYER)
+        return new WebServiceHandler<>(pathSessionsId, WS.PATH_PLAYER)
                 .create(playerEntity);
     }
 
     @Override
     public boolean register(PlayerEntity playerEntity) {
         boolean result = false;
-        WebServiceClient<?> webServiceClient = new WebServiceClient<>(
+        WebServiceHandler<?> webServiceClient = new WebServiceHandler<>(
                 WS.PATH_PLAYERS);
         if (webServiceClient.create(playerEntity)) {
             result = this.login(playerEntity);
@@ -32,7 +32,7 @@ public class LoginControllerWSClient extends ControllerWSClient implements Login
 
     @Override
     public boolean logged() {
-       return new WebServiceClient<Boolean>(
+       return new WebServiceHandler<Boolean>(
                pathSessionsId, WS.PATH_LOGGED).entityBoolean();
     }
 

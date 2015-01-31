@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.utils.WS;
-import es.art83.ticTacToe.webService.utils.WebServiceClient;
+import es.art83.ticTacToe.webService.utils.WebServiceHandler;
 
 public class PlayerResourceTest {
     private PlayerEntity player;
@@ -21,18 +21,18 @@ public class PlayerResourceTest {
 
     @Test
     public void testCreateNoExist() {
-        assertTrue(new WebServiceClient<>(WS.PATH_PLAYERS).create(player));
+        assertTrue(new WebServiceHandler<>(WS.PATH_PLAYERS).create(player));
     }
 
     @Test
     public void testCreateExist() {
-        new WebServiceClient<>(WS.PATH_PLAYERS).create(player);
-        assertFalse(new WebServiceClient<>(WS.PATH_PLAYERS).create(player));
+        new WebServiceHandler<>(WS.PATH_PLAYERS).create(player);
+        assertFalse(new WebServiceHandler<>(WS.PATH_PLAYERS).create(player));
     }
 
     @After
     public void after() {
-        new WebServiceClient<>(WS.PATH_PLAYERS, this.player.getUser()).delete();
+        new WebServiceHandler<>(WS.PATH_PLAYERS, this.player.getUser()).delete();
     }
 
 }
