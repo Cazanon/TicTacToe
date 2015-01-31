@@ -41,7 +41,7 @@ public class PlayerResource {
         return result;
     }
 
-    @Path(WS.PATH_USER)
+    @Path(WS.PATH_USER_PARAM)
     @DELETE
     public void delete(@PathParam("user") String user) {
         DAOFactory.getFactory().getPlayerDAO().deleteByID(user);

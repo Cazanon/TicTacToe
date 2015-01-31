@@ -17,7 +17,7 @@ public class WS {
     // players
     public static final String PATH_PLAYERS = "/players";
 
-    public static final String PATH_USER = "/{user}";
+    public static final String PATH_USER_PARAM = "/{user}";
 
     // games
     public static final String PATH_GAMES = "/games";
