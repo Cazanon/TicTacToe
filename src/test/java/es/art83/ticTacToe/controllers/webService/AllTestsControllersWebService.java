@@ -5,8 +5,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({CreateControllerWSClientTest.class, LoginControllerWSClientTest.class,
-        LogoutControllerWSClientTest.class, ShowGameControllerWSClientTest.class})
+@SuiteClasses({CreateGameControllerWebServiceTest.class, LoginControllerWebServiceTest.class,
+        LogoutControllerWebServiceTest.class, ShowGameControllerWebServiceTest.class})
 public class AllTestsControllersWebService {
 
 }

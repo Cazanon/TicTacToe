@@ -1,66 +1,48 @@
 package es.art83.ticTacToe.controllers.webService;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import es.art83.ticTacToe.controllers.LogoutController;
 import es.art83.ticTacToe.controllers.webService.ControllerFactoryWebService;
 import es.art83.ticTacToe.controllers.webService.PlacePieceControllerWebService;
-import es.art83.ticTacToe.controllers.webService.ShowGameControllerWebService;
+import es.art83.ticTacToe.controllers.webService.SaveGameControllerWebService;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.models.utils.ColorModel;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
-public class PlaceCardControllerWSClientTest {
+public class SaveGameControllerWebServiceTestMain {
 
+    
     private PlayerEntity playerEntity;
 
     private LogoutController logout;
 
     private PlacePieceControllerWebService placeController;
 
-    private ShowGameControllerWebService showGameController;
+    private SaveGameControllerWebService saveGameController;
 
-    @Before
+    
     public void before() {
         ControllerFactoryWebService factory = new ControllerFactoryWebService();
         this.placeController = (PlacePieceControllerWebService) factory.getPlacePieceController();
         this.logout = factory.getLogoutController();
-        this.showGameController = (ShowGameControllerWebService) factory.getShowGameController();
+        this.saveGameController = (SaveGameControllerWebService) factory.getSaveGameController();
         this.playerEntity = new PlayerEntity("u", "pass");
         factory.getLoginController().register(playerEntity);
         factory.getCreateGameControler().createGame();
     }
 
-    @Test
-    public void testPlaceCard() {
+    
+    public void testSaveGame() {
         this.placeController.placePiece(new CoordinateEntity(0, 0));
-        ColorModel[][] colors = this.showGameController.colors();
-        assertEquals(ColorModel.X, colors[0][0]);
-        assertNull(colors[1][0]);
-        assertNull(colors[0][1]);
+        this.placeController.placePiece(new CoordinateEntity(0, 1));
+        this.saveGameController.saveGame("partida1");
     }
 
-    @Test
-    public void testMoveCard() {
-        this.placeController.placePiece(new CoordinateEntity(0, 0));
-        this.placeController.placePiece(new CoordinateEntity(2, 0));
-        this.placeController.placePiece(new CoordinateEntity(0, 0),new CoordinateEntity(1, 1));
-        ColorModel[][] colors = this.showGameController.colors();
-        assertNull(colors[0][0]);
-        assertNull(colors[1][0]);
-        assertNull(colors[0][1]);
-        assertEquals(ColorModel.X, colors[1][1]);
-    }
 
-    @After
+    
     public void after() {
+        //Se deben borrar los juegos del usuario
         this.logout.logout();
         new WebServicesManager<>(WS.PATH_SESSIONS, this.placeController.getSessionId())
                 .delete();
@@ -68,4 +50,10 @@ public class PlaceCardControllerWSClientTest {
                 .delete();
     }
 
+    public static void main(String[] args) {
+        SaveGameControllerWebServiceTestMain test= new SaveGameControllerWebServiceTestMain();
+        test.before();
+        test.testSaveGame();
+        //test.after() // Falta por implementar
+    }
 }

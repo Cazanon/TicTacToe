@@ -12,7 +12,7 @@ import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
-public class NameControllerWSClientTest {
+public class NameGameControllerWebServiceTest {
 
     private PlayerEntity playerEntity;
 
