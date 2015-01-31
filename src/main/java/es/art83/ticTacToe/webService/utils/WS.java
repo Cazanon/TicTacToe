@@ -12,55 +12,55 @@ public class WS {
     public static final String URI = PROTOCOL + "://" + HOST + ":" + PORT + WEB;
 
     //
-    public static final String PATH_ID_PARAM = "/{id}";
+    public static final String PATH_ID_PARAM = "/{id}"; //DELETE
 
     // players
-    public static final String PATH_PLAYERS = "/players";
+    public static final String PATH_PLAYERS = "/players"; //POST
 
-    public static final String PATH_USER_PARAM = "/{user}";
+    public static final String PATH_USER_PARAM = "/{user}"; //DELETE
 
     // games
-    public static final String PATH_GAMES = "/games";
+    public static final String PATH_GAMES = "/games"; //POST
 
-    public static final String PATH_SEARCH = "/search";
+    public static final String PATH_SEARCH = "/search"; //GET
 
     // Sessions
-    public static final String PATH_SESSIONS = "/sessions";
+    public static final String PATH_SESSIONS = "/sessions"; //POST
 
-    public static final String PATH_LOGGED = "/logged";
+    public static final String PATH_LOGGED = "/logged"; //GET
 
-    public static final String PATH_STATE = "/state";
+    public static final String PATH_STATE = "/state"; //GET
 
-    public static final String PATH_SAVED_GAME = "/savedGame";
+    public static final String PATH_SAVED_GAME = "/savedGame"; //GET
 
-    public static final String PATH_CREATED_GAME = "/createdGame";
+    public static final String PATH_CREATED_GAME = "/createdGame"; //GET
 
     // sessions/id/player
-    public static final String PATH_PLAYER = "/player";
+    public static final String PATH_PLAYER = "/player"; //POST + DELETE
 
-    public static final String PATH_GAME_NAMES = "/gameNames";
+    public static final String PATH_GAME_NAMES = "/gameNames"; //GET
 
     // sessions/id/game
-    public static final String PATH_GAME = "/game";
+    public static final String PATH_GAME = "/game"; //POST
 
-    public static final String PATH_NAME = "/name";
+    public static final String PATH_NAME = "/name";  //GET + POST
 
-    public static final String PATH_ALL_PIECES = "/allPieces";
+    public static final String PATH_ALL_PIECES = "/allPieces"; //GET
 
-    public static final String PATH_GAME_OVER = "/gameOver";
+    public static final String PATH_GAME_OVER = "/gameOver"; //GET
 
-    public static final String PATH_WINNER = "/winner";
+    public static final String PATH_WINNER = "/winner"; //GET
 
-    public static final String PATH_TURN = "/turn";
+    public static final String PATH_TURN = "/turn"; //GET
 
-    public static final String PATH_HAS_ALL_PIECES = "/hasAllPieces";
+    public static final String PATH_HAS_ALL_PIECES = "/hasAllPieces"; //GET
 
-    public static final String PATH_VALID_SOURCE_COORDINATES = "/validSourceCoordinates";
+    public static final String PATH_VALID_SOURCE_COORDINATES = "/validSourceCoordinates"; //GET
 
-    public static final String PATH_VALID_DESTINATION_COORDINATES = "/validDestinationCoordinates";
+    public static final String PATH_VALID_DESTINATION_COORDINATES = "/validDestinationCoordinates"; //GET
 
-    public static final String PATH_PIECE = "/piece";
+    public static final String PATH_PIECE = "/piece";  //POST + DELETE
 
-    public static final String PATH_ID = "/id";
+    public static final String PATH_ID = "/id"; //GET
 
 }
