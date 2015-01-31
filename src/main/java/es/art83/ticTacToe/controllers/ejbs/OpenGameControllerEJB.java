@@ -12,16 +12,16 @@ public class OpenGameControllerEJB extends ControllerEJB implements OpenGameCont
     }
 
     private void changeSate() {
-        this.getTicTacToeContext().setTicTacToeStateModel(TicTacToeStateModel.OPENED_GAME);
+        this.getTicTacToeSession().setTicTacToeStateModel(TicTacToeStateModel.OPENED_GAME);
     }
  
     
     @Override
     public void openGame(String gameNameSelected) {
         GameEntity game = DAOFactory.getFactory().getGameDAO()
-                .findGame(this.getTicTacToeContext().getPlayer(), gameNameSelected);
-        this.getTicTacToeContext().setGame(game);
-        this.getTicTacToeContext().setSaved(true);
+                .findPlayerGame(this.getTicTacToeSession().getPlayer(), gameNameSelected);
+        this.getTicTacToeSession().setGame(game);
+        this.getTicTacToeSession().setSaved(true);
         this.changeSate();
     }
 

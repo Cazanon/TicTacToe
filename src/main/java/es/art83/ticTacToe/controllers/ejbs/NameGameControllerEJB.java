@@ -14,7 +14,7 @@ public class NameGameControllerEJB extends ControllerEJB implements NameGameCont
     @Override
     public List<String> gameNames() {
         return DAOFactory.getFactory().getGameDAO()
-                .findPlayerGameNames(this.getTicTacToeContext().getPlayer());
+                .findPlayerGameNames(this.getTicTacToeSession().getPlayer());
     }
 
 }

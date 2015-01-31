@@ -1,7 +1,6 @@
 package es.art83.ticTacToe.webService;
 
 import java.net.URI;
-import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -48,16 +47,7 @@ public class GameResource {
     public String findGame(@QueryParam("sessionId") Integer sessionId,
             @QueryParam("name") String name) {
         PlayerEntity player = DAOFactory.getFactory().getSessionDAO().read(sessionId).getPlayer();
-        GameEntity sessionGame = DAOFactory.getFactory().getSessionDAO().read(sessionId).getGame();
-        List<GameEntity> games = DAOFactory.getFactory().getGameDAO().findPlayerGames(player, name);
-        for (GameEntity gameEntity : games) {
-            if (gameEntity.getId() == sessionGame.getId()) {
-                games.remove(gameEntity);
-                break;
-            }
-        }
-        assert games.size() == 1;
-        GameEntity game = games.get(0);
+        GameEntity game = DAOFactory.getFactory().getGameDAO().findPlayerGame(player, name);
         this.info(WS.PATH_SEARCH + "?sessionId=" + sessionId + "&name=" + name + " /GET: " + game);
         if (game == null) {
             throw new NotFoundException();

@@ -15,53 +15,53 @@ public class ShowGameControllerEJB extends ControllerEJB implements ShowGameCont
 
     @Override
     public String getNameGame() {
-        return this.getTicTacToeContext().getGame().getName();
+        return this.getTicTacToeSession().getGame().getName();
     }
 
     @Override
     public ColorModel[][] colors() {
-        return this.getTicTacToeContext().getGame().colors();
+        return this.getTicTacToeSession().getGame().colors();
     }
 
     @Override
     public boolean isGameOver() {
-        return this.getTicTacToeContext().getGame().existTicTacToe();
+        return this.getTicTacToeSession().getGame().existTicTacToe();
     }
 
     @Override
     public ColorModel winner() {
-        return this.getTicTacToeContext().getGame().winner();
+        return this.getTicTacToeSession().getGame().winner();
     }
 
     @Override
     public boolean isSavedGame() {
-        return this.getTicTacToeContext().isSavedGame();
+        return this.getTicTacToeSession().isSavedGame();
     }
 
     @Override
     public ColorModel turnColor() {
-        return this.getTicTacToeContext().getGame().turnColor();
+        return this.getTicTacToeSession().getGame().turnColor();
     }
 
     @Override
     public boolean hasAllPieces() {
-        return this.getTicTacToeContext().getGame().hasAllPieces();
+        return this.getTicTacToeSession().getGame().hasAllPieces();
     }
 
     @Override
     public List<CoordinateEntity> validSourceCoordinates() {
-        return this.getTicTacToeContext().getGame().validSourceCoordinates();
+        return this.getTicTacToeSession().getGame().validSourceCoordinates();
     }
 
     @Override
     public List<CoordinateEntity> validDestinationCoordinates() {
-        return this.getTicTacToeContext().getGame().validDestinationCoordinates();
+        return this.getTicTacToeSession().getGame().validDestinationCoordinates();
     }
 
     @Override
     public boolean createdGame() {
-        boolean result = this.getTicTacToeContext().getTicTacToeStateModel() == TicTacToeStateModel.OPENED_GAME;
-        result = result || this.getTicTacToeContext().getGame() != null;
+        boolean result = this.getTicTacToeSession().getTicTacToeStateModel() == TicTacToeStateModel.OPENED_GAME;
+        result = result || this.getTicTacToeSession().getGame() != null;
         return result;
     }
 

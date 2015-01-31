@@ -11,24 +11,24 @@ public class PlaceCardControllerEJB extends ControllerEJB implements PlaceCardCo
     }
     
    private void changeSate(){
-        assert this.getTicTacToeContext().getTicTacToeStateModel() == TicTacToeStateModel.OPENED_GAME;
-        if (this.getTicTacToeContext().getGame().existTicTacToe()){
-            this.getTicTacToeContext().setSaved(true);
-            this.getTicTacToeContext().setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);        
+        assert this.getTicTacToeSession().getTicTacToeStateModel() == TicTacToeStateModel.OPENED_GAME;
+        if (this.getTicTacToeSession().getGame().existTicTacToe()){
+            this.getTicTacToeSession().setSaved(true);
+            this.getTicTacToeSession().setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);        
         }else{
-            this.getTicTacToeContext().setSaved(false);
+            this.getTicTacToeSession().setSaved(false);
         }
     }
 
     @Override
     public void placeCard(CoordinateEntity coordinate) {
-        this.getTicTacToeContext().getGame().placePiece(coordinate);
+        this.getTicTacToeSession().getGame().placePiece(coordinate);
         this.changeSate();
     }
 
     @Override
     public void placeCard(CoordinateEntity source, CoordinateEntity destination) {
-        this.getTicTacToeContext().getGame().placePiece(source,destination);
+        this.getTicTacToeSession().getGame().placePiece(source,destination);
         this.changeSate();
     }
 

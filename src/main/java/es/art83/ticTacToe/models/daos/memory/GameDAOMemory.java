@@ -46,7 +46,7 @@ public class GameDAOMemory extends GenericDAOMemory<GameEntity, Integer> impleme
     }
 
    // viejo método, el problema es que se puede encontrar dos cuando se trabaja con rest
-    public GameEntity findGame(PlayerEntity player, String gameName) {
+    public GameEntity findPlayerGame(PlayerEntity player, String gameName) {
         GameEntity gameBD = null;
         int index = getEntityList().indexOf(new GameEntity(gameName, player));
         if (index != -1) {

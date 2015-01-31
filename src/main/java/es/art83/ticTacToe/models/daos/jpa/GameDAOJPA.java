@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import es.art83.ticTacToe.models.daos.DAOFactory;
 import es.art83.ticTacToe.models.daos.GameDAO;
 import es.art83.ticTacToe.models.entities.GameEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
@@ -31,7 +32,7 @@ public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements Ga
         query.select(root.get("name")); // criteriaQuery.multiselect(root.get(atr))
         // Se configura el predicado
         Predicate predicate1 = builder.equal(root.get("player").as(PlayerEntity.class), player);
-        Predicate predicate2 = builder.isNotNull(root.get("name").as(PlayerEntity.class));
+        Predicate predicate2 = builder.isNotNull(root.get("name").as(String.class));
         // Se establece el WHERE
         query.where(builder.and(predicate1, predicate2));
         // Se crea el resultado
@@ -69,8 +70,20 @@ public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements Ga
     }
 
     @Override
-    public GameEntity findGame(PlayerEntity player, String gameNameSelected) {
-        // TODO Auto-generated method stub
-        return null;
+    public GameEntity findPlayerGame(PlayerEntity player, String gameNameSelected) {
+        List<GameEntity> sessionGames = DAOFactory.getFactory().getSessionDAO()
+                .findPlayerGames(player);
+        List<GameEntity> playerGames = this.findPlayerGames(player, gameNameSelected);
+        for (GameEntity sessionGame : sessionGames) {
+            for (GameEntity playerGame : playerGames) {
+                if (playerGame.getId() == sessionGame.getId()) {
+                    playerGames.remove(playerGame);
+                    break;
+                }
+            }
+
+        }
+        assert playerGames.size() == 1;
+        return playerGames.get(0);
     }
 }

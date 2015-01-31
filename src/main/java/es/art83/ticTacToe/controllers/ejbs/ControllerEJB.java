@@ -8,7 +8,7 @@ public class ControllerEJB {
         this.ticTacToeSession = ticTacToeSession;
     }
 
-    protected TicTacToeSession getTicTacToeContext() {
+    protected TicTacToeSession getTicTacToeSession() {
         return ticTacToeSession;
     }
 
