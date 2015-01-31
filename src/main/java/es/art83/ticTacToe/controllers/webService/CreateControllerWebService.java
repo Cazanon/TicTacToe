@@ -4,9 +4,9 @@ import es.art83.ticTacToe.controllers.CreateGameController;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
-public class CreateControllerWSClient extends ControllerWSClient implements CreateGameController {
+public class CreateControllerWebService extends ControllerWebService implements CreateGameController {
 
-    public CreateControllerWSClient(String sessionId) {
+    public CreateControllerWebService(String sessionId) {
         super(sessionId);
     }
 

@@ -4,9 +4,9 @@ import es.art83.ticTacToe.controllers.SaveGameController;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
-public class SaveControllerWSClient extends ControllerWSClient implements SaveGameController {
+public class SaveControllerWebService extends ControllerWebService implements SaveGameController {
 
-    public SaveControllerWSClient(String sessionId) {
+    public SaveControllerWebService(String sessionId) {
         super(sessionId);
     }
 

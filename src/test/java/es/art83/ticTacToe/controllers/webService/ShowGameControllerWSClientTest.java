@@ -7,8 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.art83.ticTacToe.controllers.LogoutController;
-import es.art83.ticTacToe.controllers.webService.ControllerFactoryWSClient;
-import es.art83.ticTacToe.controllers.webService.ShowGameControllerWSClient;
+import es.art83.ticTacToe.controllers.webService.ControllerFactoryWebService;
+import es.art83.ticTacToe.controllers.webService.ShowGameControllerWebService;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
 import es.art83.ticTacToe.webService.utils.WS;
@@ -16,7 +16,7 @@ import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class ShowGameControllerWSClientTest {
 
-    private ShowGameControllerWSClient showGameController;
+    private ShowGameControllerWebService showGameController;
 
     private PlayerEntity playerEntity;
 
@@ -24,8 +24,8 @@ public class ShowGameControllerWSClientTest {
 
     @Before
     public void before() {
-        ControllerFactoryWSClient factory = new ControllerFactoryWSClient();
-        this.showGameController = (ShowGameControllerWSClient) factory.getShowGameController();
+        ControllerFactoryWebService factory = new ControllerFactoryWebService();
+        this.showGameController = (ShowGameControllerWebService) factory.getShowGameController();
         this.logout = factory.getLogoutController();
         this.playerEntity = new PlayerEntity("u", "pass");
         factory.getLoginController().register(playerEntity);

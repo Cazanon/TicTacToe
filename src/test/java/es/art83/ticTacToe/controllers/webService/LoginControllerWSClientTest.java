@@ -6,21 +6,21 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.art83.ticTacToe.controllers.webService.ControllerFactoryWSClient;
-import es.art83.ticTacToe.controllers.webService.LoginControllerWSClient;
+import es.art83.ticTacToe.controllers.webService.ControllerFactoryWebService;
+import es.art83.ticTacToe.controllers.webService.LoginControllerWebService;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class LoginControllerWSClientTest {
 
-    private LoginControllerWSClient login;
+    private LoginControllerWebService login;
 
     private PlayerEntity playerEntity;
 
     @Before
     public void before() {
-        this.login = (LoginControllerWSClient) new ControllerFactoryWSClient().getLoginController();
+        this.login = (LoginControllerWebService) new ControllerFactoryWebService().getLoginController();
         this.playerEntity = new PlayerEntity("u", "pass");
     }
 

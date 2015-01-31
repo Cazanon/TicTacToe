@@ -3,23 +3,23 @@ package es.art83.ticTacToe.controllers.webService;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.art83.ticTacToe.controllers.StartGameController;
+import es.art83.ticTacToe.controllers.NameGameController;
 import es.art83.ticTacToe.models.utils.ListStringWrapper;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
-public class StartControllerWSClient extends ControllerWSClient implements StartGameController {
+public class NameControllerWebService extends ControllerWebService implements NameGameController {
 
     private String pathSessionsIdPlayer;
 
-    public StartControllerWSClient(String sessionId) {
+    public NameControllerWebService(String sessionId) {
         super(sessionId);
         this.pathSessionsIdPlayer = WS.PATH_SESSIONS + "/" + this.getSessionId()
                 + WS.PATH_PLAYER;
     }
 
     @Override
-    public List<String> readGameNames() {
+    public List<String> gameNames() {
         ListStringWrapper listStringWrapper = new WebServicesManager<ListStringWrapper>(
                 pathSessionsIdPlayer, WS.PATH_GAME_NAMES)
                 .entity(ListStringWrapper.class);

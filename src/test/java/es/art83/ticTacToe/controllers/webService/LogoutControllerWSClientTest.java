@@ -6,26 +6,26 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.art83.ticTacToe.controllers.webService.ControllerFactoryWSClient;
-import es.art83.ticTacToe.controllers.webService.LoginControllerWSClient;
-import es.art83.ticTacToe.controllers.webService.LogoutControllerWSClient;
+import es.art83.ticTacToe.controllers.webService.ControllerFactoryWebService;
+import es.art83.ticTacToe.controllers.webService.LoginControllerWebService;
+import es.art83.ticTacToe.controllers.webService.LogoutControllerWebService;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class LogoutControllerWSClientTest {
 
-    private LoginControllerWSClient login;
+    private LoginControllerWebService login;
 
-    private LogoutControllerWSClient logout;
+    private LogoutControllerWebService logout;
 
     private PlayerEntity playerEntity;
 
     @Before
     public void before() {
-        ControllerFactoryWSClient factory = new ControllerFactoryWSClient();
-        this.login = (LoginControllerWSClient) factory.getLoginController();
-        this.logout = (LogoutControllerWSClient) factory.getLogoutController();
+        ControllerFactoryWebService factory = new ControllerFactoryWebService();
+        this.login = (LoginControllerWebService) factory.getLoginController();
+        this.logout = (LogoutControllerWebService) factory.getLogoutController();
         this.playerEntity = new PlayerEntity("u", "pass");
         this.login.register(playerEntity);
     }

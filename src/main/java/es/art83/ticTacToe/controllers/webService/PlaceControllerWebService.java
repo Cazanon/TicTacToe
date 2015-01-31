@@ -5,11 +5,11 @@ import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
-public class PlaceControllerWSClient extends ControllerWSClient implements PlaceCardController {
+public class PlaceControllerWebService extends ControllerWebService implements PlaceCardController {
 
     private String pathSessionsIdGame;
 
-    public PlaceControllerWSClient(String sessionId) {
+    public PlaceControllerWebService(String sessionId) {
         super(sessionId);
         this.pathSessionsIdGame = WS.PATH_SESSIONS + "/" + this.getSessionId()
                 + WS.PATH_GAME;

@@ -5,10 +5,10 @@ import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
-public class LogoutControllerWSClient extends ControllerWSClient implements LogoutController {
+public class LogoutControllerWebService extends ControllerWebService implements LogoutController {
     private final String pathSessionsId;
 
-    public LogoutControllerWSClient(String sessionId) {
+    public LogoutControllerWebService(String sessionId) {
         super(sessionId);
         this.pathSessionsId = WS.PATH_SESSIONS + "/" + this.getSessionId();
     }

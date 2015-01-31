@@ -5,10 +5,10 @@ import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
-public class LoginControllerWSClient extends ControllerWSClient implements LoginController {
+public class LoginControllerWebService extends ControllerWebService implements LoginController {
     private final String pathSessionsId;
 
-    public LoginControllerWSClient(String sessionId) {
+    public LoginControllerWebService(String sessionId) {
         super(sessionId);
         this.pathSessionsId = WS.PATH_SESSIONS + "/" + this.getSessionId();
     }

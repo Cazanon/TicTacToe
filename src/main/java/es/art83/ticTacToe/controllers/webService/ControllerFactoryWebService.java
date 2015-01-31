@@ -18,7 +18,7 @@ import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 @ManagedBean(name = "controllerFactory")
 @SessionScoped
-public class ControllerFactoryWSClient extends ControllerFactory {
+public class ControllerFactoryWebService extends ControllerFactory {
 
     private LoginController loginController;
 
@@ -38,7 +38,7 @@ public class ControllerFactoryWSClient extends ControllerFactory {
 
     private SaveGameController saveGameController;
 
-    public ControllerFactoryWSClient() {
+    public ControllerFactoryWebService() {
         String sessionId = null;
         // Crear peticion rest para crear contexto. Almacenar la referencia del
         // contexto en el servidor
@@ -47,15 +47,15 @@ public class ControllerFactoryWSClient extends ControllerFactory {
         sessionId = webServiceClient.entity(String.class);
 
         // Pasarle la referencia a todos los controladores
-        this.loginController = new LoginControllerWSClient(sessionId);
-        this.logoutController = new LogoutControllerWSClient(sessionId);
-        this.startGameController = new StartControllerWSClient(sessionId);
-        this.createGameController = new CreateControllerWSClient(sessionId);
-        this.nameGameController = new NameControllerWSClient(sessionId);
-        this.showGameController = new ShowGameControllerWSClient(sessionId);
-        this.placeCardController = new PlaceControllerWSClient(sessionId);
-        this.saveGameController = new SaveControllerWSClient(sessionId);
-        this.openGameController = new OpenControllerWSClient(sessionId);
+        this.loginController = new LoginControllerWebService(sessionId);
+        this.logoutController = new LogoutControllerWebService(sessionId);
+        this.startGameController = new StartControllerWebService(sessionId);
+        this.createGameController = new CreateControllerWebService(sessionId);
+        this.nameGameController = new NameControllerWebService(sessionId);
+        this.showGameController = new ShowGameControllerWebService(sessionId);
+        this.placeCardController = new PlaceControllerWebService(sessionId);
+        this.saveGameController = new SaveControllerWebService(sessionId);
+        this.openGameController = new OpenControllerWebService(sessionId);
     }
 
     @Override

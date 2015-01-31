@@ -1,10 +1,10 @@
 package es.art83.ticTacToe.controllers.webService;
 
 
-public class ControllerWSClient {
+public class ControllerWebService {
     private String sessionId = null;
 
-    public ControllerWSClient(String sessionId) {
+    public ControllerWebService(String sessionId) {
         assert sessionId != null;
         this.sessionId = sessionId;
     }
