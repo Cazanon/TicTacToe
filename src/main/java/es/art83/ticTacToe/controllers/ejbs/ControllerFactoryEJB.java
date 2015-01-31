@@ -15,7 +15,7 @@ import es.art83.ticTacToe.controllers.StartGameController;
 //@SessionScoped
 public class ControllerFactoryEJB extends ControllerFactory {
 
-    private TicTacToeContext ticTacToeContext;
+    private TicTacToeSession ticTacToeSession;
 
     private LoginController loginController;
 
@@ -36,16 +36,16 @@ public class ControllerFactoryEJB extends ControllerFactory {
     private SaveGameController saveGameController;
 
     public ControllerFactoryEJB() {
-        this.ticTacToeContext = new TicTacToeContext();
-        this.loginController = new LoginControllerEJB(ticTacToeContext);
-        this.logoutController = new LogoutControllerEJB(ticTacToeContext);
-        this.startGameController = new StartGameControllerEJB(ticTacToeContext);
-        this.createGameController = new CreateGameControllerEJB(ticTacToeContext);
-        this.nameGameController = new NameGameControllerEJB(ticTacToeContext);
-        this.showGameController = new ShowGameControllerEJB(ticTacToeContext);
-        this.placeCardController = new PlaceCardControllerEJB(ticTacToeContext);
-        this.saveGameController = new SaveGameControllerEJB(ticTacToeContext);
-        this.openGameController = new OpenGameControllerEJB(ticTacToeContext);
+        this.ticTacToeSession = new TicTacToeSession();
+        this.loginController = new LoginControllerEJB(ticTacToeSession);
+        this.logoutController = new LogoutControllerEJB(ticTacToeSession);
+        this.startGameController = new StartGameControllerEJB(ticTacToeSession);
+        this.createGameController = new CreateGameControllerEJB(ticTacToeSession);
+        this.nameGameController = new NameGameControllerEJB(ticTacToeSession);
+        this.showGameController = new ShowGameControllerEJB(ticTacToeSession);
+        this.placeCardController = new PlaceCardControllerEJB(ticTacToeSession);
+        this.saveGameController = new SaveGameControllerEJB(ticTacToeSession);
+        this.openGameController = new OpenGameControllerEJB(ticTacToeSession);
     }
 
     @Override

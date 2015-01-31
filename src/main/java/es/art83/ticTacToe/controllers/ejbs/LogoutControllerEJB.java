@@ -5,7 +5,7 @@ import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
 public class LogoutControllerEJB extends ControllerEJB implements LogoutController {
 
-    public LogoutControllerEJB(TicTacToeContext ticTacToeStatesManager) {
+    public LogoutControllerEJB(TicTacToeSession ticTacToeStatesManager) {
         super(ticTacToeStatesManager);
     }
     

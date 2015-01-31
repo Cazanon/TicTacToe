@@ -7,7 +7,7 @@ import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
 public class LoginControllerEJB extends ControllerEJB implements LoginController {
 
-    public LoginControllerEJB(TicTacToeContext ticTacToeStatesManager) {
+    public LoginControllerEJB(TicTacToeSession ticTacToeStatesManager) {
         super(ticTacToeStatesManager);
     }
 

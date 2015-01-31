@@ -7,7 +7,7 @@ import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
 public class OpenGameControllerEJB extends ControllerEJB implements OpenGameController {
 
-    public OpenGameControllerEJB(TicTacToeContext ticTacToeStatesManager) {
+    public OpenGameControllerEJB(TicTacToeSession ticTacToeStatesManager) {
         super(ticTacToeStatesManager);
     }
 

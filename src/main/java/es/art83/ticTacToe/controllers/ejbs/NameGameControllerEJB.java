@@ -7,7 +7,7 @@ import es.art83.ticTacToe.models.daos.DAOFactory;
 
 public class NameGameControllerEJB extends ControllerEJB implements NameGameController {
 
-    public NameGameControllerEJB(TicTacToeContext ticTacToeStatesManager) {
+    public NameGameControllerEJB(TicTacToeSession ticTacToeStatesManager) {
         super(ticTacToeStatesManager);
     }
 

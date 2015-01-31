@@ -9,7 +9,7 @@ import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
 public class ShowGameControllerEJB extends ControllerEJB implements ShowGameController {
 
-    public ShowGameControllerEJB(TicTacToeContext ticTacToeStatesManager) {
+    public ShowGameControllerEJB(TicTacToeSession ticTacToeStatesManager) {
         super(ticTacToeStatesManager);
     }
 

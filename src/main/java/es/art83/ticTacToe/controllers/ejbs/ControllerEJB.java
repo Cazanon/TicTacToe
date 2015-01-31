@@ -2,14 +2,14 @@ package es.art83.ticTacToe.controllers.ejbs;
 
 public class ControllerEJB {
 
-    private TicTacToeContext ticTacToeContext;
+    private TicTacToeSession ticTacToeSession;
 
-    public ControllerEJB(TicTacToeContext ticTacToeContext) {
-        this.ticTacToeContext = ticTacToeContext;
+    public ControllerEJB(TicTacToeSession ticTacToeSession) {
+        this.ticTacToeSession = ticTacToeSession;
     }
 
-    protected TicTacToeContext getTicTacToeContext() {
-        return ticTacToeContext;
+    protected TicTacToeSession getTicTacToeContext() {
+        return ticTacToeSession;
     }
 
 }

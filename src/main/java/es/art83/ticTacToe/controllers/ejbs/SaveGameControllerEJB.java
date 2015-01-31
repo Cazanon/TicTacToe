@@ -6,7 +6,7 @@ import es.art83.ticTacToe.models.entities.GameEntity;
 
 public class SaveGameControllerEJB extends ControllerEJB implements SaveGameController {
 
-    public SaveGameControllerEJB(TicTacToeContext ticTacToeStatesManager) {
+    public SaveGameControllerEJB(TicTacToeSession ticTacToeStatesManager) {
         super(ticTacToeStatesManager);
     }
 

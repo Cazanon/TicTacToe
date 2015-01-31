@@ -4,7 +4,7 @@ import es.art83.ticTacToe.models.entities.GameEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
-public class TicTacToeContext {
+public class TicTacToeSession {
     private TicTacToeStateModel ticTacToeStateModel;
 
     private PlayerEntity player;
@@ -13,7 +13,7 @@ public class TicTacToeContext {
 
     private boolean saved;
 
-    public TicTacToeContext() {
+    public TicTacToeSession() {
         this.ticTacToeStateModel = TicTacToeStateModel.INITIAL;
         this.player = null;
         this.game = null;

@@ -6,7 +6,7 @@ import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
 public class PlaceCardControllerEJB extends ControllerEJB implements PlaceCardController {
 
-    public PlaceCardControllerEJB(TicTacToeContext ticTacToeStatesManager) {
+    public PlaceCardControllerEJB(TicTacToeSession ticTacToeStatesManager) {
         super(ticTacToeStatesManager);
     }
     

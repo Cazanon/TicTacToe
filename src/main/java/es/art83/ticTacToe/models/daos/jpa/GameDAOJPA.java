@@ -67,4 +67,10 @@ public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements Ga
         entityManager.close();
         return result;
     }
+
+    @Override
+    public GameEntity findGame(PlayerEntity player, String gameNameSelected) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }
