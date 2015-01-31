@@ -10,12 +10,12 @@ import javax.ws.rs.core.Response;
 
 import org.apache.logging.log4j.LogManager;
 
-public class WebServiceHandler<T> {
+public class WebServicesManager<T> {
     private WebTarget webTarget;
 
     private Response response;
 
-    public WebServiceHandler(String... paths) {
+    public WebServicesManager(String... paths) {
         this.webTarget = ClientBuilder.newClient().target(WS.URI);
         for (String path : paths) {
             this.webTarget = this.webTarget.path(path);

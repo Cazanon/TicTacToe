@@ -2,7 +2,7 @@ package es.art83.ticTacToe.controllers.webService;
 
 import es.art83.ticTacToe.controllers.OpenGameController;
 import es.art83.ticTacToe.webService.utils.WS;
-import es.art83.ticTacToe.webService.utils.WebServiceHandler;
+import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class OpenControllerWSClient extends ControllerWSClient implements OpenGameController {
 
@@ -12,10 +12,10 @@ public class OpenControllerWSClient extends ControllerWSClient implements OpenGa
 
     @Override
     public void openGame(String gameNameSelected) {
-        WebServiceHandler<?> webServiceClient = new WebServiceHandler<>(
+        WebServicesManager<?> webServiceHandler = new WebServicesManager<>(
                 WS.PATH_SESSIONS, this.getSessionId(), WS.PATH_GAME);
-        webServiceClient.addParams("name", gameNameSelected);
-        webServiceClient.create();
+        webServiceHandler.addParams("name", gameNameSelected);
+        webServiceHandler.create();
     }
 
 }

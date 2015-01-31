@@ -12,7 +12,7 @@ import es.art83.ticTacToe.controllers.webService.ShowGameControllerWSClient;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
 import es.art83.ticTacToe.webService.utils.WS;
-import es.art83.ticTacToe.webService.utils.WebServiceHandler;
+import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class ShowGameControllerWSClientTest {
 
@@ -85,9 +85,9 @@ public class ShowGameControllerWSClientTest {
     @After
     public void after() {
         this.logout.logout();
-        new WebServiceHandler<>(WS.PATH_SESSIONS,
+        new WebServicesManager<>(WS.PATH_SESSIONS,
                 this.showGameController.getSessionId()).delete();
-        new WebServiceHandler<>(WS.PATH_PLAYERS, this.playerEntity.getUser())
+        new WebServicesManager<>(WS.PATH_PLAYERS, this.playerEntity.getUser())
                 .delete();
     }
 

@@ -9,7 +9,7 @@ import es.art83.ticTacToe.controllers.webService.ControllerFactoryWSClient;
 import es.art83.ticTacToe.controllers.webService.CreateControllerWSClient;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.utils.WS;
-import es.art83.ticTacToe.webService.utils.WebServiceHandler;
+import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class CreateControllerWSClientTest {
 
@@ -36,9 +36,9 @@ public class CreateControllerWSClientTest {
     @After
     public void after() {
         this.logout.logout();
-        new WebServiceHandler<>(WS.PATH_SESSIONS, this.create.getSessionId())
+        new WebServicesManager<>(WS.PATH_SESSIONS, this.create.getSessionId())
                 .delete();
-        new WebServiceHandler<>(WS.PATH_PLAYERS, this.playerEntity.getUser())
+        new WebServicesManager<>(WS.PATH_PLAYERS, this.playerEntity.getUser())
                 .delete();
     }
 }

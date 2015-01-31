@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.utils.WS;
-import es.art83.ticTacToe.webService.utils.WebServiceHandler;
+import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class SessionPlayerResourceTest {
     private String sessionId;
@@ -19,32 +19,32 @@ public class SessionPlayerResourceTest {
 
     @Before
     public void before() {
-        WebServiceHandler<String> webService = new WebServiceHandler<>(
+        WebServicesManager<String> webService = new WebServicesManager<>(
                 WS.PATH_SESSIONS);
         webService.create();
         this.sessionId = webService.entity(String.class);
 
         this.player = new PlayerEntity("u", "pass");
-        new WebServiceHandler<>(WS.PATH_PLAYERS).create(player);
+        new WebServicesManager<>(WS.PATH_PLAYERS).create(player);
     }
 
     @Test
     public void testLoginPlayerExist() {
-        assertTrue(new WebServiceHandler<>(WS.PATH_SESSIONS, this.sessionId,
+        assertTrue(new WebServicesManager<>(WS.PATH_SESSIONS, this.sessionId,
                 WS.PATH_PLAYER).create(player));
     }
 
     @Test
     public void testLoginPlayerNotExist() {
         PlayerEntity player2 = new PlayerEntity("u2", "upass");
-        assertFalse(new WebServiceHandler<>(WS.PATH_SESSIONS, this.sessionId,
+        assertFalse(new WebServicesManager<>(WS.PATH_SESSIONS, this.sessionId,
                 WS.PATH_PLAYER).create(player2));
     }
 
     @Test
     public void testLoginPlayerNotPass() {
         PlayerEntity player2 = new PlayerEntity("u", "no");
-        assertFalse(new WebServiceHandler<>(WS.PATH_SESSIONS, this.sessionId,
+        assertFalse(new WebServicesManager<>(WS.PATH_SESSIONS, this.sessionId,
                 WS.PATH_PLAYER).create(player2));
     }
 
@@ -58,8 +58,8 @@ public class SessionPlayerResourceTest {
 
     @After
     public void after() {
-        new WebServiceHandler<>(WS.PATH_SESSIONS, this.sessionId).delete();
-        new WebServiceHandler<>(WS.PATH_PLAYERS, this.player.getUser()).delete();
+        new WebServicesManager<>(WS.PATH_SESSIONS, this.sessionId).delete();
+        new WebServicesManager<>(WS.PATH_PLAYERS, this.player.getUser()).delete();
     }
 
 }

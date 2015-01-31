@@ -6,7 +6,7 @@ import java.util.List;
 import es.art83.ticTacToe.controllers.StartGameController;
 import es.art83.ticTacToe.models.utils.ListStringWrapper;
 import es.art83.ticTacToe.webService.utils.WS;
-import es.art83.ticTacToe.webService.utils.WebServiceHandler;
+import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class StartControllerWSClient extends ControllerWSClient implements StartGameController {
 
@@ -20,7 +20,7 @@ public class StartControllerWSClient extends ControllerWSClient implements Start
 
     @Override
     public List<String> readGameNames() {
-        ListStringWrapper listStringWrapper = new WebServiceHandler<ListStringWrapper>(
+        ListStringWrapper listStringWrapper = new WebServicesManager<ListStringWrapper>(
                 pathSessionsIdPlayer, WS.PATH_GAME_NAMES)
                 .entity(ListStringWrapper.class);
         List<String> list = listStringWrapper.getListString();

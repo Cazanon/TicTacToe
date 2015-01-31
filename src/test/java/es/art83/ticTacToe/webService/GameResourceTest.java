@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.utils.WS;
-import es.art83.ticTacToe.webService.utils.WebServiceHandler;
+import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class GameResourceTest {
     private String sessionId;
@@ -22,7 +22,7 @@ public class GameResourceTest {
     @Before
     public void before() {
         // Create sessions
-        WebServiceHandler<String> webServiceClient = new WebServiceHandler<String>(
+        WebServicesManager<String> webServiceClient = new WebServicesManager<String>(
                 WS.PATH_SESSIONS);
         webServiceClient.create();
         this.sessionId = webServiceClient.entity(String.class);
@@ -32,19 +32,19 @@ public class GameResourceTest {
 
         // Register player
         this.player = new PlayerEntity("u", "pass");
-        new WebServiceHandler<>(WS.PATH_PLAYERS).create(player);
+        new WebServicesManager<>(WS.PATH_PLAYERS).create(player);
         // Login player
-        new WebServiceHandler<>(WS.PATH_SESSIONS, this.sessionId,
+        new WebServicesManager<>(WS.PATH_SESSIONS, this.sessionId,
                 WS.PATH_PLAYER).create(player);
         // Create game
-        new WebServiceHandler<>(pathSessionsIdGame).create();
+        new WebServicesManager<>(pathSessionsIdGame).create();
         // Se establece nombre de partida
-        new WebServiceHandler<>(pathSessionsIdGame, WS.PATH_NAME).create("partida1");
+        new WebServicesManager<>(pathSessionsIdGame, WS.PATH_NAME).create("partida1");
     }
 
     @Test
     public void testCreateGame() {
-        WebServiceHandler<String> webServiceClient = new WebServiceHandler<>(
+        WebServicesManager<String> webServiceClient = new WebServicesManager<>(
                 WS.PATH_GAMES);
         webServiceClient.addParams("sessionId", sessionId);
         assertTrue(webServiceClient.create());
@@ -53,12 +53,12 @@ public class GameResourceTest {
 
     @Test
     public void testFindGame() {
-        WebServiceHandler<String> webServiceClient = new WebServiceHandler<>(
+        WebServicesManager<String> webServiceClient = new WebServicesManager<>(
                 WS.PATH_GAMES);
         webServiceClient.addParams("sessionId", sessionId);
         webServiceClient.create();
 
-        webServiceClient = new WebServiceHandler<String>(WS.PATH_GAMES,
+        webServiceClient = new WebServicesManager<String>(WS.PATH_GAMES,
                 WS.PATH_SEARCH);
         webServiceClient.addParams("sessionId", sessionId);
         webServiceClient.addParams("name", "partida1");
@@ -67,11 +67,11 @@ public class GameResourceTest {
 
     @After
     public void after() {
-        new WebServiceHandler<>(WS.PATH_SESSIONS, this.sessionId,
+        new WebServicesManager<>(WS.PATH_SESSIONS, this.sessionId,
                 WS.PATH_PLAYER).delete();
-        new WebServiceHandler<>(WS.PATH_SESSIONS, this.sessionId).delete();
-        new WebServiceHandler<>(WS.PATH_GAMES, this.gameId).delete();
-        new WebServiceHandler<>(WS.PATH_PLAYERS, this.player.getUser()).delete();
+        new WebServicesManager<>(WS.PATH_SESSIONS, this.sessionId).delete();
+        new WebServicesManager<>(WS.PATH_GAMES, this.gameId).delete();
+        new WebServicesManager<>(WS.PATH_PLAYERS, this.player.getUser()).delete();
     }
 
 }

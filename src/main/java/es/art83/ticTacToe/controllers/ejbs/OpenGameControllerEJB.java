@@ -20,6 +20,7 @@ public class OpenGameControllerEJB extends ControllerEJB implements OpenGameCont
     public void openGame(String gameNameSelected) {
         GameEntity game = DAOFactory.getFactory().getGameDAO()
                 .findPlayerGame(this.getTicTacToeSession().getPlayer(), gameNameSelected);
+        game = game.clone();
         this.getTicTacToeSession().setGame(game);
         this.getTicTacToeSession().setSaved(true);
         this.changeSate();
