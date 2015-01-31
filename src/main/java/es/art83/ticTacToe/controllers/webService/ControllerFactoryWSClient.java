@@ -13,8 +13,8 @@ import es.art83.ticTacToe.controllers.PlaceCardController;
 import es.art83.ticTacToe.controllers.SaveGameController;
 import es.art83.ticTacToe.controllers.ShowGameController;
 import es.art83.ticTacToe.controllers.StartGameController;
-import es.art83.ticTacToe.controllers.webService.utils.TicTacToeResource;
-import es.art83.ticTacToe.controllers.webService.utils.WebServiceClient;
+import es.art83.ticTacToe.webService.utils.TicTacToeResource;
+import es.art83.ticTacToe.webService.utils.WebServiceClient;
 
 @ManagedBean(name = "controllerFactory")
 @SessionScoped

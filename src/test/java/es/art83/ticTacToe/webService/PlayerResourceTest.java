@@ -7,9 +7,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.art83.ticTacToe.controllers.webService.utils.TicTacToeResource;
-import es.art83.ticTacToe.controllers.webService.utils.WebServiceClient;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
+import es.art83.ticTacToe.webService.utils.TicTacToeResource;
+import es.art83.ticTacToe.webService.utils.WebServiceClient;
 
 public class PlayerResourceTest {
     private PlayerEntity player;

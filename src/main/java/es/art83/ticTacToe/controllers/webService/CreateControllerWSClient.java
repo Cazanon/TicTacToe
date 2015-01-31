@@ -1,8 +1,8 @@
 package es.art83.ticTacToe.controllers.webService;
 
 import es.art83.ticTacToe.controllers.CreateGameController;
-import es.art83.ticTacToe.controllers.webService.utils.TicTacToeResource;
-import es.art83.ticTacToe.controllers.webService.utils.WebServiceClient;
+import es.art83.ticTacToe.webService.utils.TicTacToeResource;
+import es.art83.ticTacToe.webService.utils.WebServiceClient;
 
 public class CreateControllerWSClient extends ControllerWSClient implements CreateGameController {
 

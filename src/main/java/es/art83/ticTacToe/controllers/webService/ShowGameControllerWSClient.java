@@ -5,11 +5,11 @@ import java.util.List;
 import javax.ws.rs.core.GenericType;
 
 import es.art83.ticTacToe.controllers.ShowGameController;
-import es.art83.ticTacToe.controllers.webService.utils.TicTacToeResource;
-import es.art83.ticTacToe.controllers.webService.utils.WebServiceClient;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
+import es.art83.ticTacToe.webService.utils.TicTacToeResource;
+import es.art83.ticTacToe.webService.utils.WebServiceClient;
 
 public class ShowGameControllerWSClient extends ControllerWSClient implements ShowGameController {
     private final String pathSessionsIdGame;

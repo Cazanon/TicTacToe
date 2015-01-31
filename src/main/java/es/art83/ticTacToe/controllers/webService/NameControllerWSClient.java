@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.art83.ticTacToe.controllers.NameGameController;
-import es.art83.ticTacToe.controllers.webService.utils.TicTacToeResource;
-import es.art83.ticTacToe.controllers.webService.utils.WebServiceClient;
 import es.art83.ticTacToe.models.utils.ListStringWrapper;
+import es.art83.ticTacToe.webService.utils.TicTacToeResource;
+import es.art83.ticTacToe.webService.utils.WebServiceClient;
 
 public class NameControllerWSClient extends ControllerWSClient implements NameGameController {
 

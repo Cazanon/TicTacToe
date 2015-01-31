@@ -5,10 +5,10 @@ import es.art83.ticTacToe.controllers.LogoutController;
 import es.art83.ticTacToe.controllers.webService.ControllerFactoryWSClient;
 import es.art83.ticTacToe.controllers.webService.PlaceControllerWSClient;
 import es.art83.ticTacToe.controllers.webService.SaveControllerWSClient;
-import es.art83.ticTacToe.controllers.webService.utils.TicTacToeResource;
-import es.art83.ticTacToe.controllers.webService.utils.WebServiceClient;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
+import es.art83.ticTacToe.webService.utils.TicTacToeResource;
+import es.art83.ticTacToe.webService.utils.WebServiceClient;
 
 public class SaveGameControllerWSClientTestMain {
 

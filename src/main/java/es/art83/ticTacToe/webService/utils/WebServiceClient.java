@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.controllers.webService.utils;
+package es.art83.ticTacToe.webService.utils;
 
 import java.util.List;
 

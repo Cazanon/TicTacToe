@@ -8,9 +8,9 @@ import org.junit.Test;
 
 import es.art83.ticTacToe.controllers.webService.ControllerFactoryWSClient;
 import es.art83.ticTacToe.controllers.webService.NameControllerWSClient;
-import es.art83.ticTacToe.controllers.webService.utils.TicTacToeResource;
-import es.art83.ticTacToe.controllers.webService.utils.WebServiceClient;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
+import es.art83.ticTacToe.webService.utils.TicTacToeResource;
+import es.art83.ticTacToe.webService.utils.WebServiceClient;
 
 public class NameControllerWSClientTest {
 
