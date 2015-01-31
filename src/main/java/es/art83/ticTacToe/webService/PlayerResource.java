@@ -14,9 +14,14 @@ import org.apache.logging.log4j.LogManager;
 
 import es.art83.ticTacToe.models.daos.DAOFactory;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
+import es.art83.ticTacToe.webService.utils.WS;
 
-@Path("/players")
+@Path(WS.PATH_PLAYERS)
 public class PlayerResource {
+
+    protected void info(String msg) {
+        LogManager.getLogger(this.getClass()).info(WS.PATH_PLAYERS + msg);
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
@@ -26,21 +31,21 @@ public class PlayerResource {
                 .read(playerEntity.getUser());
         if (playerEntityBD == null) {
             DAOFactory.getFactory().getPlayerDAO().create(playerEntity);
-            result = Response.created(URI.create("/players/" + playerEntity.getUser())).build();
-            LogManager.getLogger(PlayerResource.class).info(
-                    "POST/players/id: " + playerEntity.getUser());
+            result = Response.created(URI.create(WS.PATH_PLAYERS + "/" + playerEntity.getUser()))
+                    .build();
+            this.info(" /POST: " + playerEntity.getUser());
         } else {
             result = Response.status(Response.Status.CONFLICT).build();
-            LogManager.getLogger(PlayerResource.class).info(
-                    "POST/players/id: CONFLICT Usuario ya existente: " + playerEntityBD.toString());
+            this.info(" /POST: CONFLICT Usuario ya existente:" + playerEntityBD.toString());
         }
         return result;
     }
 
-    @Path("/{user}")
+    @Path(WS.PATH_USER)
     @DELETE
     public void delete(@PathParam("user") String user) {
         DAOFactory.getFactory().getPlayerDAO().deleteByID(user);
+        this.info("/" + user + " /DELETE");
     }
 
 }

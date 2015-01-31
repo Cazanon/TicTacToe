@@ -1,6 +1,6 @@
 package es.art83.ticTacToe.webService.utils;
 
-public class TicTacToeResource {
+public class WS {
     public static final String PROTOCOL = "http";
 
     public static final String HOST = "localhost";
@@ -50,5 +50,11 @@ public class TicTacToeResource {
     public static final String PATH_GAMES = "/games";
 
     public static final String PATH_SEARCH = "/search";
+
+    public static final String PATH_ID_PARAM = "/{id}";
+
+    public static final String PATH_USER = "/{user}";
+
+    public static final String PATH_ID = "/id";
 
 }

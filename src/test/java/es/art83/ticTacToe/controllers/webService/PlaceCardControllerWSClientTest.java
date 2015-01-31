@@ -14,7 +14,7 @@ import es.art83.ticTacToe.controllers.webService.ShowGameControllerWSClient;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
-import es.art83.ticTacToe.webService.utils.TicTacToeResource;
+import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServiceClient;
 
 public class PlaceCardControllerWSClientTest {
@@ -62,9 +62,9 @@ public class PlaceCardControllerWSClientTest {
     @After
     public void after() {
         this.logout.logout();
-        new WebServiceClient<>(TicTacToeResource.PATH_SESSIONS, this.placeController.getSessionId())
+        new WebServiceClient<>(WS.PATH_SESSIONS, this.placeController.getSessionId())
                 .delete();
-        new WebServiceClient<>(TicTacToeResource.PATH_PLAYERS, this.playerEntity.getUser())
+        new WebServiceClient<>(WS.PATH_PLAYERS, this.playerEntity.getUser())
                 .delete();
     }
 

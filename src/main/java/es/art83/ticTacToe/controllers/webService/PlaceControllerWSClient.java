@@ -2,7 +2,7 @@ package es.art83.ticTacToe.controllers.webService;
 
 import es.art83.ticTacToe.controllers.PlaceCardController;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
-import es.art83.ticTacToe.webService.utils.TicTacToeResource;
+import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServiceClient;
 
 public class PlaceControllerWSClient extends ControllerWSClient implements PlaceCardController {
@@ -11,24 +11,24 @@ public class PlaceControllerWSClient extends ControllerWSClient implements Place
 
     public PlaceControllerWSClient(String sessionId) {
         super(sessionId);
-        this.pathSessionsIdGame = TicTacToeResource.PATH_SESSIONS + "/" + this.getSessionId()
-                + TicTacToeResource.PATH_GAME;
+        this.pathSessionsIdGame = WS.PATH_SESSIONS + "/" + this.getSessionId()
+                + WS.PATH_GAME;
     }
 
     @Override
     public void placeCard(CoordinateEntity coordinateEntity) {
-        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+        new WebServiceClient<>(pathSessionsIdGame, WS.PATH_PIECE)
                 .create(coordinateEntity);
     }
 
     @Override
     public void placeCard(CoordinateEntity source, CoordinateEntity destination) {
         WebServiceClient<?> webServiceClient = new WebServiceClient<>(pathSessionsIdGame,
-                TicTacToeResource.PATH_PIECE);
+                WS.PATH_PIECE);
         webServiceClient.addMatrixParams("row", String.valueOf(source.getRow()));
         webServiceClient.addMatrixParams("column", String.valueOf(source.getColumn()));
         webServiceClient.delete();
-        new WebServiceClient<>(pathSessionsIdGame, TicTacToeResource.PATH_PIECE)
+        new WebServiceClient<>(pathSessionsIdGame, WS.PATH_PIECE)
                 .create(destination);
     }
 

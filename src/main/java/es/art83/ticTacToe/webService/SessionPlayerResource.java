@@ -19,9 +19,14 @@ import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.ListStringWrapper;
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
+import es.art83.ticTacToe.webService.utils.WS;
 
-@Path("/sessions/{id}/player")
+@Path(WS.PATH_SESSIONS + WS.PATH_ID_PARAM + WS.PATH_PLAYER)
 public class SessionPlayerResource extends SessionResource {
+
+    protected void info(Integer id, String msg) {
+        this.info("/" + id + WS.PATH_PLAYER + msg);
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
@@ -34,8 +39,8 @@ public class SessionPlayerResource extends SessionResource {
             sessionEntity.setPlayer(playerEntityBD);
             sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);
             DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
-            this.info("POST/" + sessionEntity.getId() + "/player");
-            return Response.created(URI.create(PATH + sessionEntity.getId() + "/player")).build();
+            this.info(id, " /POST: " + playerEntity);
+            return Response.created(URI.create(WS.PATH_SESSIONS + id + WS.PATH_PLAYER)).build();
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
@@ -56,17 +61,17 @@ public class SessionPlayerResource extends SessionResource {
         } else {
             DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
         }
-        this.info("DELETE/" + sessionEntity.getId() + "/player...");
+        this.info(id, " /DELETE" );
     }
 
-    @Path("/gameNames")
+    @Path(WS.PATH_GAME_NAMES)
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public ListStringWrapper nameGames(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         List<String> result = DAOFactory.getFactory().getGameDAO()
                 .findPlayerGameNames(sessionEntity.getPlayer());
-        this.info("GET/" + sessionEntity.getId() + "/gameNames " + result + (result.size()));
+        this.info(id, WS.PATH_GAME_NAMES + " /GET: " + result);
         return new ListStringWrapper(result);
     }
 

@@ -19,15 +19,14 @@ import org.apache.logging.log4j.LogManager;
 import es.art83.ticTacToe.models.daos.DAOFactory;
 import es.art83.ticTacToe.models.entities.GameEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
+import es.art83.ticTacToe.webService.utils.WS;
 
-/**
- * GameResource: /games<br>
- * /POST Crea un juego nuevo en la BD.<br>
- * /id /DELETE Borra un juego de la BD.<br>
- * /PUT actualiza un juego.<br>
- */
-@Path("/games")
+@Path(WS.PATH_GAMES)
 public class GameResource {
+
+    protected void info(String msg) {
+        LogManager.getLogger(this.getClass()).info(WS.PATH_GAMES + msg);
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
@@ -37,13 +36,13 @@ public class GameResource {
         GameEntity gameEntity = DAOFactory.getFactory().getGameDAO().read(gameId);
         GameEntity gameClone = gameEntity.clone();
         DAOFactory.getFactory().getGameDAO().create(gameClone);
-        result = Response.created(URI.create("/games/" + gameClone.getId()))
+        result = Response.created(URI.create(WS.PATH_GAMES + "/" + gameClone.getId()))
                 .entity(String.valueOf(gameClone.getId())).build();
-        LogManager.getLogger(PlayerResource.class).info("POST/games: " + gameClone.getId());
+        this.info("?sessionId=" + sessionId + " /POST: " + gameClone);
         return result;
     }
 
-    @Path("/search")
+    @Path(WS.PATH_SEARCH)
     @GET
     @Consumes(MediaType.APPLICATION_XML)
     public String findGame(@QueryParam("sessionId") Integer sessionId,
@@ -59,6 +58,7 @@ public class GameResource {
         }
         assert games.size() == 1;
         GameEntity game = games.get(0);
+        this.info(WS.PATH_SEARCH + "?sessionId=" + sessionId + "&name=" + name + " /GET: " + game);
         if (game == null) {
             throw new NotFoundException();
         } else {
@@ -67,11 +67,12 @@ public class GameResource {
 
     }
 
-    @Path("/{id}")
+    @Path(WS.PATH_ID_PARAM)
     @DELETE
     @Consumes(MediaType.APPLICATION_XML)
     public void deleteGame(@PathParam("id") Integer id) {
         DAOFactory.getFactory().getGameDAO().deleteByID(id);
+        this.info("/" + id + " /DELETE");
     }
 
 }

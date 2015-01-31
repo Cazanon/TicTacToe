@@ -1,7 +1,7 @@
 package es.art83.ticTacToe.controllers.webService;
 
 import es.art83.ticTacToe.controllers.CreateGameController;
-import es.art83.ticTacToe.webService.utils.TicTacToeResource;
+import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServiceClient;
 
 public class CreateControllerWSClient extends ControllerWSClient implements CreateGameController {
@@ -13,7 +13,7 @@ public class CreateControllerWSClient extends ControllerWSClient implements Crea
     @Override
     public void createGame() {
         WebServiceClient<?> webServiceClient = new WebServiceClient<>(
-                TicTacToeResource.PATH_SESSIONS, this.getSessionId(), TicTacToeResource.PATH_GAME);
+                WS.PATH_SESSIONS, this.getSessionId(), WS.PATH_GAME);
         webServiceClient.create();
     }
 

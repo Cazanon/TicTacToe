@@ -16,7 +16,7 @@ public class WebServiceClient<T> {
     private Response response;
 
     public WebServiceClient(String... paths) {
-        this.webTarget = ClientBuilder.newClient().target(TicTacToeResource.URI);
+        this.webTarget = ClientBuilder.newClient().target(WS.URI);
         for (String path : paths) {
             this.webTarget = this.webTarget.path(path);
         }
