@@ -17,7 +17,7 @@ public class PieceDAOJPA extends GenericDAOJPA<PieceEntity, Integer> implements 
         super(PieceEntity.class);
     }
 
-    @Override
+    
     public void deleteByCoordinate(CoordinateEntity coordinateEntity) {
         EntityManager entityManager = DAOJPAFactory.getEmf().createEntityManager();
         // Se crea un criterio de consulta

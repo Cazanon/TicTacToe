@@ -42,10 +42,10 @@ public class SessionGameResource extends SessionResource {
                 gameEntity = DAOFactory.getFactory().getGameDAO()
                         .findPlayerGames(sessionEntity.getPlayer(), name).get(0);
                 gameEntity = gameEntity.clone();
-                DAOFactory.getFactory().getGameDAO().create(gameEntity.clone());
+                // DAOFactory.getFactory().getGameDAO().create(gameEntity.clone());
             } else {
                 gameEntity = new GameEntity(sessionEntity.getPlayer());
-                DAOFactory.getFactory().getGameDAO().create(gameEntity);
+                // DAOFactory.getFactory().getGameDAO().create(gameEntity);
             }
             sessionEntity.setGame(gameEntity);
             sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.OPENED_GAME);
@@ -85,7 +85,8 @@ public class SessionGameResource extends SessionResource {
     public Response setGameName(@PathParam("id") Integer id, String name) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         sessionEntity.getGame().setName(name);
-        DAOFactory.getFactory().getGameDAO().update(sessionEntity.getGame());
+        //DAOFactory.getFactory().getGameDAO().update(sessionEntity.getGame());
+        DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
 
         this.info(id, WS.PATH_NAME + " /POST: " + sessionEntity);
         return Response.created(URI.create(WS.PATH_SESSIONS + id + WS.PATH_GAME + WS.PATH_NAME))
@@ -174,7 +175,6 @@ public class SessionGameResource extends SessionResource {
             sessionEntity.setSaved(false);
         }
         DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
-        DAOFactory.getFactory().getGameDAO().update(sessionEntity.getGame());
         this.info(id, WS.PATH_PIECE + " /POST: " + coordinateEntity);
         return Response.created(
                 URI.create(WS.PATH_SESSIONS + "/" + sessionEntity.getId() + WS.PATH_GAME
@@ -188,9 +188,10 @@ public class SessionGameResource extends SessionResource {
             @MatrixParam("column") int column) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         CoordinateEntity coordinate = new CoordinateEntity(row, column);
-        sessionEntity.getGame().deletePiece(coordinate);
-        DAOFactory.getFactory().getGameDAO().update(sessionEntity.getGame());
-        DAOFactory.getFactory().getPieceDAO().deleteByCoordinate(coordinate);
+        PieceEntity piece = sessionEntity.getGame().deletePiece(coordinate);
+        DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
+        // Falta elimiar la pieza de la tabla, se van acumulando
+        DAOFactory.getFactory().getPieceDAO().deleteByID(piece.getId());
         this.info(id, WS.PATH_PIECE + ";" + row + ";" + column + " /DELETE");
     }
 

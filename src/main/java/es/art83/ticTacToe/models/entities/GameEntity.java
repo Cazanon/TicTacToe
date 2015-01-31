@@ -26,7 +26,7 @@ public class GameEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private BoardEntity board;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne
     private PlayerEntity player;
 
     public GameEntity(String name, PlayerEntity player, BoardEntity board, TurnEntity turn) {
@@ -125,8 +125,9 @@ public class GameEntity {
     }
 
     //TODO hay que quitarlo, solo se usa en pruebas
-    public void deletePiece(CoordinateEntity source) {
-        this.board.remove(source);
+    //Se utiliza mediante recursos!!!!
+    public PieceEntity deletePiece(CoordinateEntity source) {
+        return this.board.remove(source);
     }
 
     public void update(GameEntity game) {

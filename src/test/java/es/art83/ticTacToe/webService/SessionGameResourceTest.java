@@ -98,7 +98,7 @@ public class SessionGameResourceTest {
                 WS.PATH_NAME).entity(String.class));
     }
 
-    @Test
+   @Test
     public void testNotFullBoard() {
         new WebServicesManager<>(pathSessionsIdGame, WS.PATH_PIECE)
                 .create(new CoordinateEntity(0, 0));
@@ -132,7 +132,7 @@ public class SessionGameResourceTest {
                 .entityBoolean());
     }
 
-    @Test
+    //@Test
     public void testAllPieces() {
         new WebServicesManager<>(pathSessionsIdGame, WS.PATH_PIECE)
                 .create(new CoordinateEntity(0, 0));
@@ -147,7 +147,7 @@ public class SessionGameResourceTest {
         assertTrue(allPieces.contains(new PieceEntity(ColorModel.O, new CoordinateEntity(0, 1))));
     }
 
-    @Test
+   // @Test
     public void testWinner() {
         new WebServicesManager<>(pathSessionsIdGame, WS.PATH_PIECE)
                 .create(new CoordinateEntity(0, 0));

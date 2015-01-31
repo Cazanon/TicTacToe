@@ -34,7 +34,6 @@ public class GameDAOJPATestMain {
         this.game.deletePiece(coor);
         this.game.placePiece(new CoordinateEntity(1, 1));
         DAOJPAFactory.getFactory().getGameDAO().update(this.game);
-        DAOJPAFactory.getFactory().getPieceDAO().deleteByCoordinate(coor);;
     }
 
     public static void main(String[] args) {

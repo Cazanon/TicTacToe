@@ -1,5 +1,6 @@
 package es.art83.ticTacToe.models.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -25,7 +26,7 @@ public class SessionEntity {
     @OneToOne
     private PlayerEntity player;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private GameEntity game;
 
     public SessionEntity() {

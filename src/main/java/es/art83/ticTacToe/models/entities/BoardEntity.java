@@ -97,19 +97,15 @@ public class BoardEntity {
         this.pieces.add(ficha);
     }
 
-    public void remove(CoordinateEntity coordinate) {
+    public PieceEntity remove(CoordinateEntity coordinate) {
         assert coordinate != null : "parametro null";
-        System.out.println("----");
-        System.out.println(coordinate);
-        System.out.println(pieces);
         for (PieceEntity piece : pieces) {
             if (piece.getCoordinate().equals(coordinate)) {
                 this.pieces.remove(piece);
-                System.out.println("salgo");
-                return;
+                return piece;
             }
         }
-        assert false : "Se intentó borrar un elemento que no existe";
+        return null;
     }
 
     public void clear() {
