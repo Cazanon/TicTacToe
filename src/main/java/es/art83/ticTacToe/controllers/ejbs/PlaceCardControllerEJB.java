@@ -28,7 +28,8 @@ public class PlaceCardControllerEJB extends ControllerEJB implements PlaceCardCo
 
     @Override
     public void placePiece(CoordinateEntity source, CoordinateEntity destination) {
-        this.getTicTacToeSession().getGame().placePiece(source,destination);
+        this.getTicTacToeSession().getGame().deletePiece(source);
+        this.getTicTacToeSession().getGame().placePiece(destination);
         this.changeSate();
     }
 

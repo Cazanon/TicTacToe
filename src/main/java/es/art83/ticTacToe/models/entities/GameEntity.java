@@ -124,7 +124,7 @@ public class GameEntity {
         this.placePiece(destination);
     }
 
-    //TODO hay que quitarlo, solo se usa en pruebas
+    //TODO hay que quitarlo, solo se usa en pruebas... NNNNNNOOOOOOOOO
     //Se utiliza mediante recursos!!!!
     public PieceEntity deletePiece(CoordinateEntity source) {
         return this.board.remove(source);
