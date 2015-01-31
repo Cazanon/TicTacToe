@@ -32,7 +32,7 @@ public class LogoutControllerWSClientTest {
 
     @Test
     public void testIsSavedGame() {
-        assertTrue(this.logout.isSavedGame());
+        assertTrue(this.logout.savedGame());
     }
 
     @Test
@@ -44,12 +44,12 @@ public class LogoutControllerWSClientTest {
     @Test
     public void testIsByeTrue() {
         this.logout.logout();
-        assertTrue(this.logout.isBye());
+        assertTrue(this.logout.bye());
     }
 
     @Test
     public void testIsByeFalse() {
-        assertFalse(this.logout.isBye());
+        assertFalse(this.logout.bye());
     }
 
     @After

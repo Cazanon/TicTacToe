@@ -44,7 +44,7 @@ public class TicTacToeSession {
         this.game = game;
     }
 
-    protected boolean isSavedGame() {
+    protected boolean savedGame() {
         return this.saved;
     }
 

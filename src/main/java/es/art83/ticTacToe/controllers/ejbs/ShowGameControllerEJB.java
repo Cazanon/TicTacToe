@@ -24,8 +24,8 @@ public class ShowGameControllerEJB extends ControllerEJB implements ShowGameCont
     }
 
     @Override
-    public boolean isGameOver() {
-        return this.getTicTacToeSession().getGame().existTicTacToe();
+    public boolean gameOver() {
+        return this.getTicTacToeSession().getGame().gameOver();
     }
 
     @Override
@@ -34,8 +34,8 @@ public class ShowGameControllerEJB extends ControllerEJB implements ShowGameCont
     }
 
     @Override
-    public boolean isSavedGame() {
-        return this.getTicTacToeSession().isSavedGame();
+    public boolean savedGame() {
+        return this.getTicTacToeSession().savedGame();
     }
 
     @Override

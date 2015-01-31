@@ -19,7 +19,7 @@ public class StartControllerWebService extends ControllerWebService implements S
     }
 
     @Override
-    public List<String> readGameNames() {
+    public List<String> gameNames() {
         ListStringWrapper listStringWrapper = new WebServicesManager<ListStringWrapper>(
                 pathSessionsIdPlayer, WS.PATH_GAME_NAMES)
                 .entity(ListStringWrapper.class);

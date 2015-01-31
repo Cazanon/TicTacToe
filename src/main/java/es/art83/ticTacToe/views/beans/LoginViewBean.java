@@ -17,7 +17,7 @@ public class LoginViewBean extends PlayerViewBean {
     @PostConstruct
     public void update() {
         LogoutController logoutController = this.getControllerFactory().getLogoutController();
-        this.bye = logoutController.isBye();
+        this.bye = logoutController.bye();
     }
 
     public boolean isBye() {

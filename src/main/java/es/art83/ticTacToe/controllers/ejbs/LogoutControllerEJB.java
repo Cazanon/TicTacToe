@@ -24,13 +24,13 @@ public class LogoutControllerEJB extends ControllerEJB implements LogoutControll
     }
 
     @Override
-    public boolean isBye() {
+    public boolean bye() {
         return this.getTicTacToeSession().getTicTacToeStateModel() == TicTacToeStateModel.FINAL;
     }
 
     @Override
-    public boolean isSavedGame() {
-        return this.getTicTacToeSession().isSavedGame();
+    public boolean savedGame() {
+        return this.getTicTacToeSession().savedGame();
     }
 
 }

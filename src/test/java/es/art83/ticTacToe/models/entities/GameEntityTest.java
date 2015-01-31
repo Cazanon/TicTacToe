@@ -31,7 +31,7 @@ public class GameEntityTest {
     public void testExistTicTacToe() {
         while (data.hasNextGame()) {
             GameEntity game = new GameEntity(null, null, new BoardEntity(data.getPiecesGame()), data.getTurnGame());
-            assertEquals(data.message(), data.getExistTitTacToeGame(), game.existTicTacToe());
+            assertEquals(data.message(), data.getExistTitTacToeGame(), game.gameOver());
             data.nextGame();
         }
     }

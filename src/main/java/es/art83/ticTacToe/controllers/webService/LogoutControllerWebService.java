@@ -19,14 +19,14 @@ public class LogoutControllerWebService extends ControllerWebService implements 
     }
 
     @Override
-    public boolean isBye() {
+    public boolean bye() {
         return new WebServicesManager<TicTacToeStateModel>(pathSessionsId,
                 WS.PATH_STATE).entity(TicTacToeStateModel.class).equals(
                 TicTacToeStateModel.FINAL);
     }
 
     @Override
-    public boolean isSavedGame() {
+    public boolean savedGame() {
         return new WebServicesManager<Boolean>(pathSessionsId, WS.PATH_SAVED_GAME)
                 .entityBoolean();
     }

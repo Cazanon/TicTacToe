@@ -64,7 +64,7 @@ public class SessionGameResource extends SessionResource {
     @Produces(MediaType.APPLICATION_XML)
     public String isGameOver(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        Boolean result = sessionEntity.getGame().existTicTacToe();
+        Boolean result = sessionEntity.getGame().gameOver();
         this.info(id, WS.PATH_GAME_OVER + " /GET: " + result);
         return Boolean.toString(result);
     }
@@ -167,7 +167,7 @@ public class SessionGameResource extends SessionResource {
     public Response createPiece(@PathParam("id") Integer id, CoordinateEntity coordinateEntity) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         sessionEntity.getGame().placePiece(coordinateEntity);
-        if (sessionEntity.getGame().existTicTacToe()) {
+        if (sessionEntity.getGame().gameOver()) {
             sessionEntity.setSaved(true);
             sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);
         } else {

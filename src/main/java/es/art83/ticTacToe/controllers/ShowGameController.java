@@ -11,11 +11,11 @@ public interface ShowGameController {
 
     ColorModel[][] colors();
 
-    boolean isGameOver();
+    boolean gameOver();
 
     ColorModel winner();
 
-    boolean isSavedGame();
+    boolean savedGame();
 
     ColorModel turnColor();
 

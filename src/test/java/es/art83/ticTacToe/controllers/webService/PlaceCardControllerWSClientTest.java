@@ -40,7 +40,7 @@ public class PlaceCardControllerWSClientTest {
 
     @Test
     public void testPlaceCard() {
-        this.placeController.placeCard(new CoordinateEntity(0, 0));
+        this.placeController.placePiece(new CoordinateEntity(0, 0));
         ColorModel[][] colors = this.showGameController.colors();
         assertEquals(ColorModel.X, colors[0][0]);
         assertNull(colors[1][0]);
@@ -49,9 +49,9 @@ public class PlaceCardControllerWSClientTest {
 
     @Test
     public void testMoveCard() {
-        this.placeController.placeCard(new CoordinateEntity(0, 0));
-        this.placeController.placeCard(new CoordinateEntity(2, 0));
-        this.placeController.placeCard(new CoordinateEntity(0, 0),new CoordinateEntity(1, 1));
+        this.placeController.placePiece(new CoordinateEntity(0, 0));
+        this.placeController.placePiece(new CoordinateEntity(2, 0));
+        this.placeController.placePiece(new CoordinateEntity(0, 0),new CoordinateEntity(1, 1));
         ColorModel[][] colors = this.showGameController.colors();
         assertNull(colors[0][0]);
         assertNull(colors[1][0]);

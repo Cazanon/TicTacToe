@@ -34,8 +34,8 @@ public class SaveGameControllerWSClientTestMain {
 
     
     public void testSaveGame() {
-        this.placeController.placeCard(new CoordinateEntity(0, 0));
-        this.placeController.placeCard(new CoordinateEntity(0, 1));
+        this.placeController.placePiece(new CoordinateEntity(0, 0));
+        this.placeController.placePiece(new CoordinateEntity(0, 1));
         this.saveGameController.saveGame("partida1");
     }
 

@@ -81,7 +81,7 @@ public class GameEntity {
     }
 
     //TODO que devuelva ColorModel del que gana
-    public boolean existTicTacToe() {
+    public boolean gameOver() {
         return this.board.existTicTacToe(this.turn.getColorChanged());
     }
 

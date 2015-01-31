@@ -54,11 +54,11 @@ public class GameViewBean extends ViewBean {
         if (this.createdGame) {
             this.gameName = showGameController.getNameGame();
             this.colors = showGameController.colors();
-            this.gameOver = showGameController.isGameOver();
+            this.gameOver = showGameController.gameOver();
             if (this.gameOver) {
                 this.winner = showGameController.winner();
             } else {
-                this.savedGame = showGameController.isSavedGame();
+                this.savedGame = showGameController.savedGame();
                 this.turn = showGameController.turnColor();
                 this.hasAllPieces = showGameController.hasAllPieces();
                 if (this.hasAllPieces) {
@@ -67,7 +67,7 @@ public class GameViewBean extends ViewBean {
                 this.validDestinationCoordinates = showGameController.validDestinationCoordinates();
             }
         }
-        this.gameNames = this.getControllerFactory().getStartGameController().readGameNames();
+        this.gameNames = this.getControllerFactory().getStartGameController().gameNames();
     }
 
     public String getGameNameSelected() {
@@ -160,7 +160,7 @@ public class GameViewBean extends ViewBean {
     public String logout() {
         String next = null;
         LogoutController logoutController = this.getControllerFactory().getLogoutController();
-        if (!logoutController.isSavedGame()) {
+        if (!logoutController.savedGame()) {
             next = "logout";
         } else {
             logoutController.logout();
@@ -175,10 +175,10 @@ public class GameViewBean extends ViewBean {
         PlaceCardController placeCardController = this.getControllerFactory()
                 .getPlaceCardController();
         if (this.hasAllPieces) {
-            placeCardController.placeCard(new CoordinateEntity(this.selectedSourceCoordinate),
+            placeCardController.placePiece(new CoordinateEntity(this.selectedSourceCoordinate),
                     new CoordinateEntity(this.selectedDestinationCoordinate));
         } else {
-            placeCardController.placeCard(new CoordinateEntity(this.selectedDestinationCoordinate));
+            placeCardController.placePiece(new CoordinateEntity(this.selectedDestinationCoordinate));
         }
         LogManager.getLogger("Bean:" + placeCardController.getClass().getName()).info(
                 "Place card: " + this.selectedSourceCoordinate + ">"

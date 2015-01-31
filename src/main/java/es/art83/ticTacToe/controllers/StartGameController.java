@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface StartGameController {
 
-    List<String> readGameNames();
+    List<String> gameNames();
 
 }

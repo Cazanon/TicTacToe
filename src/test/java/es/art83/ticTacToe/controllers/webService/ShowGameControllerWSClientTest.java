@@ -44,7 +44,7 @@ public class ShowGameControllerWSClientTest {
 
     @Test
     public void testIsGameOver() {
-        assertFalse(this.showGameController.isGameOver());
+        assertFalse(this.showGameController.gameOver());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class ShowGameControllerWSClientTest {
 
     @Test
     public void testIsSavedGame() {
-        assertTrue(this.showGameController.isSavedGame());
+        assertTrue(this.showGameController.savedGame());
     }
 
     @Test

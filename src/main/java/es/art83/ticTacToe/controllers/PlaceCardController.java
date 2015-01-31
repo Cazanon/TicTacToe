@@ -4,8 +4,8 @@ import es.art83.ticTacToe.models.entities.CoordinateEntity;
 
 public interface PlaceCardController {
 
-    void placeCard(CoordinateEntity coordinateEntity);
+    void placePiece(CoordinateEntity coordinateEntity);
 
-    void placeCard(CoordinateEntity source, CoordinateEntity destination);
+    void placePiece(CoordinateEntity source, CoordinateEntity destination);
 
 }

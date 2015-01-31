@@ -16,13 +16,13 @@ public class PlaceControllerWebService extends ControllerWebService implements P
     }
 
     @Override
-    public void placeCard(CoordinateEntity coordinateEntity) {
+    public void placePiece(CoordinateEntity coordinateEntity) {
         new WebServicesManager<>(pathSessionsIdGame, WS.PATH_PIECE)
                 .create(coordinateEntity);
     }
 
     @Override
-    public void placeCard(CoordinateEntity source, CoordinateEntity destination) {
+    public void placePiece(CoordinateEntity source, CoordinateEntity destination) {
         WebServicesManager<?> webServiceClient = new WebServicesManager<>(pathSessionsIdGame,
                 WS.PATH_PIECE);
         webServiceClient.addMatrixParams("row", String.valueOf(source.getRow()));

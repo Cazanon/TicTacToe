@@ -41,7 +41,7 @@ public class ShowGameControllerWebService extends ControllerWebService implement
     }
 
     @Override
-    public boolean isGameOver() {
+    public boolean gameOver() {
         return new WebServicesManager<Boolean>(pathSessionsIdGame, WS.PATH_GAME_OVER)
                 .entityBoolean();
     }
@@ -53,7 +53,7 @@ public class ShowGameControllerWebService extends ControllerWebService implement
     }
 
     @Override
-    public boolean isSavedGame() {
+    public boolean savedGame() {
         return new WebServicesManager<Boolean>(WS.PATH_SESSIONS, this.getSessionId(),
                 WS.PATH_SAVED_GAME).entityBoolean();
     }
