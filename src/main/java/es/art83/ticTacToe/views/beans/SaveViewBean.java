@@ -54,8 +54,8 @@ public class SaveViewBean extends ViewBean {
             SaveGameController saveGameController = this.getControllerFactory()
                     .getSaveGameController();
             saveGameController.saveGame(this.gameName);
-            LogManager.getLogger(saveGameController.getClass().getName()).info(
-                    "Partida salvada: " + this.gameName);
+            LogManager.getLogger(this.getClass().getName()).info(
+                    "--- Partida salvada: " + this.gameName + " ---");
             next = "game";
         }
         return next;
@@ -64,8 +64,8 @@ public class SaveViewBean extends ViewBean {
     public String overWriteGame() {
         SaveGameController saveGameController = this.getControllerFactory().getSaveGameController();
         saveGameController.overWriteGame(this.gameName);
-        LogManager.getLogger(saveGameController.getClass().getName()).info(
-                "Partida sobrescrita: " + this.gameName);
+        LogManager.getLogger(this.getClass().getName()).info(
+                "--- Partida sobrescrita: " + this.gameName + " ---");
         return "game";
     }
 

@@ -32,8 +32,8 @@ public class LoginViewBean extends PlayerViewBean {
             FacesContext.getCurrentInstance().addMessage("loginViewBean",
                     new FacesMessage("usuario o clave incorrecta"));
         } else {
-            LogManager.getLogger(loginController.getClass().getName()).info(
-                    "Usuario Logeado: " + this.getPlayer().toString());
+            LogManager.getLogger(this.getClass().getName()).info(
+                    "--- Usuario Logeado: " + this.getPlayer().toString() + " ---");
 
             next = "logged/game";
         }

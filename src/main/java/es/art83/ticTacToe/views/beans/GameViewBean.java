@@ -161,8 +161,7 @@ public class GameViewBean extends ViewBean {
                 .getCreateGameControler();
         createGameController.createGame();
         this.update();
-        LogManager.getLogger("Bean:" + createGameController.getClass().getName()).info(
-                "Created game");
+        LogManager.getLogger(this.getClass().getName()).info("--- Partida creada ---");
         return null;
     }
 
@@ -173,8 +172,7 @@ public class GameViewBean extends ViewBean {
             next = "logout";
         } else {
             logoutController.logout();
-            LogManager.getLogger("Bean:" + logoutController.getClass().getName()).info(
-                    "Usuario cerrado");
+            LogManager.getLogger(this.getClass().getName()).info("--- Usuario cerrado ---");
             next = "/login";
         }
         return next;
@@ -190,10 +188,10 @@ public class GameViewBean extends ViewBean {
             placeCardController
                     .placePiece(new CoordinateEntity(this.selectedDestinationCoordinate));
         }
-        LogManager.getLogger("Bean:" + placeCardController.getClass().getName()).info(
-                "Place card: " + this.selectedSourceCoordinate + ">"
-                        + this.selectedDestinationCoordinate);
-        this.update();
+       this.update();
+       LogManager.getLogger(this.getClass().getName()).info(
+               "--- Ficha puesta: " + this.selectedSourceCoordinate + ">"
+                       + this.selectedDestinationCoordinate+" ---");
         return null;
     }
 
@@ -204,8 +202,8 @@ public class GameViewBean extends ViewBean {
                     .getSaveGameController();
             saveGameController.saveGame();
             this.savedGame = true;
-            LogManager.getLogger("Bean:" + saveGameController.getClass().getName()).info(
-                    "Partida salvada: " + this.gameName);
+            LogManager.getLogger(this.getClass().getName()).info(
+                    "--- Partida salvada: " + this.gameName +" ---");
 
         } else {
             result = "save";
@@ -217,7 +215,7 @@ public class GameViewBean extends ViewBean {
         OpenGameController openGameController = this.getControllerFactory().getOpenGameController();
         openGameController.openGame(this.gameNameSelected);
         this.update();
-        LogManager.getLogger("Bean:" + openGameController.getClass().getName()).info("openGame");
+        LogManager.getLogger(this.getClass().getName()).info("--- Partida abierta ---");
         return null;
     }
 
