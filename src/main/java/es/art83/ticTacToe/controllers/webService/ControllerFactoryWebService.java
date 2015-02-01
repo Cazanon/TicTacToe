@@ -12,7 +12,6 @@ import es.art83.ticTacToe.controllers.OpenGameController;
 import es.art83.ticTacToe.controllers.PlacePieceController;
 import es.art83.ticTacToe.controllers.SaveGameController;
 import es.art83.ticTacToe.controllers.ShowGameController;
-import es.art83.ticTacToe.controllers.StartGameController;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
@@ -23,8 +22,6 @@ public class ControllerFactoryWebService extends ControllerFactory {
     private LoginController loginController;
 
     private LogoutController logoutController;
-
-    private StartGameController startGameController;
 
     private CreateGameController createGameController;
 
@@ -49,7 +46,6 @@ public class ControllerFactoryWebService extends ControllerFactory {
         // Pasarle la referencia a todos los controladores
         this.loginController = new LoginControllerWebService(sessionId);
         this.logoutController = new LogoutControllerWebService(sessionId);
-        this.startGameController = new StartGameControllerWebService(sessionId);
         this.createGameController = new CreateGameControllerWebService(sessionId);
         this.nameGameController = new NameGameControllerWebService(sessionId);
         this.showGameController = new ShowGameControllerWebService(sessionId);
@@ -76,11 +72,6 @@ public class ControllerFactoryWebService extends ControllerFactory {
     @Override
     public OpenGameController getOpenGameController() {
         return this.openGameController;
-    }
-
-    @Override
-    public StartGameController getStartGameController() {
-        return this.startGameController;
     }
 
     @Override

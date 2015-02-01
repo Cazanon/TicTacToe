@@ -67,7 +67,7 @@ public class GameViewBean extends ViewBean {
                 this.validDestinationCoordinates = showGameController.validDestinationCoordinates();
             }
         }
-        this.gameNames = this.getControllerFactory().getStartGameController().gameNames();
+        this.gameNames = this.getControllerFactory().getNameGameController().gameNames();
     }
 
     public String getGameNameSelected() {
