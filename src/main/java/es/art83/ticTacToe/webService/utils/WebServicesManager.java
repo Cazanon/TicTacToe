@@ -26,8 +26,8 @@ public class WebServicesManager<T> {
     private String logMsg(String method) {
         String result = this.webTarget.getUri().toString();
         result += " /" + method;
-        result += ": " + this.response.getStatusInfo();
-        result += " (" + this.response.getStatus() + ")";
+        result += ":" + this.response.getStatusInfo();
+        result += "(" + this.response.getStatus() + ")";
         return result;
     }
 
