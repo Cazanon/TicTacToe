@@ -19,8 +19,8 @@ import es.art83.ticTacToe.webService.utils.WS;
 @Path(WS.PATH_PLAYERS)
 public class PlayerResource {
 
-    protected void info(String msg) {
-        LogManager.getLogger(this.getClass()).info(WS.PATH_PLAYERS + msg);
+    protected void debug(String msg) {
+        LogManager.getLogger(this.getClass()).debug(WS.PATH_PLAYERS + msg);
     }
 
     @POST
@@ -33,10 +33,10 @@ public class PlayerResource {
             DAOFactory.getFactory().getPlayerDAO().create(playerEntity);
             result = Response.created(URI.create(WS.PATH_PLAYERS + "/" + playerEntity.getUser()))
                     .build();
-            this.info(" /POST: " + playerEntity.getUser());
+            this.debug(" /POST: " + playerEntity.getUser());
         } else {
             result = Response.status(Response.Status.CONFLICT).build();
-            this.info(" /POST: CONFLICT Usuario ya existente:" + playerEntityBD.toString());
+            this.debug(" /POST: CONFLICT Usuario ya existente:" + playerEntityBD.toString());
         }
         return result;
     }
@@ -45,7 +45,7 @@ public class PlayerResource {
     @DELETE
     public void delete(@PathParam("user") String user) {
         DAOFactory.getFactory().getPlayerDAO().deleteByID(user);
-        this.info("/" + user + " /DELETE");
+        this.debug("/" + user + " /DELETE");
     }
 
 }

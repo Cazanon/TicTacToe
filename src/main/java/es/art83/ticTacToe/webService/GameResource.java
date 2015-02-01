@@ -23,8 +23,8 @@ import es.art83.ticTacToe.webService.utils.WS;
 @Path(WS.PATH_GAMES)
 public class GameResource {
 
-    protected void info(String msg) {
-        LogManager.getLogger(this.getClass()).info(WS.PATH_GAMES + msg);
+    protected void debug(String msg) {
+        LogManager.getLogger(this.getClass()).debug(WS.PATH_GAMES + msg);
     }
 
     @POST
@@ -37,7 +37,7 @@ public class GameResource {
         DAOFactory.getFactory().getGameDAO().create(gameClone);
         result = Response.created(URI.create(WS.PATH_GAMES + "/" + gameClone.getId()))
                 .entity(String.valueOf(gameClone.getId())).build();
-        this.info("?sessionId=" + sessionId + " /POST: " + gameClone);
+        this.debug("?sessionId=" + sessionId + " /POST: " + gameClone);
         return result;
     }
 
@@ -48,7 +48,7 @@ public class GameResource {
             @QueryParam("name") String name) {
         PlayerEntity player = DAOFactory.getFactory().getSessionDAO().read(sessionId).getPlayer();
         GameEntity game = DAOFactory.getFactory().getGameDAO().findPlayerGame(player, name);
-        this.info(WS.PATH_SEARCH + "?sessionId=" + sessionId + "&name=" + name + " /GET: " + game);
+        this.debug(WS.PATH_SEARCH + "?sessionId=" + sessionId + "&name=" + name + " /GET: " + game);
         if (game == null) {
             throw new NotFoundException();
         } else {
@@ -62,7 +62,7 @@ public class GameResource {
     @Consumes(MediaType.APPLICATION_XML)
     public void deleteGame(@PathParam("id") Integer id) {
         DAOFactory.getFactory().getGameDAO().deleteByID(id);
-        this.info("/" + id + " /DELETE");
+        this.debug("/" + id + " /DELETE");
     }
 
 }

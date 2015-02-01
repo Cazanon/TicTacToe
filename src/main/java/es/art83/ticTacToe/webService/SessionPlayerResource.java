@@ -25,7 +25,7 @@ import es.art83.ticTacToe.webService.utils.WS;
 public class SessionPlayerResource extends SessionResource {
 
     protected void info(Integer id, String msg) {
-        this.info("/" + id + WS.PATH_PLAYER + msg);
+        this.debug("/" + id + WS.PATH_PLAYER + msg);
     }
 
     @POST

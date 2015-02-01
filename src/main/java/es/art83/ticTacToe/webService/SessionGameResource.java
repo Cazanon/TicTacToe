@@ -28,7 +28,7 @@ import es.art83.ticTacToe.webService.utils.WS;
 public class SessionGameResource extends SessionResource {
 
     protected void info(Integer id, String msg) {
-        this.info("/" + id + WS.PATH_GAME + msg);
+        this.debug("/" + id + WS.PATH_GAME + msg);
     }
 
     @POST

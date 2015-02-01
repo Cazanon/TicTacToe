@@ -39,7 +39,7 @@ public class WebServicesManager<T> {
             LogManager.getLogger(this.getClass()).fatal(this.logMsg(method));
         } else if (this.response.getStatusInfo().getFamily()
                 .equals(Response.Status.Family.SUCCESSFUL)) {
-            LogManager.getLogger(this.getClass()).info(this.logMsg(method));
+            LogManager.getLogger(this.getClass()).debug(this.logMsg(method));
         } else {
             LogManager.getLogger(this.getClass()).error(this.logMsg(method));
         }

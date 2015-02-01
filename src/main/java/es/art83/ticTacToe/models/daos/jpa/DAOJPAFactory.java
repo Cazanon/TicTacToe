@@ -18,7 +18,7 @@ public class DAOJPAFactory extends DAOFactory {
             .createEntityManagerFactory(PERSISTENCE_UNIT);
 
     public DAOJPAFactory() {
-        LogManager.getLogger(DAOJPAFactory.class).info("create Entity Manager Factory");
+        LogManager.getLogger(DAOJPAFactory.class).debug("create Entity Manager Factory");
     }
 
     public static EntityManagerFactory getEmf() {

@@ -26,7 +26,7 @@ public class GenericDAOJPA<T, ID> implements GenericDAO<T, ID> {
             entityManager.getTransaction().begin();
             entityManager.persist(entity);
             entityManager.getTransaction().commit();
-            LogManager.getLogger(GenericDAOJPA.class).info("create: " + entity);
+            LogManager.getLogger(GenericDAOJPA.class).debug("create: " + entity);
         } catch (Exception e) {
             LogManager.getLogger(GenericDAOJPA.class).error("create: " + e);
             if (entityManager.getTransaction().isActive())
@@ -53,7 +53,7 @@ public class GenericDAOJPA<T, ID> implements GenericDAO<T, ID> {
             entityManager.getTransaction().begin();
             entityManager.merge(entity);
             entityManager.getTransaction().commit();
-            LogManager.getLogger(GenericDAOJPA.class).info("update: " + entity);
+            LogManager.getLogger(GenericDAOJPA.class).debug("update: " + entity);
         } catch (Exception e) {
             LogManager.getLogger(GenericDAOJPA.class).error("update: " + e);
             if (entityManager.getTransaction().isActive())
@@ -78,7 +78,7 @@ public class GenericDAOJPA<T, ID> implements GenericDAO<T, ID> {
                 entityManager.getTransaction().begin();
                 entityManager.remove(entity);
                 entityManager.getTransaction().commit();
-                LogManager.getLogger(GenericDAOJPA.class).info("delete: " + entity);
+                LogManager.getLogger(GenericDAOJPA.class).debug("delete: " + entity);
             } catch (Exception e) {
                 LogManager.getLogger(GenericDAOJPA.class).error("delete: " + e);
                 if (entityManager.getTransaction().isActive())
