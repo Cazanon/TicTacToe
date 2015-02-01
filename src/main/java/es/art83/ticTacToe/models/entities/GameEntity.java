@@ -89,8 +89,8 @@ public class GameEntity {
         return this.board.getPieces();
     }
 
-    public ColorModel[][] colors() {
-        return this.board.colors();
+    public List<PieceEntity> allPieces() {
+        return this.board.getPieces();
     }
 
     //TODO esto no es correcto del todo, siempre daría un ganador! Se arregla con lo que devuelva existTitTacToe
@@ -171,5 +171,6 @@ public class GameEntity {
         }
         return result && this.player.equals(other.player);
     }
+
 
 }

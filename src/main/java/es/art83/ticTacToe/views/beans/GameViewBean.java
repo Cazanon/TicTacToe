@@ -14,6 +14,7 @@ import es.art83.ticTacToe.controllers.PlacePieceController;
 import es.art83.ticTacToe.controllers.SaveGameController;
 import es.art83.ticTacToe.controllers.ShowGameController;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
+import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
 
 @ManagedBean
@@ -53,7 +54,7 @@ public class GameViewBean extends ViewBean {
         this.createdGame = showGameController.createdGame();
         if (this.createdGame) {
             this.gameName = showGameController.getNameGame();
-            this.colors = showGameController.colors();
+            this.prepareBoarView(showGameController.allPieces());
             this.gameOver = showGameController.gameOver();
             if (this.gameOver) {
                 this.winner = showGameController.winner();
@@ -68,6 +69,14 @@ public class GameViewBean extends ViewBean {
             }
         }
         this.gameNames = this.getControllerFactory().getNameGameController().gameNames();
+    }
+
+    private void prepareBoarView(List<PieceEntity> allPieces) {
+        this.colors = new ColorModel[3][3];
+        for (PieceEntity ficha : allPieces) {
+            this.colors[ficha.getCoordinate().getRow()][ficha.getCoordinate().getColumn()] = ficha
+                    .getColor();
+        }
     }
 
     public String getGameNameSelected() {
@@ -178,7 +187,8 @@ public class GameViewBean extends ViewBean {
             placeCardController.placePiece(new CoordinateEntity(this.selectedSourceCoordinate),
                     new CoordinateEntity(this.selectedDestinationCoordinate));
         } else {
-            placeCardController.placePiece(new CoordinateEntity(this.selectedDestinationCoordinate));
+            placeCardController
+                    .placePiece(new CoordinateEntity(this.selectedDestinationCoordinate));
         }
         LogManager.getLogger("Bean:" + placeCardController.getClass().getName()).info(
                 "Place card: " + this.selectedSourceCoordinate + ">"

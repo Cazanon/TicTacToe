@@ -1,7 +1,8 @@
 package es.art83.ticTacToe.controllers.webService;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,8 +13,8 @@ import es.art83.ticTacToe.controllers.webService.ControllerFactoryWebService;
 import es.art83.ticTacToe.controllers.webService.PlacePieceControllerWebService;
 import es.art83.ticTacToe.controllers.webService.ShowGameControllerWebService;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
+import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.models.utils.ColorModel;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
@@ -41,31 +42,25 @@ public class PlacePieceControllerWebServiceTest {
     @Test
     public void testPlaceCard() {
         this.placeController.placePiece(new CoordinateEntity(0, 0));
-        ColorModel[][] colors = this.showGameController.colors();
-        assertEquals(ColorModel.X, colors[0][0]);
-        assertNull(colors[1][0]);
-        assertNull(colors[0][1]);
-    }
+        List<PieceEntity> pieces = this.showGameController.allPieces();
+        assertEquals(1, pieces.size());
+        assertEquals(new CoordinateEntity(0, 0), pieces.get(0).getCoordinate());
+     }
 
     @Test
     public void testMoveCard() {
         this.placeController.placePiece(new CoordinateEntity(0, 0));
         this.placeController.placePiece(new CoordinateEntity(2, 0));
-        this.placeController.placePiece(new CoordinateEntity(0, 0),new CoordinateEntity(1, 1));
-        ColorModel[][] colors = this.showGameController.colors();
-        assertNull(colors[0][0]);
-        assertNull(colors[1][0]);
-        assertNull(colors[0][1]);
-        assertEquals(ColorModel.X, colors[1][1]);
+        this.placeController.placePiece(new CoordinateEntity(0, 0), new CoordinateEntity(1, 1));
+        List<PieceEntity> pieces = this.showGameController.allPieces();
+        assertEquals(3,pieces.size());
     }
 
     @After
     public void after() {
         this.logout.logout();
-        new WebServicesManager<>(WS.PATH_SESSIONS, this.placeController.getSessionId())
-                .delete();
-        new WebServicesManager<>(WS.PATH_PLAYERS, this.playerEntity.getUser())
-                .delete();
+        new WebServicesManager<>(WS.PATH_SESSIONS, this.placeController.getSessionId()).delete();
+        new WebServicesManager<>(WS.PATH_PLAYERS, this.playerEntity.getUser()).delete();
     }
 
 }

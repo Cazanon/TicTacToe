@@ -11,13 +11,13 @@ import es.art83.ticTacToe.models.utils.ColorModel;
 import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
-public class ShowGameControllerWebService extends ControllerWebService implements ShowGameController {
+public class ShowGameControllerWebService extends ControllerWebService implements
+        ShowGameController {
     private final String pathSessionsIdGame;
 
     public ShowGameControllerWebService(String sessionId) {
         super(sessionId);
-        this.pathSessionsIdGame = WS.PATH_SESSIONS + "/" + this.getSessionId()
-                + WS.PATH_GAME;
+        this.pathSessionsIdGame = WS.PATH_SESSIONS + "/" + this.getSessionId() + WS.PATH_GAME;
     }
 
     @Override
@@ -27,17 +27,12 @@ public class ShowGameControllerWebService extends ControllerWebService implement
     }
 
     @Override
-    public ColorModel[][] colors() {
+    public List<PieceEntity> allPieces() {
         GenericType<List<PieceEntity>> gerericType = new GenericType<List<PieceEntity>>() {
         };
         List<PieceEntity> allPieces = new WebServicesManager<PieceEntity>(pathSessionsIdGame,
                 WS.PATH_ALL_PIECES).entities(gerericType);
-        ColorModel[][] matriz = new ColorModel[3][3];
-        for (PieceEntity ficha : allPieces) {
-            matriz[ficha.getCoordinate().getRow()][ficha.getCoordinate().getColumn()] = ficha
-                    .getColor();
-        }
-        return matriz;
+        return allPieces;
     }
 
     @Override
@@ -66,8 +61,8 @@ public class ShowGameControllerWebService extends ControllerWebService implement
 
     @Override
     public boolean hasAllPieces() {
-        return new WebServicesManager<Boolean>(pathSessionsIdGame,
-                WS.PATH_HAS_ALL_PIECES).entityBoolean();
+        return new WebServicesManager<Boolean>(pathSessionsIdGame, WS.PATH_HAS_ALL_PIECES)
+                .entityBoolean();
     }
 
     @Override

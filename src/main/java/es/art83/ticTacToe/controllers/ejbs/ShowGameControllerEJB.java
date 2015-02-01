@@ -4,6 +4,7 @@ import java.util.List;
 
 import es.art83.ticTacToe.controllers.ShowGameController;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
+import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
@@ -19,8 +20,8 @@ public class ShowGameControllerEJB extends ControllerEJB implements ShowGameCont
     }
 
     @Override
-    public ColorModel[][] colors() {
-        return this.getTicTacToeSession().getGame().colors();
+    public List<PieceEntity> allPieces() {
+        return this.getTicTacToeSession().getGame().allPieces();
     }
 
     @Override

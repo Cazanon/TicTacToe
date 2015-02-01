@@ -38,11 +38,6 @@ public class ShowGameControllerWebServiceTest {
     }
 
     @Test
-    public void testColors() {
-        this.showGameController.colors();
-    }
-
-    @Test
     public void testIsGameOver() {
         assertFalse(this.showGameController.gameOver());
     }
