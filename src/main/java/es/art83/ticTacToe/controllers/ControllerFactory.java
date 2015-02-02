@@ -9,8 +9,6 @@ public abstract class ControllerFactory {
 
     public abstract OpenGameController getOpenGameController();
 
-    public abstract NameGameController getNameGameController();
-
     public abstract ShowGameController getShowGameController();
 
     public abstract PlacePieceController getPlacePieceController();

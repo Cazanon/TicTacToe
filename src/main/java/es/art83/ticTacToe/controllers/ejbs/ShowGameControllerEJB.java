@@ -3,6 +3,7 @@ package es.art83.ticTacToe.controllers.ejbs;
 import java.util.List;
 
 import es.art83.ticTacToe.controllers.ShowGameController;
+import es.art83.ticTacToe.models.daos.DAOFactory;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
@@ -60,5 +61,11 @@ public class ShowGameControllerEJB extends ControllerEJB implements ShowGameCont
         result = result || this.getTicTacToeSession().getGame() != null;
         return result;
     }
+    @Override
+    public List<String> gameNames() {
+        return DAOFactory.getFactory().getGameDAO()
+                .findPlayerGameNames(this.getTicTacToeSession().getPlayer());
+    }
+
 
 }

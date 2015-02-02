@@ -1,5 +1,6 @@
 package es.art83.ticTacToe.controllers.webService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.GenericType;
@@ -8,7 +9,9 @@ import es.art83.ticTacToe.controllers.ShowGameController;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
+import es.art83.ticTacToe.models.utils.ListStringWrapper;
 import es.art83.ticTacToe.webService.SessionGameResource;
+import es.art83.ticTacToe.webService.SessionPlayerResource;
 import es.art83.ticTacToe.webService.SessionResource;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
@@ -18,7 +21,8 @@ public class ShowGameControllerWebService extends ControllerWebService implement
 
     public ShowGameControllerWebService(String sessionId) {
         super(sessionId);
-        this.pathSessionsIdGame = SessionResource.PATH_SESSIONS + "/" + this.getSessionId() + SessionGameResource.PATH_GAME;
+        this.pathSessionsIdGame = SessionResource.PATH_SESSIONS + "/" + this.getSessionId()
+                + SessionGameResource.PATH_GAME;
     }
 
     @Override
@@ -38,14 +42,14 @@ public class ShowGameControllerWebService extends ControllerWebService implement
 
     @Override
     public boolean gameOver() {
-        return new WebServicesManager<Boolean>(pathSessionsIdGame, SessionGameResource.PATH_GAME_OVER)
-                .entityBoolean();
+        return new WebServicesManager<Boolean>(pathSessionsIdGame,
+                SessionGameResource.PATH_GAME_OVER).entityBoolean();
     }
 
     @Override
     public ColorModel winner() {
-        return new WebServicesManager<ColorModel>(pathSessionsIdGame, SessionGameResource.PATH_WINNER)
-                .entity(ColorModel.class);
+        return new WebServicesManager<ColorModel>(pathSessionsIdGame,
+                SessionGameResource.PATH_WINNER).entity(ColorModel.class);
     }
 
     @Override
@@ -56,8 +60,8 @@ public class ShowGameControllerWebService extends ControllerWebService implement
 
     @Override
     public boolean hasAllPieces() {
-        return new WebServicesManager<Boolean>(pathSessionsIdGame, SessionGameResource.PATH_HAS_ALL_PIECES)
-                .entityBoolean();
+        return new WebServicesManager<Boolean>(pathSessionsIdGame,
+                SessionGameResource.PATH_HAS_ALL_PIECES).entityBoolean();
     }
 
     @Override
@@ -80,6 +84,19 @@ public class ShowGameControllerWebService extends ControllerWebService implement
     public boolean createdGame() {
         return new WebServicesManager<Boolean>(SessionResource.PATH_SESSIONS, this.getSessionId(),
                 SessionResource.PATH_CREATED_GAME).entityBoolean();
+    }
+
+    @Override
+    public List<String> gameNames() {
+        ListStringWrapper listStringWrapper = new WebServicesManager<ListStringWrapper>(
+                SessionResource.PATH_SESSIONS, this.getSessionId(),
+                SessionPlayerResource.PATH_PLAYER, SessionPlayerResource.PATH_GAME_NAMES)
+                .entity(ListStringWrapper.class);
+        List<String> list = listStringWrapper.getListString();
+        if (list == null) {
+            list = new ArrayList<String>();
+        }
+        return list;
     }
 
 }

@@ -25,5 +25,7 @@ public interface ShowGameController {
     List<CoordinateEntity> validDestinationCoordinates();
 
     boolean createdGame();
+    
+    List<String> gameNames();
 
 }

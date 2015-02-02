@@ -21,7 +21,7 @@ public class SaveViewBean extends ViewBean {
 
     @PostConstruct
     public void update() {
-        this.gameNames = this.getControllerFactory().getNameGameController().gameNames();
+        this.gameNames = this.getControllerFactory().getShowGameController().gameNames();
     }
 
     public boolean isOverWrite() {

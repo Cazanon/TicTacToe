@@ -65,7 +65,7 @@ public class GameViewBean extends ViewBean {
                 this.validDestinationCoordinates = showGameController.validDestinationCoordinates();
             }
         }
-        this.gameNames = this.getControllerFactory().getNameGameController().gameNames();
+        this.gameNames = this.getControllerFactory().getShowGameController().gameNames();
     }
 
     private void prepareBoarView(List<PieceEntity> allPieces) {
