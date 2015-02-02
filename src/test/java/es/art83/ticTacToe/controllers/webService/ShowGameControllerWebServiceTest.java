@@ -40,12 +40,7 @@ public class ShowGameControllerWebServiceTest {
 
     @Test
     public void testIsGameOver() {
-        assertFalse(this.showGameController.gameOver());
-    }
-
-    @Test
-    public void testWinner() {
-        assertEquals(ColorModel.O, this.showGameController.winner());
+        assertNull(this.showGameController.gameOver());
     }
 
     @Test
@@ -78,8 +73,7 @@ public class ShowGameControllerWebServiceTest {
         this.logout.logout();
         new WebServicesManager<>(SessionResource.PATH_SESSIONS,
                 this.showGameController.getSessionId()).delete();
-        new WebServicesManager<>(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser())
-                .delete();
+        new WebServicesManager<>(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
     }
 
 }

@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.webService; 
+package es.art83.ticTacToe.webService;
 
 import java.net.URI;
 import java.util.List;
@@ -26,17 +26,25 @@ import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 @Path(SessionResource.PATH_SESSIONS + SessionResource.PATH_ID_PARAM + SessionGameResource.PATH_GAME)
 public class SessionGameResource extends SessionResource {
 
-    public static final String PATH_GAME = "/game"; 
-    public static final String PATH_NAME = "/name";  
-    public static final String PATH_ALL_PIECES = "/allPieces"; 
-    public static final String PATH_GAME_OVER = "/gameOver"; 
-    public static final String PATH_WINNER = "/winner"; 
-    public static final String PATH_TURN = "/turn"; 
-    public static final String PATH_HAS_ALL_PIECES = "/hasAllPieces"; 
-    public static final String PATH_VALID_SOURCE_COORDINATES = "/validSourceCoordinates"; 
-    public static final String PATH_VALID_DESTINATION_COORDINATES = "/validDestinationCoordinates"; 
-    public static final String PATH_PIECE = "/piece";  
-    public static final String PATH_ID = "/id"; 
+    public static final String PATH_GAME = "/game";
+
+    public static final String PATH_NAME = "/name";
+
+    public static final String PATH_ALL_PIECES = "/allPieces";
+
+    public static final String PATH_GAME_OVER = "/gameOver";
+
+    public static final String PATH_TURN = "/turn";
+
+    public static final String PATH_HAS_ALL_PIECES = "/hasAllPieces";
+
+    public static final String PATH_VALID_SOURCE_COORDINATES = "/validSourceCoordinates";
+
+    public static final String PATH_VALID_DESTINATION_COORDINATES = "/validDestinationCoordinates";
+
+    public static final String PATH_PIECE = "/piece";
+
+    public static final String PATH_ID = "/id";
 
     protected void info(Integer id, String msg) {
         this.debug("/" + id + SessionGameResource.PATH_GAME + msg);
@@ -64,7 +72,8 @@ public class SessionGameResource extends SessionResource {
             DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
             this.info(id, "?name=" + name + " /POST: " + sessionEntity);
             return Response.created(
-                    URI.create(SessionResource.PATH_SESSIONS + sessionEntity.getId() + SessionGameResource.PATH_GAME)).build();
+                    URI.create(SessionResource.PATH_SESSIONS + sessionEntity.getId()
+                            + SessionGameResource.PATH_GAME)).build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
@@ -73,11 +82,11 @@ public class SessionGameResource extends SessionResource {
     @Path(SessionGameResource.PATH_GAME_OVER)
     @GET
     @Produces(MediaType.APPLICATION_XML)
-    public String isGameOver(@PathParam("id") Integer id) {
+    public ColorModel isGameOver(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        Boolean result = sessionEntity.getGameEntity().gameOver();
+        ColorModel result = sessionEntity.getGameEntity().gameOver();
         this.info(id, SessionGameResource.PATH_GAME_OVER + " /GET: " + result);
-        return Boolean.toString(result);
+        return result;
     }
 
     @Path(SessionGameResource.PATH_NAME)
@@ -96,12 +105,13 @@ public class SessionGameResource extends SessionResource {
     public Response setGameName(@PathParam("id") Integer id, String name) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         sessionEntity.getGameEntity().setName(name);
-        //DAOFactory.getFactory().getGameDAO().update(sessionEntity.getGame());
+        // DAOFactory.getFactory().getGameDAO().update(sessionEntity.getGame());
         DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
 
         this.info(id, SessionGameResource.PATH_NAME + " /POST: " + sessionEntity);
-        return Response.created(URI.create(SessionResource.PATH_SESSIONS + id + SessionGameResource.PATH_GAME + SessionGameResource.PATH_NAME))
-                .build();
+        return Response.created(
+                URI.create(SessionResource.PATH_SESSIONS + id + SessionGameResource.PATH_GAME
+                        + SessionGameResource.PATH_NAME)).build();
     }
 
     @Path(SessionGameResource.PATH_HAS_ALL_PIECES)
@@ -121,16 +131,6 @@ public class SessionGameResource extends SessionResource {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         List<PieceEntity> result = sessionEntity.getGameEntity().allPieces();
         this.info(id, SessionGameResource.PATH_ALL_PIECES + " /GET: " + result);
-        return result;
-    }
-
-    @Path(SessionGameResource.PATH_WINNER)
-    @GET
-    @Produces(MediaType.APPLICATION_XML)
-    public ColorModel gameWinner(@PathParam("id") Integer id) {
-        SessionEntity sessionEntity = this.readSessionEntity(id);
-        ColorModel result = sessionEntity.getGameEntity().winner();
-        this.info(id, SessionGameResource.PATH_WINNER + " /GET: " + result);
         return result;
     }
 
@@ -179,17 +179,16 @@ public class SessionGameResource extends SessionResource {
     public Response createPiece(@PathParam("id") Integer id, CoordinateEntity coordinateEntity) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         sessionEntity.getGameEntity().placePiece(coordinateEntity);
-        if (sessionEntity.getGameEntity().gameOver()) {
-            sessionEntity.setSavedGame(true);
+        if (sessionEntity.getGameEntity().gameOver() != null) {
             sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);
-        } else {
-            sessionEntity.setSavedGame(false);
         }
+        sessionEntity.setSavedGame(false);
+
         DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
         this.info(id, SessionGameResource.PATH_PIECE + " /POST: " + coordinateEntity);
         return Response.created(
-                URI.create(SessionResource.PATH_SESSIONS + "/" + sessionEntity.getId() + SessionGameResource.PATH_GAME
-                        + SessionGameResource.PATH_PIECE)).build();
+                URI.create(SessionResource.PATH_SESSIONS + "/" + sessionEntity.getId()
+                        + SessionGameResource.PATH_GAME + SessionGameResource.PATH_PIECE)).build();
     }
 
     @Path(SessionGameResource.PATH_PIECE)

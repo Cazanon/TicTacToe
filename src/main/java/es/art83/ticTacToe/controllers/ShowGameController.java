@@ -12,9 +12,7 @@ public interface ShowGameController {
 
     List<PieceEntity> allPieces();
 
-    boolean gameOver();
-
-    ColorModel winner();
+    ColorModel gameOver();
 
     ColorModel turnColor();
 

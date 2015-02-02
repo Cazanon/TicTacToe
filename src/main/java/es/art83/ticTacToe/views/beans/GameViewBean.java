@@ -53,10 +53,9 @@ public class GameViewBean extends ViewBean {
         if (this.createdGame) {
             this.gameName = showGameController.getNameGame();
             this.prepareBoarView(showGameController.allPieces());
-            this.gameOver = showGameController.gameOver();
-            if (this.gameOver) {
-                this.winner = showGameController.winner();
-            } else {
+            this.winner = showGameController.gameOver();
+            this.gameOver = this.winner != null;
+            if (!this.gameOver) {
                 this.turn = showGameController.turnColor();
                 this.hasAllPieces = showGameController.hasAllPieces();
                 if (this.hasAllPieces) {
@@ -71,8 +70,8 @@ public class GameViewBean extends ViewBean {
     private void prepareBoarView(List<PieceEntity> allPieces) {
         this.colors = new ColorModel[3][3];
         for (PieceEntity ficha : allPieces) {
-            this.colors[ficha.getCoordinateEntity().getRow()][ficha.getCoordinateEntity().getColumn()] = ficha
-                    .getColorModel();
+            this.colors[ficha.getCoordinateEntity().getRow()][ficha.getCoordinateEntity()
+                    .getColumn()] = ficha.getColorModel();
         }
     }
 
@@ -181,10 +180,10 @@ public class GameViewBean extends ViewBean {
             placeCardController
                     .placePiece(new CoordinateEntity(this.selectedDestinationCoordinate));
         }
-       this.update();
-       LogManager.getLogger(this.getClass().getName()).info(
-               "--- Ficha puesta: " + this.selectedSourceCoordinate + ">"
-                       + this.selectedDestinationCoordinate+" ---");
+        this.update();
+        LogManager.getLogger(this.getClass().getName()).info(
+                "--- Ficha puesta: " + this.selectedSourceCoordinate + ">"
+                        + this.selectedDestinationCoordinate + " ---");
         return null;
     }
 
@@ -195,7 +194,7 @@ public class GameViewBean extends ViewBean {
                     .getSaveGameController();
             saveGameController.saveGame();
             LogManager.getLogger(this.getClass().getName()).info(
-                    "--- Partida salvada: " + this.gameName +" ---");
+                    "--- Partida salvada: " + this.gameName + " ---");
 
         } else {
             result = "save";

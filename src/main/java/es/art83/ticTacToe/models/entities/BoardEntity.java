@@ -62,16 +62,7 @@ public class BoardEntity {
         return this.pieces.size() == CoordinateEntity.DIMENSION * 2;
     }
 
-    // TODO se debería quitar, no se usa y es redundante
-    public boolean existTicTacToe() {
-        for (ColorModel color : ColorModel.values()) {
-            if (existTicTacToe(color))
-                return true;
-        }
-        return false;
-    }
-
-    public boolean existTicTacToe(ColorModel color) {
+    public boolean gameOver(ColorModel color) {
         assert color != null;
         List<CoordinateEntity> coordinates = this.coordinates(color);
         if (coordinates.size() < CoordinateEntity.DIMENSION) {

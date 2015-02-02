@@ -42,7 +42,7 @@ public class SessionGameResourceTest {
         // Register player
         this.player = new PlayerEntity("u", "pass");
         new WebServicesManager<>(PlayerResource.PATH_PLAYERS).create(player);
-        //Login player
+        // Login player
         new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.sessionId,
                 SessionPlayerResource.PATH_PLAYER).create(player);
         // Create game
@@ -70,12 +70,6 @@ public class SessionGameResourceTest {
     }
 
     @Test
-    public void testNotGameOver() {
-        assertFalse(new WebServicesManager<>(pathSessionsIdGame, SessionGameResource.PATH_GAME_OVER)
-                .entityBoolean());
-    }
-
-    @Test
     public void testGameOver() {
         new WebServicesManager<>(pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 0));
@@ -87,17 +81,17 @@ public class SessionGameResourceTest {
                 .create(new CoordinateEntity(1, 1));
         new WebServicesManager<>(pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 2));
-        assertTrue(new WebServicesManager<>(pathSessionsIdGame, SessionGameResource.PATH_GAME_OVER)
-                .entityBoolean());
+        assertEquals(ColorModel.X, new WebServicesManager<ColorModel>(pathSessionsIdGame,
+                SessionGameResource.PATH_GAME_OVER).entity(ColorModel.class));
     }
 
     @Test
     public void testNotName() {
-        assertNull(new WebServicesManager<String>(pathSessionsIdGame,
-                SessionGameResource.PATH_NAME).entity(String.class));
+        assertNull(new WebServicesManager<String>(pathSessionsIdGame, SessionGameResource.PATH_NAME)
+                .entity(String.class));
     }
 
-   @Test
+    @Test
     public void testNotFullBoard() {
         new WebServicesManager<>(pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 0));
@@ -109,8 +103,8 @@ public class SessionGameResourceTest {
                 .create(new CoordinateEntity(1, 0));
         new WebServicesManager<>(pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(1, 1));
-        assertFalse(new WebServicesManager<>(pathSessionsIdGame, SessionGameResource.PATH_HAS_ALL_PIECES)
-                .entityBoolean());
+        assertFalse(new WebServicesManager<>(pathSessionsIdGame,
+                SessionGameResource.PATH_HAS_ALL_PIECES).entityBoolean());
     }
 
     @Test
@@ -127,11 +121,11 @@ public class SessionGameResourceTest {
                 .create(new CoordinateEntity(1, 1));
         new WebServicesManager<>(pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(1, 2));
-        assertTrue(new WebServicesManager<>(pathSessionsIdGame, SessionGameResource.PATH_HAS_ALL_PIECES)
-                .entityBoolean());
+        assertTrue(new WebServicesManager<>(pathSessionsIdGame,
+                SessionGameResource.PATH_HAS_ALL_PIECES).entityBoolean());
     }
 
-    //@Test
+    @Test
     public void testAllPieces() {
         new WebServicesManager<>(pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 0));
@@ -146,7 +140,7 @@ public class SessionGameResourceTest {
         assertTrue(allPieces.contains(new PieceEntity(ColorModel.O, new CoordinateEntity(0, 1))));
     }
 
-   // @Test
+    @Test
     public void testWinner() {
         new WebServicesManager<>(pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 0));
@@ -159,7 +153,7 @@ public class SessionGameResourceTest {
         new WebServicesManager<>(pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 2));
         assertEquals(ColorModel.X, new WebServicesManager<ColorModel>(pathSessionsIdGame,
-                SessionGameResource.PATH_WINNER).entity(ColorModel.class));
+                SessionGameResource.PATH_GAME_OVER).entity(ColorModel.class));
     }
 
     @Test

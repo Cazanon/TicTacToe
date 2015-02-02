@@ -9,15 +9,13 @@ public class PlacePieceControllerEJB extends ControllerEJB implements PlacePiece
     public PlacePieceControllerEJB(TicTacToeSession ticTacToeStatesManager) {
         super(ticTacToeStatesManager);
     }
-    
-   private void changeSate(){
+
+    private void changeSate() {
         assert this.getTicTacToeSession().getTicTacToeStateModel() == TicTacToeStateModel.OPENED_GAME;
-        if (this.getTicTacToeSession().getGame().gameOver()){
-            this.getTicTacToeSession().setSaved(true);
-            this.getTicTacToeSession().setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);        
-        }else{
-            this.getTicTacToeSession().setSaved(false);
+        if (this.getTicTacToeSession().getGame().gameOver() != null) {
+            this.getTicTacToeSession().setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);
         }
+        this.getTicTacToeSession().setSaved(false);
     }
 
     @Override

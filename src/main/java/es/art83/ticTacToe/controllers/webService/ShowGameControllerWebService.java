@@ -41,15 +41,9 @@ public class ShowGameControllerWebService extends ControllerWebService implement
     }
 
     @Override
-    public boolean gameOver() {
-        return new WebServicesManager<Boolean>(pathSessionsIdGame,
-                SessionGameResource.PATH_GAME_OVER).entityBoolean();
-    }
-
-    @Override
-    public ColorModel winner() {
+    public ColorModel gameOver() {
         return new WebServicesManager<ColorModel>(pathSessionsIdGame,
-                SessionGameResource.PATH_WINNER).entity(ColorModel.class);
+                SessionGameResource.PATH_GAME_OVER).entity(ColorModel.class);
     }
 
     @Override

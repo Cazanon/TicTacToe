@@ -26,11 +26,11 @@ public class GameEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private BoardEntity boardEntity;
 
-    
     @ManyToOne
     private PlayerEntity playerEntity;
 
-    public GameEntity(String name, PlayerEntity playerEntity, BoardEntity boardEntity, TurnEntity turnEntity) {
+    public GameEntity(String name, PlayerEntity playerEntity, BoardEntity boardEntity,
+            TurnEntity turnEntity) {
         this.setName(name);
         this.setPlayerEntity(playerEntity);
         this.setBoardEntity(boardEntity);
@@ -81,18 +81,16 @@ public class GameEntity {
         this.boardEntity = boardEntity;
     }
 
-    //TODO que devuelva ColorModel del que gana
-    public boolean gameOver() {
-        return this.boardEntity.existTicTacToe(this.turnEntity.getColorChanged());
+    public ColorModel gameOver() {
+        ColorModel result = this.turnEntity.colorChanged();
+        if (!this.boardEntity.gameOver(result)) {
+            result = null;
+        }
+        return result;
     }
 
     public List<PieceEntity> allPieces() {
         return this.boardEntity.getPieces();
-    }
-
-    //TODO esto no es correcto del todo, siempre daría un ganador! Se arregla con lo que devuelva existTitTacToe
-    public ColorModel winner() {
-        return this.turnEntity.getColorChanged();
     }
 
     public ColorModel turnColor() {
@@ -109,7 +107,7 @@ public class GameEntity {
 
     public List<CoordinateEntity> validDestinationCoordinates() {
         return this.boardEntity.validDestinationCoordinates();
-    } 
+    }
 
     public void placePiece(CoordinateEntity coordinate) {
         this.boardEntity.put(new PieceEntity(this.getTurnEntity().getColor(), coordinate));
@@ -129,7 +127,8 @@ public class GameEntity {
 
     @Override
     public String toString() {
-        return "GameEntity[" + id + ":" + name + "," + playerEntity + "," + turnEntity + "," + boardEntity + "]";
+        return "GameEntity[" + id + ":" + name + "," + playerEntity + "," + turnEntity + ","
+                + boardEntity + "]";
     }
 
     @Override
@@ -161,6 +160,5 @@ public class GameEntity {
         }
         return result && this.playerEntity.equals(other.playerEntity);
     }
-
 
 }

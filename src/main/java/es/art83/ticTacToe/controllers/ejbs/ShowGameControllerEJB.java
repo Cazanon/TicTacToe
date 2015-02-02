@@ -26,13 +26,8 @@ public class ShowGameControllerEJB extends ControllerEJB implements ShowGameCont
     }
 
     @Override
-    public boolean gameOver() {
+    public ColorModel gameOver() {
         return this.getTicTacToeSession().getGame().gameOver();
-    }
-
-    @Override
-    public ColorModel winner() {
-        return this.getTicTacToeSession().getGame().winner();
     }
 
     @Override
