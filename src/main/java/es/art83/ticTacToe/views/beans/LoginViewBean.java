@@ -12,16 +12,16 @@ import es.art83.ticTacToe.controllers.LogoutController;
 
 @ManagedBean
 public class LoginViewBean extends PlayerViewBean {
-    private boolean bye;
+    private boolean logouted;
 
     @PostConstruct
     public void update() {
         LogoutController logoutController = this.getControllerFactory().getLogoutController();
-        this.bye = logoutController.bye();
+        this.logouted = logoutController.logouted();
     }
 
-    public boolean isBye() {
-        return this.bye;
+    public boolean isLogouted() {
+        return this.logouted;
     }
 
     public String login() {

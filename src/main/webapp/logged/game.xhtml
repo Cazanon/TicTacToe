@@ -59,8 +59,8 @@
 	</h:panelGroup>
 
 	<fieldset>
-		<legend>Start game</legend>
-		<h:form id="startGame">
+		<legend>Start another game</legend>
+		<h:form>
 			<h:commandButton value="New game" action="#{gameViewBean.createGame}" />
 			<h:panelGroup rendered="#{!gameViewBean.zeroGameNames}">
 				<h:selectOneMenu value="#{gameViewBean.gameNameSelected}">
@@ -71,7 +71,7 @@
 		</h:form>
 	</fieldset>
 
-	<h:form id="logout">
+	<h:form>
 		<h:commandButton value="Logout" action="#{gameViewBean.logout}" />
 	</h:form>
 
