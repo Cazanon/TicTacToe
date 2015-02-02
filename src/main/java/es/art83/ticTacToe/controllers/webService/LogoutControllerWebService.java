@@ -2,7 +2,8 @@ package es.art83.ticTacToe.controllers.webService;
 
 import es.art83.ticTacToe.controllers.LogoutController;
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
-import es.art83.ticTacToe.webService.utils.WS;
+import es.art83.ticTacToe.webService.SessionPlayerResource;
+import es.art83.ticTacToe.webService.SessionResource;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class LogoutControllerWebService extends ControllerWebService implements LogoutController {
@@ -10,24 +11,24 @@ public class LogoutControllerWebService extends ControllerWebService implements 
 
     public LogoutControllerWebService(String sessionId) {
         super(sessionId);
-        this.pathSessionsId = WS.PATH_SESSIONS + "/" + this.getSessionId();
+        this.pathSessionsId = SessionResource.PATH_SESSIONS + "/" + this.getSessionId();
     }
 
     @Override
     public void logout() {
-        new WebServicesManager<>(pathSessionsId, WS.PATH_PLAYER).delete();
+        new WebServicesManager<>(pathSessionsId, SessionPlayerResource.PATH_PLAYER).delete();
     }
 
     @Override
     public boolean bye() {
         return new WebServicesManager<TicTacToeStateModel>(pathSessionsId,
-                WS.PATH_STATE).entity(TicTacToeStateModel.class).equals(
+                SessionResource.PATH_STATE).entity(TicTacToeStateModel.class).equals(
                 TicTacToeStateModel.FINAL);
     }
 
     @Override
     public boolean savedGame() {
-        return new WebServicesManager<Boolean>(pathSessionsId, WS.PATH_SAVED_GAME)
+        return new WebServicesManager<Boolean>(pathSessionsId, SessionResource.PATH_SAVED_GAME)
                 .entityBoolean();
     }
 

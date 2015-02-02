@@ -16,8 +16,6 @@ public interface ShowGameController {
 
     ColorModel winner();
 
-    boolean savedGame();
-
     ColorModel turnColor();
 
     boolean hasAllPieces();

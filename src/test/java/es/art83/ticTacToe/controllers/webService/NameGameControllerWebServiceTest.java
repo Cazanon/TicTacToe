@@ -9,7 +9,8 @@ import org.junit.Test;
 import es.art83.ticTacToe.controllers.webService.ControllerFactoryWebService;
 import es.art83.ticTacToe.controllers.webService.NameGameControllerWebService;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.webService.utils.WS;
+import es.art83.ticTacToe.webService.PlayerResource;
+import es.art83.ticTacToe.webService.SessionResource;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class NameGameControllerWebServiceTest {
@@ -33,8 +34,8 @@ public class NameGameControllerWebServiceTest {
 
     @After
     public void after() {
-        new WebServicesManager<>(WS.PATH_SESSIONS, this.name.getSessionId()).delete();
-        new WebServicesManager<>(WS.PATH_PLAYERS, this.playerEntity.getUser())
+        new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.name.getSessionId()).delete();
+        new WebServicesManager<>(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser())
                 .delete();
     }
 }

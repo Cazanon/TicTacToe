@@ -34,8 +34,6 @@ public class GameViewBean extends ViewBean {
 
     private ColorModel winner;
 
-    private boolean savedGame;
-
     private ColorModel turn;
 
     private boolean hasAllPieces;
@@ -59,7 +57,6 @@ public class GameViewBean extends ViewBean {
             if (this.gameOver) {
                 this.winner = showGameController.winner();
             } else {
-                this.savedGame = showGameController.savedGame();
                 this.turn = showGameController.turnColor();
                 this.hasAllPieces = showGameController.hasAllPieces();
                 if (this.hasAllPieces) {
@@ -117,10 +114,6 @@ public class GameViewBean extends ViewBean {
 
     public ColorModel getWinner() {
         return winner;
-    }
-
-    public boolean isSavedGame() {
-        return savedGame;
     }
 
     public ColorModel getTurn() {
@@ -201,7 +194,6 @@ public class GameViewBean extends ViewBean {
             SaveGameController saveGameController = this.getControllerFactory()
                     .getSaveGameController();
             saveGameController.saveGame();
-            this.savedGame = true;
             LogManager.getLogger(this.getClass().getName()).info(
                     "--- Partida salvada: " + this.gameName +" ---");
 

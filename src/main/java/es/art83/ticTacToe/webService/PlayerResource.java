@@ -14,13 +14,16 @@ import org.apache.logging.log4j.LogManager;
 
 import es.art83.ticTacToe.models.daos.DAOFactory;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.webService.utils.WS;
 
-@Path(WS.PATH_PLAYERS)
+@Path(PlayerResource.PATH_PLAYERS)
 public class PlayerResource {
 
+    public static final String PATH_PLAYERS = "/players";
+
+    public static final String PATH_USER_PARAM = "/{user}";
+
     protected void debug(String msg) {
-        LogManager.getLogger(this.getClass()).debug(WS.PATH_PLAYERS + msg);
+        LogManager.getLogger(this.getClass()).debug(PATH_PLAYERS + msg);
     }
 
     @POST
@@ -31,7 +34,7 @@ public class PlayerResource {
                 .read(playerEntity.getUser());
         if (playerEntityBD == null) {
             DAOFactory.getFactory().getPlayerDAO().create(playerEntity);
-            result = Response.created(URI.create(WS.PATH_PLAYERS + "/" + playerEntity.getUser()))
+            result = Response.created(URI.create(PATH_PLAYERS + "/" + playerEntity.getUser()))
                     .build();
             this.debug(" /POST: " + playerEntity.getUser());
         } else {
@@ -41,7 +44,7 @@ public class PlayerResource {
         return result;
     }
 
-    @Path(WS.PATH_USER_PARAM)
+    @Path(PATH_USER_PARAM)
     @DELETE
     public void delete(@PathParam("user") String user) {
         DAOFactory.getFactory().getPlayerDAO().deleteByID(user);

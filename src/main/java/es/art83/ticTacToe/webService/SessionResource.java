@@ -18,13 +18,24 @@ import es.art83.ticTacToe.models.daos.DAOFactory;
 import es.art83.ticTacToe.models.daos.SessionDAO;
 import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
-import es.art83.ticTacToe.webService.utils.WS;
 
-@Path(WS.PATH_SESSIONS)
+@Path(SessionResource.PATH_SESSIONS)
 public class SessionResource {
 
+    public static final String PATH_SESSIONS = "/sessions";
+
+    public static final String PATH_ID_PARAM = "/{id}";
+
+    public static final String PATH_LOGGED = "/logged";
+
+    public static final String PATH_STATE = "/state";
+
+    public static final String PATH_SAVED_GAME = "/savedGame";
+
+    public static final String PATH_CREATED_GAME = "/createdGame";
+
     protected void debug(String msg) {
-        LogManager.getLogger(this.getClass()).debug(WS.PATH_SESSIONS + msg);
+        LogManager.getLogger(this.getClass()).debug(PATH_SESSIONS + msg);
     }
 
     protected SessionEntity readSessionEntity(Integer id) {
@@ -41,39 +52,39 @@ public class SessionResource {
         SessionEntity sessionEntity = new SessionEntity();
         DAOFactory.getFactory().getSessionDAO().create(sessionEntity);
         this.debug(" POST/ sessionId: " + sessionEntity.getId());
-        return Response.created(URI.create(WS.PATH_SESSIONS + "/" + sessionEntity.getId()))
+        return Response.created(URI.create(PATH_SESSIONS + "/" + sessionEntity.getId()))
                 .entity(String.valueOf(sessionEntity.getId())).build();
     }
 
-    @Path(WS.PATH_ID_PARAM + WS.PATH_LOGGED)
+    @Path(PATH_ID_PARAM + SessionResource.PATH_LOGGED)
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public String logged(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         Boolean result = sessionEntity.getPlayerEntity() != null;
-        this.debug("/" + sessionEntity.getId() + WS.PATH_LOGGED + " /GET: " + result);
+        this.debug("/" + sessionEntity.getId() + PATH_LOGGED + " /GET: " + result);
         return Boolean.toString(result);
     }
 
-    @Path(WS.PATH_ID_PARAM + WS.PATH_STATE)
+    @Path(PATH_ID_PARAM + PATH_STATE)
     @GET
     public TicTacToeStateModel state(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         TicTacToeStateModel result = sessionEntity.getTicTacToeStateModel();
-        this.debug("/" + sessionEntity.getId() + WS.PATH_STATE + " /GET: " + result);
+        this.debug("/" + sessionEntity.getId() + PATH_STATE + " /GET: " + result);
         return result;
     }
 
-    @Path(WS.PATH_ID_PARAM + WS.PATH_SAVED_GAME)
+    @Path(PATH_ID_PARAM + PATH_SAVED_GAME)
     @GET
     public String savedGame(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         Boolean result = sessionEntity.isSavedGame();
-        this.debug(sessionEntity.getId() + WS.PATH_SAVED_GAME + " /GET: " + result);
+        this.debug(sessionEntity.getId() + SessionResource.PATH_SAVED_GAME + " /GET: " + result);
         return Boolean.toString(result);
     }
 
-    @Path(WS.PATH_ID_PARAM)
+    @Path(PATH_ID_PARAM)
     @DELETE
     public void delete(@PathParam("id") Integer id) {
         SessionDAO sessionDAO = DAOFactory.getFactory().getSessionDAO();
@@ -84,12 +95,12 @@ public class SessionResource {
         this.debug("/" + sessionEntity.getId() + " /DELETE");
     }
 
-    @Path(WS.PATH_ID_PARAM + WS.PATH_CREATED_GAME)
+    @Path(PATH_ID_PARAM + PATH_CREATED_GAME)
     @GET
     public String createdGame(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         Boolean result = sessionEntity.getGameEntity() != null;
-        this.debug("/" + sessionEntity.getId() + WS.PATH_CREATED_GAME + " /GET:" + result);
+        this.debug("/" + sessionEntity.getId() + PATH_CREATED_GAME + " /GET:" + result);
         return Boolean.toString(result);
     }
 

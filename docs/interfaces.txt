@@ -1,0 +1,39 @@
+public interface LoginController {
+    boolean login(PlayerEntity playerEntity);
+    boolean register(PlayerEntity playerEntity);
+    boolean logged();
+}
+public interface LogoutController {
+    void logout();
+    boolean bye();
+    boolean savedGame();
+}
+public interface CreateGameController {
+    void createGame();
+}
+public interface OpenGameController {
+    void openGame(String gameNameSelected);
+}
+public interface PlacePieceController {
+    void placePiece(CoordinateEntity coordinateEntity);
+    void placePiece(CoordinateEntity source, CoordinateEntity destination);
+}
+public interface SaveGameController {
+    void saveGame();
+    void saveGame(String gameName);
+    void overWriteGame(String gameName);
+}
+public interface ShowGameController {
+    String gameName();
+    List<PieceEntity> allPieces();
+    boolean gameOver();
+    ColorModel winner();
+    ColorModel turnColor();
+    boolean hasAllPieces();
+    List<CoordinateEntity> validSourceCoordinates();
+    List<CoordinateEntity> validDestinationCoordinates();
+    boolean createdGame();
+}
+public interface NameGameController {
+    List<String> gameNames();
+}

@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class SessionPlayerResourceTest {
@@ -20,32 +19,32 @@ public class SessionPlayerResourceTest {
     @Before
     public void before() {
         WebServicesManager<String> webService = new WebServicesManager<>(
-                WS.PATH_SESSIONS);
+                SessionResource.PATH_SESSIONS);
         webService.create();
         this.sessionId = webService.entity(String.class);
 
         this.player = new PlayerEntity("u", "pass");
-        new WebServicesManager<>(WS.PATH_PLAYERS).create(player);
+        new WebServicesManager<>(PlayerResource.PATH_PLAYERS).create(player);
     }
 
     @Test
     public void testLoginPlayerExist() {
-        assertTrue(new WebServicesManager<>(WS.PATH_SESSIONS, this.sessionId,
-                WS.PATH_PLAYER).create(player));
+        assertTrue(new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.sessionId,
+                SessionPlayerResource.PATH_PLAYER).create(player));
     }
 
     @Test
     public void testLoginPlayerNotExist() {
         PlayerEntity player2 = new PlayerEntity("u2", "upass");
-        assertFalse(new WebServicesManager<>(WS.PATH_SESSIONS, this.sessionId,
-                WS.PATH_PLAYER).create(player2));
+        assertFalse(new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.sessionId,
+                SessionPlayerResource.PATH_PLAYER).create(player2));
     }
 
     @Test
     public void testLoginPlayerNotPass() {
         PlayerEntity player2 = new PlayerEntity("u", "no");
-        assertFalse(new WebServicesManager<>(WS.PATH_SESSIONS, this.sessionId,
-                WS.PATH_PLAYER).create(player2));
+        assertFalse(new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.sessionId,
+                SessionPlayerResource.PATH_PLAYER).create(player2));
     }
 
     public void testLogoutPlayer() {
@@ -58,8 +57,8 @@ public class SessionPlayerResourceTest {
 
     @After
     public void after() {
-        new WebServicesManager<>(WS.PATH_SESSIONS, this.sessionId).delete();
-        new WebServicesManager<>(WS.PATH_PLAYERS, this.player.getUser()).delete();
+        new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.sessionId).delete();
+        new WebServicesManager<>(PlayerResource.PATH_PLAYERS, this.player.getUser()).delete();
     }
 
 }

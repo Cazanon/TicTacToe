@@ -10,13 +10,15 @@ import javax.ws.rs.core.Response;
 
 import org.apache.logging.log4j.LogManager;
 
+import es.art83.ticTacToe.controllers.webService.ControllerWebService;
+
 public class WebServicesManager<T> {
     private WebTarget webTarget;
 
     private Response response;
 
     public WebServicesManager(String... paths) {
-        this.webTarget = ClientBuilder.newClient().target(WS.URI);
+        this.webTarget = ClientBuilder.newClient().target(ControllerWebService.URI);
         for (String path : paths) {
             this.webTarget = this.webTarget.path(path);
         }

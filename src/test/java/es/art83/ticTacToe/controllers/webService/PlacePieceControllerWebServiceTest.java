@@ -15,7 +15,8 @@ import es.art83.ticTacToe.controllers.webService.ShowGameControllerWebService;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.webService.utils.WS;
+import es.art83.ticTacToe.webService.PlayerResource;
+import es.art83.ticTacToe.webService.SessionResource;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class PlacePieceControllerWebServiceTest {
@@ -59,8 +60,8 @@ public class PlacePieceControllerWebServiceTest {
     @After
     public void after() {
         this.logout.logout();
-        new WebServicesManager<>(WS.PATH_SESSIONS, this.placeController.getSessionId()).delete();
-        new WebServicesManager<>(WS.PATH_PLAYERS, this.playerEntity.getUser()).delete();
+        new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.placeController.getSessionId()).delete();
+        new WebServicesManager<>(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
     }
 
 }

@@ -18,37 +18,44 @@ import org.apache.logging.log4j.LogManager;
 import es.art83.ticTacToe.models.daos.DAOFactory;
 import es.art83.ticTacToe.models.entities.GameEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.webService.utils.WS;
 
-@Path(WS.PATH_GAMES)
+@Path(GameResource.PATH_GAMES)
 public class GameResource {
 
+    public static final String PATH_GAMES = "/games";
+
+    public static final String PATH_SEARCH = "/search";
+
+    private static final String PATH_ID_PARAM = "/{id}";
+
     protected void debug(String msg) {
-        LogManager.getLogger(this.getClass()).debug(WS.PATH_GAMES + msg);
+        LogManager.getLogger(this.getClass()).debug(PATH_GAMES + msg);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
     public Response create(@QueryParam("sessionId") Integer sessionId) {
         Response result;
-        Integer gameId = DAOFactory.getFactory().getSessionDAO().read(sessionId).getGameEntity().getId();
+        Integer gameId = DAOFactory.getFactory().getSessionDAO().read(sessionId).getGameEntity()
+                .getId();
         GameEntity gameEntity = DAOFactory.getFactory().getGameDAO().read(gameId);
         GameEntity gameClone = gameEntity.clone();
         DAOFactory.getFactory().getGameDAO().create(gameClone);
-        result = Response.created(URI.create(WS.PATH_GAMES + "/" + gameClone.getId()))
+        result = Response.created(URI.create(PATH_GAMES + "/" + gameClone.getId()))
                 .entity(String.valueOf(gameClone.getId())).build();
         this.debug("?sessionId=" + sessionId + " /POST: " + gameClone);
         return result;
     }
 
-    @Path(WS.PATH_SEARCH)
+    @Path(PATH_SEARCH)
     @GET
     @Consumes(MediaType.APPLICATION_XML)
     public String findGame(@QueryParam("sessionId") Integer sessionId,
             @QueryParam("name") String name) {
-        PlayerEntity player = DAOFactory.getFactory().getSessionDAO().read(sessionId).getPlayerEntity();
+        PlayerEntity player = DAOFactory.getFactory().getSessionDAO().read(sessionId)
+                .getPlayerEntity();
         GameEntity game = DAOFactory.getFactory().getGameDAO().findPlayerGame(player, name);
-        this.debug(WS.PATH_SEARCH + "?sessionId=" + sessionId + "&name=" + name + " /GET: " + game);
+        this.debug(PATH_SEARCH + "?sessionId=" + sessionId + "&name=" + name + " /GET: " + game);
         if (game == null) {
             throw new NotFoundException();
         } else {
@@ -57,7 +64,7 @@ public class GameResource {
 
     }
 
-    @Path(WS.PATH_ID_PARAM)
+    @Path(PATH_ID_PARAM)
     @DELETE
     @Consumes(MediaType.APPLICATION_XML)
     public void deleteGame(@PathParam("id") Integer id) {

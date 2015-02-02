@@ -9,7 +9,8 @@ import org.junit.Test;
 import es.art83.ticTacToe.controllers.webService.ControllerFactoryWebService;
 import es.art83.ticTacToe.controllers.webService.LoginControllerWebService;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.webService.utils.WS;
+import es.art83.ticTacToe.webService.PlayerResource;
+import es.art83.ticTacToe.webService.SessionResource;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class LoginControllerWebServiceTest {
@@ -48,7 +49,7 @@ public class LoginControllerWebServiceTest {
 
     @After
     public void after() {
-        new WebServicesManager<>(WS.PATH_SESSIONS, this.login.getSessionId()).delete();
-        new WebServicesManager<>(WS.PATH_PLAYERS, this.playerEntity.getUser()).delete();
+        new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.login.getSessionId()).delete();
+        new WebServicesManager<>(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
     }
 }

@@ -8,7 +8,8 @@ import es.art83.ticTacToe.controllers.ShowGameController;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
-import es.art83.ticTacToe.webService.utils.WS;
+import es.art83.ticTacToe.webService.SessionGameResource;
+import es.art83.ticTacToe.webService.SessionResource;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class ShowGameControllerWebService extends ControllerWebService implements
@@ -17,12 +18,12 @@ public class ShowGameControllerWebService extends ControllerWebService implement
 
     public ShowGameControllerWebService(String sessionId) {
         super(sessionId);
-        this.pathSessionsIdGame = WS.PATH_SESSIONS + "/" + this.getSessionId() + WS.PATH_GAME;
+        this.pathSessionsIdGame = SessionResource.PATH_SESSIONS + "/" + this.getSessionId() + SessionGameResource.PATH_GAME;
     }
 
     @Override
     public String getNameGame() {
-        return new WebServicesManager<String>(pathSessionsIdGame, WS.PATH_NAME)
+        return new WebServicesManager<String>(pathSessionsIdGame, SessionGameResource.PATH_NAME)
                 .entity(String.class);
     }
 
@@ -31,37 +32,31 @@ public class ShowGameControllerWebService extends ControllerWebService implement
         GenericType<List<PieceEntity>> gerericType = new GenericType<List<PieceEntity>>() {
         };
         List<PieceEntity> allPieces = new WebServicesManager<PieceEntity>(pathSessionsIdGame,
-                WS.PATH_ALL_PIECES).entities(gerericType);
+                SessionGameResource.PATH_ALL_PIECES).entities(gerericType);
         return allPieces;
     }
 
     @Override
     public boolean gameOver() {
-        return new WebServicesManager<Boolean>(pathSessionsIdGame, WS.PATH_GAME_OVER)
+        return new WebServicesManager<Boolean>(pathSessionsIdGame, SessionGameResource.PATH_GAME_OVER)
                 .entityBoolean();
     }
 
     @Override
     public ColorModel winner() {
-        return new WebServicesManager<ColorModel>(pathSessionsIdGame, WS.PATH_WINNER)
+        return new WebServicesManager<ColorModel>(pathSessionsIdGame, SessionGameResource.PATH_WINNER)
                 .entity(ColorModel.class);
     }
 
     @Override
-    public boolean savedGame() {
-        return new WebServicesManager<Boolean>(WS.PATH_SESSIONS, this.getSessionId(),
-                WS.PATH_SAVED_GAME).entityBoolean();
-    }
-
-    @Override
     public ColorModel turnColor() {
-        return new WebServicesManager<ColorModel>(pathSessionsIdGame, WS.PATH_TURN)
+        return new WebServicesManager<ColorModel>(pathSessionsIdGame, SessionGameResource.PATH_TURN)
                 .entity(ColorModel.class);
     }
 
     @Override
     public boolean hasAllPieces() {
-        return new WebServicesManager<Boolean>(pathSessionsIdGame, WS.PATH_HAS_ALL_PIECES)
+        return new WebServicesManager<Boolean>(pathSessionsIdGame, SessionGameResource.PATH_HAS_ALL_PIECES)
                 .entityBoolean();
     }
 
@@ -70,7 +65,7 @@ public class ShowGameControllerWebService extends ControllerWebService implement
         GenericType<List<CoordinateEntity>> gerericType = new GenericType<List<CoordinateEntity>>() {
         };
         return new WebServicesManager<CoordinateEntity>(pathSessionsIdGame,
-                WS.PATH_VALID_SOURCE_COORDINATES).entities(gerericType);
+                SessionGameResource.PATH_VALID_SOURCE_COORDINATES).entities(gerericType);
     }
 
     @Override
@@ -78,13 +73,13 @@ public class ShowGameControllerWebService extends ControllerWebService implement
         GenericType<List<CoordinateEntity>> gerericType = new GenericType<List<CoordinateEntity>>() {
         };
         return new WebServicesManager<CoordinateEntity>(pathSessionsIdGame,
-                WS.PATH_VALID_DESTINATION_COORDINATES).entities(gerericType);
+                SessionGameResource.PATH_VALID_DESTINATION_COORDINATES).entities(gerericType);
     }
 
     @Override
     public boolean createdGame() {
-        return new WebServicesManager<Boolean>(WS.PATH_SESSIONS, this.getSessionId(),
-                WS.PATH_CREATED_GAME).entityBoolean();
+        return new WebServicesManager<Boolean>(SessionResource.PATH_SESSIONS, this.getSessionId(),
+                SessionResource.PATH_CREATED_GAME).entityBoolean();
     }
 
 }

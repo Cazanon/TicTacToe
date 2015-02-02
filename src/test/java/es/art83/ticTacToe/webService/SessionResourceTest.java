@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
-import es.art83.ticTacToe.webService.utils.WS;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class SessionResourceTest {
@@ -17,34 +16,34 @@ public class SessionResourceTest {
     @Before
     public void testCreate() {
         WebServicesManager<String> webService = new WebServicesManager<>(
-                WS.PATH_SESSIONS);
+                SessionResource.PATH_SESSIONS);
         assertTrue(webService.create());
         this.sessionId = webService.entity(String.class);
     }
 
     @Test
     public void testNotLogged() {
-        assertFalse(new WebServicesManager<>(WS.PATH_SESSIONS, this.sessionId,
-                WS.PATH_LOGGED).entityBoolean());
+        assertFalse(new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.sessionId,
+                SessionResource.PATH_LOGGED).entityBoolean());
     }
 
     @Test
     public void testStateInitial() {
         TicTacToeStateModel state = new WebServicesManager<TicTacToeStateModel>(
-                WS.PATH_SESSIONS, this.sessionId, WS.PATH_STATE)
+                SessionResource.PATH_SESSIONS, this.sessionId, SessionResource.PATH_STATE)
                 .entity(TicTacToeStateModel.class);
         assertEquals(TicTacToeStateModel.INITIAL, state);
     }
 
     @Test
     public void testSavedGameInitial() {
-        assertTrue(new WebServicesManager<>(WS.PATH_SESSIONS, this.sessionId,
-                WS.PATH_SAVED_GAME).entityBoolean());
+        assertTrue(new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.sessionId,
+                SessionResource.PATH_SAVED_GAME).entityBoolean());
     }
 
     @After
     public void deleteSession() {
-        new WebServicesManager<>(WS.PATH_SESSIONS, this.sessionId).delete();
+        new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.sessionId).delete();
     }
 
 }

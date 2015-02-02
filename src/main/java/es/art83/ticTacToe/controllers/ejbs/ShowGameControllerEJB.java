@@ -35,11 +35,6 @@ public class ShowGameControllerEJB extends ControllerEJB implements ShowGameCont
     }
 
     @Override
-    public boolean savedGame() {
-        return this.getTicTacToeSession().savedGame();
-    }
-
-    @Override
     public ColorModel turnColor() {
         return this.getTicTacToeSession().getGame().turnColor();
     }
