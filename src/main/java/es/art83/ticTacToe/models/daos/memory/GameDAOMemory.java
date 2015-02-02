@@ -39,7 +39,7 @@ public class GameDAOMemory extends GenericDAOMemory<GameEntity, Integer> impleme
     public List<String> findPlayerGameNames(PlayerEntity player) {
         List<String> gameNames = new ArrayList<>();
         for (GameEntity game : getEntityList()) {
-            if (game.getPlayer().equals(player))
+            if (game.getPlayerEntity().equals(player))
                 gameNames.add(game.getName());
         }
         return gameNames;

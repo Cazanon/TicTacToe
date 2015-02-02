@@ -74,8 +74,8 @@ public class GameViewBean extends ViewBean {
     private void prepareBoarView(List<PieceEntity> allPieces) {
         this.colors = new ColorModel[3][3];
         for (PieceEntity ficha : allPieces) {
-            this.colors[ficha.getCoordinate().getRow()][ficha.getCoordinate().getColumn()] = ficha
-                    .getColor();
+            this.colors[ficha.getCoordinateEntity().getRow()][ficha.getCoordinateEntity().getColumn()] = ficha
+                    .getColorModel();
         }
     }
 

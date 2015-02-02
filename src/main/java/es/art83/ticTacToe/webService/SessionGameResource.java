@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.webService;
+package es.art83.ticTacToe.webService; 
 
 import java.net.URI;
 import java.util.List;
@@ -35,21 +35,21 @@ public class SessionGameResource extends SessionResource {
     @Consumes(MediaType.APPLICATION_XML)
     public Response createGame(@PathParam("id") Integer id, @QueryParam("name") String name) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        if (sessionEntity.getPlayer() != null) {
+        if (sessionEntity.getPlayerEntity() != null) {
             GameEntity gameEntity;
             if (name != null) {
                 // Solo puede haber uno
                 gameEntity = DAOFactory.getFactory().getGameDAO()
-                        .findPlayerGames(sessionEntity.getPlayer(), name).get(0);
+                        .findPlayerGames(sessionEntity.getPlayerEntity(), name).get(0);
                 gameEntity = gameEntity.clone();
                 // DAOFactory.getFactory().getGameDAO().create(gameEntity.clone());
             } else {
-                gameEntity = new GameEntity(sessionEntity.getPlayer());
+                gameEntity = new GameEntity(sessionEntity.getPlayerEntity());
                 // DAOFactory.getFactory().getGameDAO().create(gameEntity);
             }
-            sessionEntity.setGame(gameEntity);
+            sessionEntity.setGameEntity(gameEntity);
             sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.OPENED_GAME);
-            sessionEntity.setSaved(true);
+            sessionEntity.setSavedGame(true);
             DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
             this.info(id, "?name=" + name + " /POST: " + sessionEntity);
             return Response.created(
@@ -64,7 +64,7 @@ public class SessionGameResource extends SessionResource {
     @Produces(MediaType.APPLICATION_XML)
     public String isGameOver(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        Boolean result = sessionEntity.getGame().gameOver();
+        Boolean result = sessionEntity.getGameEntity().gameOver();
         this.info(id, WS.PATH_GAME_OVER + " /GET: " + result);
         return Boolean.toString(result);
     }
@@ -74,7 +74,7 @@ public class SessionGameResource extends SessionResource {
     @Produces(MediaType.APPLICATION_XML)
     public String gameName(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        String result = sessionEntity.getGame().getName();
+        String result = sessionEntity.getGameEntity().getName();
         this.info(id, WS.PATH_NAME + " /GET: " + result);
         return result;
     }
@@ -84,7 +84,7 @@ public class SessionGameResource extends SessionResource {
     @Produces(MediaType.APPLICATION_XML)
     public Response setGameName(@PathParam("id") Integer id, String name) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        sessionEntity.getGame().setName(name);
+        sessionEntity.getGameEntity().setName(name);
         //DAOFactory.getFactory().getGameDAO().update(sessionEntity.getGame());
         DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
 
@@ -98,7 +98,7 @@ public class SessionGameResource extends SessionResource {
     @Produces(MediaType.APPLICATION_XML)
     public String hasAllPieces(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        Boolean result = sessionEntity.getGame().hasAllPieces();
+        Boolean result = sessionEntity.getGameEntity().hasAllPieces();
         this.info(id, WS.PATH_HAS_ALL_PIECES + " /GET: " + result);
         return Boolean.toString(result);
     }
@@ -108,7 +108,7 @@ public class SessionGameResource extends SessionResource {
     @Produces(MediaType.APPLICATION_XML)
     public List<PieceEntity> allPieces(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        List<PieceEntity> result = sessionEntity.getGame().pieces();
+        List<PieceEntity> result = sessionEntity.getGameEntity().allPieces();
         this.info(id, WS.PATH_ALL_PIECES + " /GET: " + result);
         return result;
     }
@@ -118,7 +118,7 @@ public class SessionGameResource extends SessionResource {
     @Produces(MediaType.APPLICATION_XML)
     public ColorModel gameWinner(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        ColorModel result = sessionEntity.getGame().winner();
+        ColorModel result = sessionEntity.getGameEntity().winner();
         this.info(id, WS.PATH_WINNER + " /GET: " + result);
         return result;
     }
@@ -128,7 +128,7 @@ public class SessionGameResource extends SessionResource {
     @Produces(MediaType.APPLICATION_XML)
     public ColorModel turnColor(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        ColorModel result = sessionEntity.getGame().turnColor();
+        ColorModel result = sessionEntity.getGameEntity().turnColor();
         this.info(id, WS.PATH_TURN + " /GET: " + result);
         return result;
     }
@@ -138,7 +138,7 @@ public class SessionGameResource extends SessionResource {
     @Produces(MediaType.APPLICATION_XML)
     public List<CoordinateEntity> validSourceCoordinates(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        List<CoordinateEntity> result = sessionEntity.getGame().validSourceCoordinates();
+        List<CoordinateEntity> result = sessionEntity.getGameEntity().validSourceCoordinates();
         this.info(id, WS.PATH_VALID_SOURCE_COORDINATES + " /GET: " + result);
         return result;
     }
@@ -148,7 +148,7 @@ public class SessionGameResource extends SessionResource {
     @Produces(MediaType.APPLICATION_XML)
     public List<CoordinateEntity> validDestinationCoordinates(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        List<CoordinateEntity> result = sessionEntity.getGame().validDestinationCoordinates();
+        List<CoordinateEntity> result = sessionEntity.getGameEntity().validDestinationCoordinates();
         this.info(id, WS.PATH_VALID_DESTINATION_COORDINATES + " /GET: " + result);
         return result;
     }
@@ -157,7 +157,7 @@ public class SessionGameResource extends SessionResource {
     @GET
     public Integer gameId(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        Integer result = sessionEntity.getGame().getId();
+        Integer result = sessionEntity.getGameEntity().getId();
         this.info(id, WS.PATH_ID + " /GET: " + result);
         return result;
     }
@@ -167,12 +167,12 @@ public class SessionGameResource extends SessionResource {
     @Consumes(MediaType.APPLICATION_XML)
     public Response createPiece(@PathParam("id") Integer id, CoordinateEntity coordinateEntity) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        sessionEntity.getGame().placePiece(coordinateEntity);
-        if (sessionEntity.getGame().gameOver()) {
-            sessionEntity.setSaved(true);
+        sessionEntity.getGameEntity().placePiece(coordinateEntity);
+        if (sessionEntity.getGameEntity().gameOver()) {
+            sessionEntity.setSavedGame(true);
             sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);
         } else {
-            sessionEntity.setSaved(false);
+            sessionEntity.setSavedGame(false);
         }
         DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
         this.info(id, WS.PATH_PIECE + " /POST: " + coordinateEntity);
@@ -188,7 +188,7 @@ public class SessionGameResource extends SessionResource {
             @MatrixParam("column") int column) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         CoordinateEntity coordinate = new CoordinateEntity(row, column);
-        PieceEntity piece = sessionEntity.getGame().deletePiece(coordinate);
+        PieceEntity piece = sessionEntity.getGameEntity().deletePiece(coordinate);
         DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
         // Falta elimiar la pieza de la tabla, se van acumulando
         DAOFactory.getFactory().getPieceDAO().deleteByID(piece.getId());

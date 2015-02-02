@@ -3,9 +3,6 @@ package es.art83.ticTacToe.models.entities;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Before;
@@ -34,16 +31,6 @@ public class BoardEntityTest {
             List<PieceEntity> pieceEntityList = data.getPiecesBoard();
             BoardEntity board = new BoardEntity(pieceEntityList);
             assertSame(data.message(), pieceEntityList, board.getPieces());
-            data.nextBoard();
-        }
-    }
-
-    @Test
-    public void testClear() {
-        while (data.hasNextBoard()) {
-            BoardEntity board = new BoardEntity(data.getPiecesBoard());
-            board.clear();
-            assertEquals(data.message(), 0, new BoardEntity().getPieces().size());
             data.nextBoard();
         }
     }
@@ -112,7 +99,7 @@ public class BoardEntityTest {
             data.message();
             BoardEntity board = new BoardEntity(data.getPiecesBoard());
             if (data.getRemovePieceBoard() != null) {
-                board.remove(data.getRemovePieceBoard().getCoordinate());
+                board.remove(data.getRemovePieceBoard().getCoordinateEntity());
             }
             assertEquals(data.message(), data.getRemovePiecesBoard(), board.getPieces());
             data.nextBoard();

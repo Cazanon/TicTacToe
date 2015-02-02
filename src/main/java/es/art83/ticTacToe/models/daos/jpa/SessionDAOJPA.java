@@ -29,10 +29,10 @@ public class SessionDAOJPA extends GenericDAOJPA<SessionEntity, Integer> impleme
         // Se establece la clausula FROM
         Root<SessionEntity> root = query.from(SessionEntity.class);
         // Se establece la clausula SELECT
-        query.select(root.get("game")); // criteriaQuery.multiselect(root.get(atr))
+        query.select(root.get("gameEntity")); // criteriaQuery.multiselect(root.get(atr))
         // Se configura el predicado
-        Predicate predicate1 = builder.equal(root.get("player").as(PlayerEntity.class), player);
-        Predicate predicate2 = builder.isNotNull(root.get("game").as(GameEntity.class));
+        Predicate predicate1 = builder.equal(root.get("playerEntity").as(PlayerEntity.class), player);
+        Predicate predicate2 = builder.isNotNull(root.get("gameEntity").as(GameEntity.class));
         // Se establece el WHERE
         query.where(builder.and(predicate1, predicate2));
         // Se crea el resultado

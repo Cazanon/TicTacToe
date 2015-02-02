@@ -18,14 +18,14 @@ public class PieceEntity {
     private int id;
 
     @Enumerated(EnumType.STRING)
-    private ColorModel color;
+    private ColorModel colorModel;
 
     @Embedded
-    private CoordinateEntity coordinate;
+    private CoordinateEntity coordinateEntity;
 
     public PieceEntity(ColorModel color, CoordinateEntity coordinate) {
-        this.setColor(color);
-        this.setCoordinate(coordinate);
+        this.setColorModel(color);
+        this.setCoordinateEntity(coordinate);
     }
 
     public PieceEntity() {
@@ -36,28 +36,28 @@ public class PieceEntity {
         return id;
     }
 
-    public ColorModel getColor() {
-        return color;
+    public ColorModel getColorModel() {
+        return colorModel;
     }
 
-    public void setColor(ColorModel color) {
-        this.color = color;
+    public void setColorModel(ColorModel colorModel) {
+        this.colorModel = colorModel;
     }
 
-    public CoordinateEntity getCoordinate() {
-        return coordinate;
+    public CoordinateEntity getCoordinateEntity() {
+        return coordinateEntity;
     }
 
-    public void setCoordinate(CoordinateEntity coordinate) {
-        this.coordinate = coordinate;
+    public void setCoordinateEntity(CoordinateEntity coordinateEntity) {
+        this.coordinateEntity = coordinateEntity;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((color == null) ? 0 : color.hashCode());
-        result = prime * result + ((coordinate == null) ? 0 : coordinate.hashCode());
+        result = prime * result + ((colorModel == null) ? 0 : colorModel.hashCode());
+        result = prime * result + ((coordinateEntity == null) ? 0 : coordinateEntity.hashCode());
         return result;
     }
 
@@ -65,17 +65,17 @@ public class PieceEntity {
     public boolean equals(Object object) {
         assert object != null;
         PieceEntity piece = (PieceEntity) object;
-        return this.color.equals(piece.color) && this.coordinate.equals(piece.coordinate);
+        return this.colorModel.equals(piece.colorModel) && this.coordinateEntity.equals(piece.coordinateEntity);
     }
 
     @Override
     public String toString() {
-        return "Piece[" + color + "-" + coordinate + "]";
+        return "Piece[" + colorModel + "-" + coordinateEntity + "]";
     }
     
     @Override
     public PieceEntity clone() {
-        return new PieceEntity(color, (CoordinateEntity) coordinate.clone());
+        return new PieceEntity(colorModel, (CoordinateEntity) coordinateEntity.clone());
     }
 
 }

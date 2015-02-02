@@ -44,7 +44,7 @@ public class PlacePieceControllerWebServiceTest {
         this.placeController.placePiece(new CoordinateEntity(0, 0));
         List<PieceEntity> pieces = this.showGameController.allPieces();
         assertEquals(1, pieces.size());
-        assertEquals(new CoordinateEntity(0, 0), pieces.get(0).getCoordinate());
+        assertEquals(new CoordinateEntity(0, 0), pieces.get(0).getCoordinateEntity());
      }
 
     @Test

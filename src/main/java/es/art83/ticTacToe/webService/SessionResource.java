@@ -50,7 +50,7 @@ public class SessionResource {
     @Produces(MediaType.APPLICATION_XML)
     public String logged(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        Boolean result = sessionEntity.getPlayer() != null;
+        Boolean result = sessionEntity.getPlayerEntity() != null;
         this.debug("/" + sessionEntity.getId() + WS.PATH_LOGGED + " /GET: " + result);
         return Boolean.toString(result);
     }
@@ -78,8 +78,8 @@ public class SessionResource {
     public void delete(@PathParam("id") Integer id) {
         SessionDAO sessionDAO = DAOFactory.getFactory().getSessionDAO();
         SessionEntity sessionEntity = sessionDAO.read(id);
-        assert (sessionEntity.getGame() == null);
-        assert (sessionEntity.getPlayer() == null);
+        assert (sessionEntity.getGameEntity() == null);
+        assert (sessionEntity.getPlayerEntity() == null);
         sessionDAO.deleteByID(id);
         this.debug("/" + sessionEntity.getId() + " /DELETE");
     }
@@ -88,7 +88,7 @@ public class SessionResource {
     @GET
     public String createdGame(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        Boolean result = sessionEntity.getGame() != null;
+        Boolean result = sessionEntity.getGameEntity() != null;
         this.debug("/" + sessionEntity.getId() + WS.PATH_CREATED_GAME + " /GET:" + result);
         return Boolean.toString(result);
     }

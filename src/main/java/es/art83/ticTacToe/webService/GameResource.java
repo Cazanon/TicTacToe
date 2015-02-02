@@ -31,7 +31,7 @@ public class GameResource {
     @Consumes(MediaType.APPLICATION_XML)
     public Response create(@QueryParam("sessionId") Integer sessionId) {
         Response result;
-        Integer gameId = DAOFactory.getFactory().getSessionDAO().read(sessionId).getGame().getId();
+        Integer gameId = DAOFactory.getFactory().getSessionDAO().read(sessionId).getGameEntity().getId();
         GameEntity gameEntity = DAOFactory.getFactory().getGameDAO().read(gameId);
         GameEntity gameClone = gameEntity.clone();
         DAOFactory.getFactory().getGameDAO().create(gameClone);
@@ -46,7 +46,7 @@ public class GameResource {
     @Consumes(MediaType.APPLICATION_XML)
     public String findGame(@QueryParam("sessionId") Integer sessionId,
             @QueryParam("name") String name) {
-        PlayerEntity player = DAOFactory.getFactory().getSessionDAO().read(sessionId).getPlayer();
+        PlayerEntity player = DAOFactory.getFactory().getSessionDAO().read(sessionId).getPlayerEntity();
         GameEntity game = DAOFactory.getFactory().getGameDAO().findPlayerGame(player, name);
         this.debug(WS.PATH_SEARCH + "?sessionId=" + sessionId + "&name=" + name + " /GET: " + game);
         if (game == null) {

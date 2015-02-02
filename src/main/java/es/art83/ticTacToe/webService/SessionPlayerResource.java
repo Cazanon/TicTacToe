@@ -36,7 +36,7 @@ public class SessionPlayerResource extends SessionResource {
         if (playerEntityBD != null
                 && playerEntityBD.getPassword().equals(playerEntity.getPassword())) {
             SessionEntity sessionEntity = this.readSessionEntity(id);
-            sessionEntity.setPlayer(playerEntityBD);
+            sessionEntity.setPlayerEntity(playerEntityBD);
             sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);
             DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
             this.info(id, " /POST: " + playerEntity);
@@ -49,13 +49,13 @@ public class SessionPlayerResource extends SessionResource {
     @Consumes(MediaType.APPLICATION_XML)
     public void deletePlayer(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
-        sessionEntity.setPlayer(null);
-        sessionEntity.setSaved(true);
+        sessionEntity.setPlayerEntity(null);
+        sessionEntity.setSavedGame(true);
         sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.FINAL);
-        GameEntity gameEntity = sessionEntity.getGame();
+        GameEntity gameEntity = sessionEntity.getGameEntity();
         if (gameEntity != null) {
             Integer gameId = gameEntity.getId();
-            sessionEntity.setGame(null);
+            sessionEntity.setGameEntity(null);
             DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
             DAOFactory.getFactory().getGameDAO().deleteByID(gameId);
         } else {
@@ -70,7 +70,7 @@ public class SessionPlayerResource extends SessionResource {
     public ListStringWrapper nameGames(@PathParam("id") Integer id) {
         SessionEntity sessionEntity = this.readSessionEntity(id);
         List<String> result = DAOFactory.getFactory().getGameDAO()
-                .findPlayerGameNames(sessionEntity.getPlayer());
+                .findPlayerGameNames(sessionEntity.getPlayerEntity());
         this.info(id, WS.PATH_GAME_NAMES + " /GET: " + result);
         return new ListStringWrapper(result);
     }

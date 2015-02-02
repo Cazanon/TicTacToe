@@ -44,8 +44,8 @@ public class BoardEntity {
         assert color != null;
         List<CoordinateEntity> coordinates = new ArrayList<>();
         for (PieceEntity ficha : pieces) {
-            if (ficha.getColor() == color)
-                coordinates.add(ficha.getCoordinate());
+            if (ficha.getColorModel() == color)
+                coordinates.add(ficha.getCoordinateEntity());
         }
         return coordinates;
     }
@@ -53,7 +53,7 @@ public class BoardEntity {
     public List<CoordinateEntity> validDestinationCoordinates() {
         List<CoordinateEntity> coordinates = CoordinateEntity.allCoordinates();
         for (PieceEntity ficha : pieces) {
-            coordinates.remove(ficha.getCoordinate());
+            coordinates.remove(ficha.getCoordinateEntity());
         }
         return coordinates;
     }
@@ -83,16 +83,6 @@ public class BoardEntity {
         }
     }
 
-    // LUIS debería irse al bean que lo necesite y él pide getPieces
-    public ColorModel[][] colors() {
-        ColorModel[][] matriz = new ColorModel[3][3];
-        for (PieceEntity ficha : pieces) {
-            matriz[ficha.getCoordinate().getRow()][ficha.getCoordinate().getColumn()] = ficha
-                    .getColor();
-        }
-        return matriz;
-    }
-
     public void put(PieceEntity ficha) {
         this.pieces.add(ficha);
     }
@@ -100,16 +90,12 @@ public class BoardEntity {
     public PieceEntity remove(CoordinateEntity coordinate) {
         assert coordinate != null : "parametro null";
         for (PieceEntity piece : pieces) {
-            if (piece.getCoordinate().equals(coordinate)) {
+            if (piece.getCoordinateEntity().equals(coordinate)) {
                 this.pieces.remove(piece);
                 return piece;
             }
         }
         return null;
-    }
-
-    public void clear() {
-        this.pieces.clear();
     }
 
     public void update(BoardEntity board) {
