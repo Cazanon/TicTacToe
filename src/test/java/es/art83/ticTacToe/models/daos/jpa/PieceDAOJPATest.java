@@ -27,8 +27,13 @@ public class PieceDAOJPATest {
     public void testCreate() {
         List<PieceEntity> piecesData = new ArrayList<PieceEntity>();
         while (data.hasNextPieces()) {
-            dao.create(data.getPiece());
-            piecesData.add(data.getPiece());
+            if (data.getPiece() != null) {
+                System.out.println("!!!PIECE Id: " + data.getPiece().getId() + ": "
+                        + data.getPiece());
+                dao.create(data.getPiece());
+                piecesData.add(data.getPiece());
+            }
+            data.nextPiece();
         }
         List<PieceEntity> pieces = dao.findAll();
         for (PieceEntity piece : piecesData) {
@@ -39,7 +44,7 @@ public class PieceDAOJPATest {
 
     @Test
     public void testUpdate() {
-  
+
         // dao.deleteByID(data.getPiece().getId());
         // dao.read(data.getPiece().getId());
         // dao.update(data.getPiece());
@@ -47,27 +52,27 @@ public class PieceDAOJPATest {
 
     @Test
     public void testDelete() {
-      
+
     }
 
     @Test
     public void testDeleteByID() {
-        
+
     }
 
     @Test
     public void testDeleteByCoordinate() {
-        
+
     }
 
     @Test
     public void testRead() {
-        
+
     }
 
     @Test
     public void testFindAll() {
-        
+
     }
 
 }
