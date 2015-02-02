@@ -17,7 +17,7 @@ public class PieceDAOJPA extends GenericDAOJPA<PieceEntity, Integer> implements 
         super(PieceEntity.class);
     }
 
-    @Override
+    
     public void deleteByCoordinate(CoordinateEntity coordinateEntity) {
         EntityManager entityManager = DAOJPAFactory.getEmf().createEntityManager();
         // Se crea un criterio de consulta
@@ -28,7 +28,7 @@ public class PieceDAOJPA extends GenericDAOJPA<PieceEntity, Integer> implements 
         // Se establece la clausula SELECT
         query.select(root);
         // Se configura el predicado
-        Predicate predicate = builder.equal(root.get("coordinate").as(CoordinateEntity.class),
+        Predicate predicate = builder.equal(root.get("coordinateEntity").as(CoordinateEntity.class),
                 coordinateEntity);
         // Se establece el WHERE
         query.where(predicate);

@@ -10,10 +10,11 @@ import org.apache.logging.log4j.LogManager;
 import es.art83.ticTacToe.controllers.CreateGameController;
 import es.art83.ticTacToe.controllers.LogoutController;
 import es.art83.ticTacToe.controllers.OpenGameController;
-import es.art83.ticTacToe.controllers.PlaceCardController;
+import es.art83.ticTacToe.controllers.PlacePieceController;
 import es.art83.ticTacToe.controllers.SaveGameController;
 import es.art83.ticTacToe.controllers.ShowGameController;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
+import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
 
 @ManagedBean
@@ -33,8 +34,6 @@ public class GameViewBean extends ViewBean {
 
     private ColorModel winner;
 
-    private boolean savedGame;
-
     private ColorModel turn;
 
     private boolean hasAllPieces;
@@ -53,12 +52,10 @@ public class GameViewBean extends ViewBean {
         this.createdGame = showGameController.createdGame();
         if (this.createdGame) {
             this.gameName = showGameController.getNameGame();
-            this.colors = showGameController.colors();
-            this.gameOver = showGameController.isGameOver();
-            if (this.gameOver) {
-                this.winner = showGameController.winner();
-            } else {
-                this.savedGame = showGameController.isSavedGame();
+            this.prepareBoarView(showGameController.allPieces());
+            this.winner = showGameController.gameOver();
+            this.gameOver = this.winner != null;
+            if (!this.gameOver) {
                 this.turn = showGameController.turnColor();
                 this.hasAllPieces = showGameController.hasAllPieces();
                 if (this.hasAllPieces) {
@@ -67,7 +64,15 @@ public class GameViewBean extends ViewBean {
                 this.validDestinationCoordinates = showGameController.validDestinationCoordinates();
             }
         }
-        this.gameNames = this.getControllerFactory().getStartGameController().readGameNames();
+        this.gameNames = this.getControllerFactory().getShowGameController().gameNames();
+    }
+
+    private void prepareBoarView(List<PieceEntity> allPieces) {
+        this.colors = new ColorModel[3][3];
+        for (PieceEntity ficha : allPieces) {
+            this.colors[ficha.getCoordinateEntity().getRow()][ficha.getCoordinateEntity()
+                    .getColumn()] = ficha.getColorModel();
+        }
     }
 
     public String getGameNameSelected() {
@@ -110,10 +115,6 @@ public class GameViewBean extends ViewBean {
         return winner;
     }
 
-    public boolean isSavedGame() {
-        return savedGame;
-    }
-
     public ColorModel getTurn() {
         return turn;
     }
@@ -152,38 +153,37 @@ public class GameViewBean extends ViewBean {
                 .getCreateGameControler();
         createGameController.createGame();
         this.update();
-        LogManager.getLogger("Bean:" + createGameController.getClass().getName()).info(
-                "Created game");
+        LogManager.getLogger(this.getClass().getName()).info("--- Partida creada ---");
         return null;
     }
 
     public String logout() {
         String next = null;
         LogoutController logoutController = this.getControllerFactory().getLogoutController();
-        if (!logoutController.isSavedGame()) {
+        if (!logoutController.savedGame()) {
             next = "logout";
         } else {
             logoutController.logout();
-            LogManager.getLogger("Bean:" + logoutController.getClass().getName()).info(
-                    "Usuario cerrado");
+            LogManager.getLogger(this.getClass().getName()).info("--- Usuario cerrado ---");
             next = "/login";
         }
         return next;
     }
 
     public String placeCard() {
-        PlaceCardController placeCardController = this.getControllerFactory()
-                .getPlaceCardController();
+        PlacePieceController placeCardController = this.getControllerFactory()
+                .getPlacePieceController();
         if (this.hasAllPieces) {
-            placeCardController.placeCard(new CoordinateEntity(this.selectedSourceCoordinate),
+            placeCardController.placePiece(new CoordinateEntity(this.selectedSourceCoordinate),
                     new CoordinateEntity(this.selectedDestinationCoordinate));
         } else {
-            placeCardController.placeCard(new CoordinateEntity(this.selectedDestinationCoordinate));
+            placeCardController
+                    .placePiece(new CoordinateEntity(this.selectedDestinationCoordinate));
         }
-        LogManager.getLogger("Bean:" + placeCardController.getClass().getName()).info(
-                "Place card: " + this.selectedSourceCoordinate + ">"
-                        + this.selectedDestinationCoordinate);
         this.update();
+        LogManager.getLogger(this.getClass().getName()).info(
+                "--- Ficha puesta: " + this.selectedSourceCoordinate + ">"
+                        + this.selectedDestinationCoordinate + " ---");
         return null;
     }
 
@@ -193,9 +193,8 @@ public class GameViewBean extends ViewBean {
             SaveGameController saveGameController = this.getControllerFactory()
                     .getSaveGameController();
             saveGameController.saveGame();
-            this.savedGame = true;
-            LogManager.getLogger("Bean:" + saveGameController.getClass().getName()).info(
-                    "Partida salvada: " + this.gameName);
+            LogManager.getLogger(this.getClass().getName()).info(
+                    "--- Partida salvada: " + this.gameName + " ---");
 
         } else {
             result = "save";
@@ -207,7 +206,7 @@ public class GameViewBean extends ViewBean {
         OpenGameController openGameController = this.getControllerFactory().getOpenGameController();
         openGameController.openGame(this.gameNameSelected);
         this.update();
-        LogManager.getLogger("Bean:" + openGameController.getClass().getName()).info("openGame");
+        LogManager.getLogger(this.getClass().getName()).info("--- Partida abierta ---");
         return null;
     }
 

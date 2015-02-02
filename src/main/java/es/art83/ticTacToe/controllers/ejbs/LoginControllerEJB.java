@@ -7,15 +7,15 @@ import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
 public class LoginControllerEJB extends ControllerEJB implements LoginController {
 
-    public LoginControllerEJB(TicTacToeContext ticTacToeStatesManager) {
-        super(ticTacToeStatesManager);
+    public LoginControllerEJB(TicTacToeSession ticTacToeSession) {
+        super(ticTacToeSession);
     }
 
     private void changeSate(PlayerEntity player) {
-        assert this.getTicTacToeContext().getTicTacToeStateModel() == TicTacToeStateModel.INITIAL
-                || this.getTicTacToeContext().getTicTacToeStateModel() == TicTacToeStateModel.FINAL;
-        this.getTicTacToeContext().setPlayer(player);
-        this.getTicTacToeContext().setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);
+        assert this.getTicTacToeSession().getTicTacToeStateModel() == TicTacToeStateModel.INITIAL
+                || this.getTicTacToeSession().getTicTacToeStateModel() == TicTacToeStateModel.FINAL;
+        this.getTicTacToeSession().setPlayer(player);
+        this.getTicTacToeSession().setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);
     }
 
     @Override
@@ -43,8 +43,8 @@ public class LoginControllerEJB extends ControllerEJB implements LoginController
 
     @Override
     public boolean logged() {
-       return this.getTicTacToeContext().getTicTacToeStateModel() == TicTacToeStateModel.CLOSED_GAME
-                || this.getTicTacToeContext().getTicTacToeStateModel() == TicTacToeStateModel.OPENED_GAME;
+       return this.getTicTacToeSession().getTicTacToeStateModel() == TicTacToeStateModel.CLOSED_GAME
+                || this.getTicTacToeSession().getTicTacToeStateModel() == TicTacToeStateModel.OPENED_GAME;
     }
 
 }

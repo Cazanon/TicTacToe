@@ -29,12 +29,12 @@ public class TurnEntity {
 
     //LUIS se debe quitar el get
     //LUIS revisar en todo todo si ponemos el this ante atributos bajo necesidad o siempre
-    public ColorModel getColorChanged() {
+    public ColorModel colorChanged() {
         return this.color.next(); 
     }
     
     public void change() {
-        this.color = this.getColorChanged();
+        this.color = this.colorChanged();
     }
 
     public void update(TurnEntity turn) {

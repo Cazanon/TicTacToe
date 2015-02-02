@@ -9,4 +9,6 @@ public interface GameDAO extends GenericDAO<GameEntity, Integer> {
     List<String> findPlayerGameNames(PlayerEntity playerEntity);
 
     List<GameEntity> findPlayerGames(PlayerEntity player, String nameGame);
+
+    GameEntity findPlayerGame(PlayerEntity player, String gameNameSelected);
 }

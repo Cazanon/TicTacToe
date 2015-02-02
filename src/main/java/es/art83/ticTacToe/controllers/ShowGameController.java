@@ -3,19 +3,16 @@ package es.art83.ticTacToe.controllers;
 import java.util.List;
 
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
+import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
 
 public interface ShowGameController {
 
     String getNameGame();
 
-    ColorModel[][] colors();
+    List<PieceEntity> allPieces();
 
-    boolean isGameOver();
-
-    ColorModel winner();
-
-    boolean isSavedGame();
+    ColorModel gameOver();
 
     ColorModel turnColor();
 
@@ -26,5 +23,7 @@ public interface ShowGameController {
     List<CoordinateEntity> validDestinationCoordinates();
 
     boolean createdGame();
+    
+    List<String> gameNames();
 
 }

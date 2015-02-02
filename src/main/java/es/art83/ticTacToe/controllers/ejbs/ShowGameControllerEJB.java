@@ -3,66 +3,64 @@ package es.art83.ticTacToe.controllers.ejbs;
 import java.util.List;
 
 import es.art83.ticTacToe.controllers.ShowGameController;
+import es.art83.ticTacToe.models.daos.DAOFactory;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
+import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
 import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
 
 public class ShowGameControllerEJB extends ControllerEJB implements ShowGameController {
 
-    public ShowGameControllerEJB(TicTacToeContext ticTacToeStatesManager) {
+    public ShowGameControllerEJB(TicTacToeSession ticTacToeStatesManager) {
         super(ticTacToeStatesManager);
     }
 
     @Override
     public String getNameGame() {
-        return this.getTicTacToeContext().getGame().getName();
+        return this.getTicTacToeSession().getGame().getName();
     }
 
     @Override
-    public ColorModel[][] colors() {
-        return this.getTicTacToeContext().getGame().colors();
+    public List<PieceEntity> allPieces() {
+        return this.getTicTacToeSession().getGame().allPieces();
     }
 
     @Override
-    public boolean isGameOver() {
-        return this.getTicTacToeContext().getGame().existTicTacToe();
-    }
-
-    @Override
-    public ColorModel winner() {
-        return this.getTicTacToeContext().getGame().winner();
-    }
-
-    @Override
-    public boolean isSavedGame() {
-        return this.getTicTacToeContext().isSavedGame();
+    public ColorModel gameOver() {
+        return this.getTicTacToeSession().getGame().gameOver();
     }
 
     @Override
     public ColorModel turnColor() {
-        return this.getTicTacToeContext().getGame().turnColor();
+        return this.getTicTacToeSession().getGame().turnColor();
     }
 
     @Override
     public boolean hasAllPieces() {
-        return this.getTicTacToeContext().getGame().hasAllPieces();
+        return this.getTicTacToeSession().getGame().hasAllPieces();
     }
 
     @Override
     public List<CoordinateEntity> validSourceCoordinates() {
-        return this.getTicTacToeContext().getGame().validSourceCoordinates();
+        return this.getTicTacToeSession().getGame().validSourceCoordinates();
     }
 
     @Override
     public List<CoordinateEntity> validDestinationCoordinates() {
-        return this.getTicTacToeContext().getGame().validDestinationCoordinates();
+        return this.getTicTacToeSession().getGame().validDestinationCoordinates();
     }
 
     @Override
     public boolean createdGame() {
-        boolean result = this.getTicTacToeContext().getTicTacToeStateModel() == TicTacToeStateModel.OPENED_GAME;
-        result = result || this.getTicTacToeContext().getGame() != null;
+        boolean result = this.getTicTacToeSession().getTicTacToeStateModel() == TicTacToeStateModel.OPENED_GAME;
+        result = result || this.getTicTacToeSession().getGame() != null;
         return result;
     }
+    @Override
+    public List<String> gameNames() {
+        return DAOFactory.getFactory().getGameDAO()
+                .findPlayerGameNames(this.getTicTacToeSession().getPlayer());
+    }
+
 
 }

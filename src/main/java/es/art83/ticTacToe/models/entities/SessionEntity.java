@@ -1,5 +1,6 @@
 package es.art83.ticTacToe.models.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,19 +21,19 @@ public class SessionEntity {
     @Enumerated(EnumType.STRING)
     private TicTacToeStateModel ticTacToeStateModel;
 
-    private boolean saved;
+    private boolean savedGame;
 
     @OneToOne
-    private PlayerEntity player;
+    private PlayerEntity playerEntity;
 
-    @OneToOne
-    private GameEntity game;
+    @OneToOne(cascade = CascadeType.ALL)
+    private GameEntity gameEntity;
 
     public SessionEntity() {
         this.ticTacToeStateModel = TicTacToeStateModel.INITIAL;
-        this.player = null;
-        this.game = null;
-        this.saved = true;
+        this.playerEntity = null;
+        this.gameEntity = null;
+        this.savedGame = true;
     }
 
     public int getId() {
@@ -47,35 +48,34 @@ public class SessionEntity {
         this.ticTacToeStateModel = ticTacToeStateModel;
     }
 
-    public PlayerEntity getPlayer() {
-        return this.player;
-    }
-
-    public void setPlayer(PlayerEntity player) {
-        this.player = player;
-    }
-
-    public GameEntity getGame() {
-        return this.game;
-    }
-
-    public void setGame(GameEntity game) {
-        this.game = game;
-    }
-
     public boolean isSavedGame() {
-        return this.saved;
+        return this.savedGame;
     }
 
-    public void setSaved(boolean saved) {
-        this.saved = saved;
+    public void setSavedGame(boolean savedGame) {
+        this.savedGame = savedGame;
+    }
+
+    public PlayerEntity getPlayerEntity() {
+        return this.playerEntity;
+    }
+
+    public void setPlayerEntity(PlayerEntity playerEntity) {
+        this.playerEntity = playerEntity;
+    }
+
+    public GameEntity getGameEntity() {
+        return this.gameEntity;
+    }
+
+    public void setGameEntity(GameEntity gameEntity) {
+        this.gameEntity = gameEntity;
     }
 
     @Override
     public String toString() {
         return "SessionEntity[" + id + ":" + ticTacToeStateModel
-                + "," + saved + ";player:" + player + ";game:" + game + "]";
+                + ",saved:" + savedGame + ";player:" + playerEntity + ";game:" + gameEntity + "]";
     }
-
 
 }

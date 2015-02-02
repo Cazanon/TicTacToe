@@ -17,15 +17,15 @@ public class SaveViewBean extends ViewBean {
 
     private String gameName;
 
-    private boolean overWrite = false;
+    private boolean overWrote = false;
 
     @PostConstruct
     public void update() {
-        this.gameNames = this.getControllerFactory().getNameGameController().gameNames();
+        this.gameNames = this.getControllerFactory().getShowGameController().gameNames();
     }
 
-    public boolean isOverWrite() {
-        return this.overWrite;
+    public boolean isOverWrote() {
+        return this.overWrote;
     }
 
     public List<String> getGameNames() {
@@ -40,8 +40,8 @@ public class SaveViewBean extends ViewBean {
         this.gameName = gameName;
     }
 
-    public boolean isZeroGameNames() {
-        return this.gameNames.size() == 0;
+    public boolean isExistGames() {
+        return this.gameNames.size() > 0;
     }
 
     public String saveGame() {
@@ -49,13 +49,13 @@ public class SaveViewBean extends ViewBean {
         if (this.gameNames.contains(this.gameName)) {
             FacesContext.getCurrentInstance().addMessage("over",
                     new FacesMessage("Game name exist!!!"));
-            this.overWrite = true;
+            this.overWrote = true;
         } else {
             SaveGameController saveGameController = this.getControllerFactory()
                     .getSaveGameController();
             saveGameController.saveGame(this.gameName);
-            LogManager.getLogger(saveGameController.getClass().getName()).info(
-                    "Partida salvada: " + this.gameName);
+            LogManager.getLogger(this.getClass().getName()).info(
+                    "--- Partida salvada: " + this.gameName + " ---");
             next = "game";
         }
         return next;
@@ -64,8 +64,8 @@ public class SaveViewBean extends ViewBean {
     public String overWriteGame() {
         SaveGameController saveGameController = this.getControllerFactory().getSaveGameController();
         saveGameController.overWriteGame(this.gameName);
-        LogManager.getLogger(saveGameController.getClass().getName()).info(
-                "Partida sobrescrita: " + this.gameName);
+        LogManager.getLogger(this.getClass().getName()).info(
+                "--- Partida sobrescrita: " + this.gameName + " ---");
         return "game";
     }
 

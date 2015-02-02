@@ -12,17 +12,17 @@
 	<h1>Tic Tac Toe. Save</h1>
 
 	<h:selectOneListbox readonly="true"
-		rendered="#{!saveViewBean.zeroGameNames}">
+		rendered="#{saveViewBean.existGames}">
 		<f:selectItems value="#{saveViewBean.gameNames}" />
 	</h:selectOneListbox>
-	<h:form id="save" rendered="#{!saveViewBean.overWrite}">
+	<h:form id="save" rendered="#{!saveViewBean.overWrote}">
 		<h:panelGrid columns="1">
 			<h:inputText id="gameName" value="#{saveViewBean.gameName}" />
 			<h:commandButton value="Save game" action="#{saveViewBean.saveGame}" />
 			<h:commandButton value="Cancel" action="game.jsf" />
 		</h:panelGrid>
 	</h:form>
-	<h:form id="over" rendered="#{saveViewBean.overWrite}">
+	<h:form id="over" rendered="#{saveViewBean.overWrote}">
 		<h:inputHidden value="#{saveViewBean.gameName}" />
 		<h:panelGrid columns="1">
 			<h:message for="over" style="color:red" />

@@ -28,7 +28,7 @@ public class TurnEntityTest {
     @Test
     public void testColorChanged() {
         for (ColorModel color : ColorModel.values()) {
-            assertEquals(color.next(), new TurnEntity(color).getColorChanged());
+            assertEquals(color.next(), new TurnEntity(color).colorChanged());
         }
     }
 

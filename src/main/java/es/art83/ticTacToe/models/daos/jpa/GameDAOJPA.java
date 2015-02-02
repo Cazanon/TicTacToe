@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import es.art83.ticTacToe.models.daos.DAOFactory;
 import es.art83.ticTacToe.models.daos.GameDAO;
 import es.art83.ticTacToe.models.entities.GameEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
@@ -30,8 +31,9 @@ public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements Ga
         // Se establece la clausula SELECT
         query.select(root.get("name")); // criteriaQuery.multiselect(root.get(atr))
         // Se configura el predicado
-        Predicate predicate1 = builder.equal(root.get("player").as(PlayerEntity.class), player);
-        Predicate predicate2 = builder.isNotNull(root.get("name").as(PlayerEntity.class));
+        Predicate predicate1 = builder.equal(root.get("playerEntity").as(PlayerEntity.class),
+                player);
+        Predicate predicate2 = builder.isNotNull(root.get("name").as(String.class));
         // Se establece el WHERE
         query.where(builder.and(predicate1, predicate2));
         // Se crea el resultado
@@ -54,7 +56,8 @@ public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements Ga
         // Se establece la clausula SELECT
         query.select(root); // criteriaQuery.multiselect(root.get(atr))
         // Se configura el predicado
-        Predicate predicate1 = builder.equal(root.get("player").as(PlayerEntity.class), player);
+        Predicate predicate1 = builder.equal(root.get("playerEntity").as(PlayerEntity.class),
+                player);
         Predicate predicate2 = builder.equal(root.get("name").as(String.class), gameName);
         Predicate predicate = builder.and(predicate1, predicate2);
         // Se establece el WHERE
@@ -66,5 +69,23 @@ public class GameDAOJPA extends GenericDAOJPA<GameEntity, Integer> implements Ga
         List<GameEntity> result = tq.getResultList();
         entityManager.close();
         return result;
+    }
+
+    @Override
+    public GameEntity findPlayerGame(PlayerEntity player, String gameNameSelected) {
+        List<GameEntity> sessionGames = DAOFactory.getFactory().getSessionDAO()
+                .findPlayerGames(player);
+        List<GameEntity> playerGames = this.findPlayerGames(player, gameNameSelected);
+        for (GameEntity sessionGame : sessionGames) {
+            for (GameEntity playerGame : playerGames) {
+                if (playerGame.getId() == sessionGame.getId()) {
+                    playerGames.remove(playerGame);
+                    break;
+                }
+            }
+
+        }
+        assert playerGames.size() == 1;
+        return playerGames.get(0);
     }
 }

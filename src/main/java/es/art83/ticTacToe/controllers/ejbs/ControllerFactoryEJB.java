@@ -4,48 +4,41 @@ import es.art83.ticTacToe.controllers.ControllerFactory;
 import es.art83.ticTacToe.controllers.CreateGameController;
 import es.art83.ticTacToe.controllers.LoginController;
 import es.art83.ticTacToe.controllers.LogoutController;
-import es.art83.ticTacToe.controllers.NameGameController;
 import es.art83.ticTacToe.controllers.OpenGameController;
-import es.art83.ticTacToe.controllers.PlaceCardController;
+import es.art83.ticTacToe.controllers.PlacePieceController;
 import es.art83.ticTacToe.controllers.SaveGameController;
 import es.art83.ticTacToe.controllers.ShowGameController;
-import es.art83.ticTacToe.controllers.StartGameController;
 
 //@ManagedBean(name = "controllerFactory")
 //@SessionScoped
 public class ControllerFactoryEJB extends ControllerFactory {
 
-    private TicTacToeContext ticTacToeContext;
+    private TicTacToeSession ticTacToeSession;
 
     private LoginController loginController;
 
     private LogoutController logoutController;
 
-    private StartGameController startGameController;
-
     private CreateGameController createGameController;
 
     private OpenGameController openGameController;
 
-    private NameGameController nameGameController;
 
     private ShowGameController showGameController;
 
-    private PlaceCardController placeCardController;
+    private PlacePieceController placePieceController;
 
     private SaveGameController saveGameController;
 
     public ControllerFactoryEJB() {
-        this.ticTacToeContext = new TicTacToeContext();
-        this.loginController = new LoginControllerEJB(ticTacToeContext);
-        this.logoutController = new LogoutControllerEJB(ticTacToeContext);
-        this.startGameController = new StartGameControllerEJB(ticTacToeContext);
-        this.createGameController = new CreateGameControllerEJB(ticTacToeContext);
-        this.nameGameController = new NameGameControllerEJB(ticTacToeContext);
-        this.showGameController = new ShowGameControllerEJB(ticTacToeContext);
-        this.placeCardController = new PlaceCardControllerEJB(ticTacToeContext);
-        this.saveGameController = new SaveGameControllerEJB(ticTacToeContext);
-        this.openGameController = new OpenGameControllerEJB(ticTacToeContext);
+        this.ticTacToeSession = new TicTacToeSession();
+        this.loginController = new LoginControllerEJB(ticTacToeSession);
+        this.logoutController = new LogoutControllerEJB(ticTacToeSession);
+        this.createGameController = new CreateGameControllerEJB(ticTacToeSession);
+        this.showGameController = new ShowGameControllerEJB(ticTacToeSession);
+        this.placePieceController = new PlacePieceControllerEJB(ticTacToeSession);
+        this.saveGameController = new SaveGameControllerEJB(ticTacToeSession);
+        this.openGameController = new OpenGameControllerEJB(ticTacToeSession);
     }
 
     @Override
@@ -69,23 +62,13 @@ public class ControllerFactoryEJB extends ControllerFactory {
     }
 
     @Override
-    public StartGameController getStartGameController() {
-        return this.startGameController;
-    }
-
-    @Override
-    public NameGameController getNameGameController() {
-        return this.nameGameController;
-    }
-
-    @Override
     public ShowGameController getShowGameController() {
         return this.showGameController;
     }
 
     @Override
-    public PlaceCardController getPlaceCardController() {
-        return this.placeCardController;
+    public PlacePieceController getPlacePieceController() {
+        return this.placePieceController;
     }
 
     @Override

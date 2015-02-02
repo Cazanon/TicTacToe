@@ -1,0 +1,45 @@
+package es.art83.ticTacToe.controllers.webService;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import es.art83.ticTacToe.controllers.LogoutController;
+import es.art83.ticTacToe.controllers.webService.ControllerFactoryWebService;
+import es.art83.ticTacToe.controllers.webService.CreateGameControllerWebService;
+import es.art83.ticTacToe.models.entities.PlayerEntity;
+import es.art83.ticTacToe.webService.PlayerResource;
+import es.art83.ticTacToe.webService.SessionResource;
+import es.art83.ticTacToe.webService.utils.WebServicesManager;
+
+public class CreateGameControllerWebServiceTest {
+
+    private CreateGameControllerWebService create;
+
+    private PlayerEntity playerEntity;
+
+    private LogoutController logout;
+
+    @Before
+    public void before() {
+        ControllerFactoryWebService factory = new ControllerFactoryWebService();
+        this.create = (CreateGameControllerWebService) factory.getCreateGameControler();
+        this.logout = factory.getLogoutController();
+        this.playerEntity = new PlayerEntity("u", "pass");
+        factory.getLoginController().register(playerEntity);
+    }
+
+    @Test
+    public void testCreateGame() {
+        this.create.createGame();
+    }
+
+    @After
+    public void after() {
+        this.logout.logout();
+        new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.create.getSessionId())
+                .delete();
+        new WebServicesManager<>(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser())
+                .delete();
+    }
+}

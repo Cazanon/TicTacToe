@@ -23,11 +23,10 @@
 				<h:column>#{fila[1]}</h:column>
 				<h:column>#{fila[2]}</h:column>
 			</h:dataTable>
+			<h:form id="gameViewBean">
+				<h:commandButton value="Save game" action="#{gameViewBean.saveGame}" />
+			</h:form>
 			<h:panelGroup rendered="#{!gameViewBean.gameOver}">
-				<h:form id="saveGameViewBean" rendered="#{!gameViewBean.savedGame}">
-					<h:commandButton value="Save game"
-						action="#{gameViewBean.saveGame}" />
-				</h:form>
 				<h:form id="placeCardGameViewBean">
 					<h:panelGrid columns="2">
 						<h:outputText value="Turn: " />
@@ -60,8 +59,8 @@
 	</h:panelGroup>
 
 	<fieldset>
-		<legend>Start game</legend>
-		<h:form id="startGame">
+		<legend>Start another game</legend>
+		<h:form>
 			<h:commandButton value="New game" action="#{gameViewBean.createGame}" />
 			<h:panelGroup rendered="#{!gameViewBean.zeroGameNames}">
 				<h:selectOneMenu value="#{gameViewBean.gameNameSelected}">
@@ -72,7 +71,7 @@
 		</h:form>
 	</fieldset>
 
-	<h:form id="logout">
+	<h:form>
 		<h:commandButton value="Logout" action="#{gameViewBean.logout}" />
 	</h:form>
 
