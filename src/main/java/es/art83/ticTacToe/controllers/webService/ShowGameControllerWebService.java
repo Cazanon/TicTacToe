@@ -26,7 +26,7 @@ public class ShowGameControllerWebService extends ControllerWebService implement
     }
 
     @Override
-    public String getNameGame() {
+    public String gameName() {
         return new WebServicesManager<String>(pathSessionsIdGame, SessionGameResource.PATH_NAME)
                 .entity(String.class);
     }

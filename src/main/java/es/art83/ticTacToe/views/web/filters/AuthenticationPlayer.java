@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.views.filters;
+package es.art83.ticTacToe.views.web.filters;
 
 import java.io.IOException;
 

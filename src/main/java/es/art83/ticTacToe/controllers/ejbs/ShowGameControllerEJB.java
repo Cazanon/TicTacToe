@@ -16,7 +16,7 @@ public class ShowGameControllerEJB extends ControllerEJB implements ShowGameCont
     }
 
     @Override
-    public String getNameGame() {
+    public String gameName() {
         return this.getTicTacToeSession().getGame().getName();
     }
 

@@ -35,7 +35,7 @@ public class ShowGameControllerWebServiceTest {
 
     @Test
     public void testGetNameGameNull() {
-        assertNull(this.showGameController.getNameGame());
+        assertNull(this.showGameController.gameName());
     }
 
     @Test

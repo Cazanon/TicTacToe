@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.views.beans;
+package es.art83.ticTacToe.views.web.beans;
 
 import javax.faces.bean.ManagedProperty;
 

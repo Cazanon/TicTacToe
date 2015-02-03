@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.views.beans;
+package es.art83.ticTacToe.views.web.beans;
 
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 

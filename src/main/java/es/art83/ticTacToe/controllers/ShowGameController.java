@@ -8,7 +8,7 @@ import es.art83.ticTacToe.models.utils.ColorModel;
 
 public interface ShowGameController {
 
-    String getNameGame();
+    String gameName();
 
     List<PieceEntity> allPieces();
 

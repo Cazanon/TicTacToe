@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.views.beans;
+package es.art83.ticTacToe.views.web.beans;
 
 import java.util.List;
 
@@ -51,7 +51,7 @@ public class GameViewBean extends ViewBean {
         ShowGameController showGameController = this.getControllerFactory().getShowGameController();
         this.createdGame = showGameController.createdGame();
         if (this.createdGame) {
-            this.gameName = showGameController.getNameGame();
+            this.gameName = showGameController.gameName();
             this.prepareBoarView(showGameController.allPieces());
             this.winner = showGameController.gameOver();
             this.gameOver = this.winner != null;
