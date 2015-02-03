@@ -1,57 +1,64 @@
 package es.art83.ticTacToe.views.desktop;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
+import es.art83.ticTacToe.controllers.LogoutController;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 
-class LoginViewPanel extends ViewPanel implements ActionListener {
+@SuppressWarnings("serial")
+class LoginViewPanel extends UserViewPanel {
 
-    private JTextField user;
-
-    private JPasswordField password;
-
+    private LogoutController logoutController;
+    
+    private JLabel byeMsg;
+    
     private JButton login;
 
     private JButton register;
 
     LoginViewPanel(Frame frame) {
         super(frame);
-        if (factory.getLogoutController().logouted()) {
-            this.add(new JLabel("Bye!"));
-        }
-        this.add(new JLabel("User:"));
-        user = new JTextField(15);
-        this.add(user);
-        this.add(new JLabel("Password:"));
-        password = new JPasswordField(15);
-        this.add(password);
-        login = new JButton("Login");
-        this.add(login);
-        login.addActionListener(this);
-        register = new JButton("Register");
-        this.add(register);
-        register.addActionListener(this);
+    }
+    
+    @Override
+    protected void updateControllers() {
+        logoutController = factory.getLogoutController();
+        super.updateControllers();
+    }
+    
+    @Override
+    protected void createComponents(){
+        byeMsg = this.createLabelInPanel("Bye!");
+        super.createComponents();
+        login = this.createButtonInPanel("Login");
+        register = this.createButtonInPanel("Register");
     }
 
+    @Override
+    protected void visualizeComponents() {
+        byeMsg.setVisible(logoutController.logouted());
+        super.visualizeComponents();
+        login.setVisible(true);
+        register.setVisible(true);
+    }
+
+    @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == login) {
-            boolean result = factory.getLoginController().login(
+            boolean result = loginController.login(
                     new PlayerEntity(user.getText(), new String(password.getPassword())));
             if (result) {
-                frame.update(new GameViewPanel(frame));
+                frame.setPanel(new GameViewPanel(frame));
             } else {
                 JOptionPane.showMessageDialog(null,
-                        "The user can not be empty and passwords must match");
+                        "Unknow user! Try again");
             }
         } else if (event.getSource() == register) {
-            frame.update(new RegisterViewPanel(frame));
+            frame.setPanel(new RegisterViewPanel(frame));
         }
     }
 

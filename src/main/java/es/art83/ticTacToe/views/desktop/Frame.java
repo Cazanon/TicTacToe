@@ -2,6 +2,7 @@ package es.art83.ticTacToe.views.desktop;
 
 import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 class Frame extends JFrame {
 
     Frame() {
@@ -10,15 +11,15 @@ class Frame extends JFrame {
         this.setSize(500, 150);
         this.setResizable(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.update(new LoginViewPanel(this));
+        this.setPanel(new LoginViewPanel(this));
     }
 
-    void update(ViewPanel viewPanel) {
+    void setPanel(ViewPanel viewPanel) {
         this.setContentPane(viewPanel);
         this.setVisible(true);
     }
     
     public static void main(String[] args){
-        Frame frame = new Frame();
+        new Frame();
     }
 }

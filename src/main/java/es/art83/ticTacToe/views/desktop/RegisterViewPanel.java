@@ -1,21 +1,18 @@
 package es.art83.ticTacToe.views.desktop;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 
-public class RegisterViewPanel extends ViewPanel implements ActionListener {
+@SuppressWarnings("serial")
+class RegisterViewPanel extends UserViewPanel {
 
-    private JTextField user;
-
-    private JPasswordField password;
+    private JLabel repeatedPasswordMsg;
 
     private JPasswordField repeatedPassword;
 
@@ -25,39 +22,45 @@ public class RegisterViewPanel extends ViewPanel implements ActionListener {
 
     RegisterViewPanel(Frame frame) {
         super(frame);
-        this.add(new JLabel("User:"));
-        user = new JTextField(15);
-        this.add(user);
-        this.add(new JLabel("Password:"));
-        password = new JPasswordField(15);
-        this.add(password);
-        this.add(new JLabel("Repeated password:"));
-        repeatedPassword = new JPasswordField(15);
-        this.add(repeatedPassword);
-        register = new JButton("Register");
-        this.add(register);
-        register.addActionListener(this);
-        cancel = new JButton("Cancel");
-        this.add(cancel);
-        cancel.addActionListener(this);
     }
 
+    @Override
+    protected void createComponents() {
+        super.createComponents();
+        repeatedPasswordMsg = this.createLabelInPanel("Repeated Password: ");
+        repeatedPassword = this.createPasswordFieldInPanel(FIELD_LENGTH);
+        register = this.createButtonInPanel("Register");
+        cancel = this.createButtonInPanel("Cancel");
+    }
+
+    @Override
+    protected void visualizeComponents() {
+        super.visualizeComponents();
+        repeatedPasswordMsg.setVisible(true);
+        repeatedPassword.setVisible(true);
+        register.setVisible(true);
+        cancel.setVisible(true);
+    }
+
+    @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == register) {
             if (user.getText().equals("")
-                    || !new String(password.getPassword())
-                            .equals(new String(repeatedPassword.getPassword()))) {
+                    || password.getPassword().length == 0
+                    || repeatedPassword.getPassword().length == 0
+                    || !new String(password.getPassword()).equals(new String(repeatedPassword
+                            .getPassword()))) {
                 JOptionPane.showMessageDialog(null,
                         "The user can not be empty and passwords must match");
             } else {
-                boolean result = factory.getLoginController().register(
-                        new PlayerEntity(user.getText(), new String(password.getPassword())));
+                boolean result = loginController.register(new PlayerEntity(user.getText(),
+                        new String(password.getPassword())));
                 if (result) {
-                    frame.update(new GameViewPanel(frame));
+                    frame.setPanel(new GameViewPanel(frame));
                 }
             }
         } else if (event.getSource() == cancel) {
-            frame.update(new LoginViewPanel(frame));
+            frame.setPanel(new LoginViewPanel(frame));
         }
     }
 }
