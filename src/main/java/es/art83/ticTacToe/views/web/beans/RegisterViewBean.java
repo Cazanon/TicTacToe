@@ -10,20 +10,20 @@ import es.art83.ticTacToe.controllers.LoginController;
 
 @ManagedBean
 public class RegisterViewBean extends PlayerViewBean {
-    private String password;
+    private String repeatedPassword;
 
-    public String getPassword() {
-        return password;
+    public String getRepeatedPassword() {
+        return repeatedPassword;
     }
 
-    public void setPassword(String password2) {
-        this.password = password2;
+    public void setRepeatedPassword(String repeatedPassword) {
+        this.repeatedPassword = repeatedPassword;
     }
 
     public String register() {
         String next = null;
         LoginController loginController = this.getControllerFactory().getLoginController();
-        if (!this.getPlayer().getPassword().equals(this.password)) {
+        if (!this.getPlayer().getPassword().equals(this.repeatedPassword)) {
             FacesContext.getCurrentInstance().addMessage("registerViewBean:password",
                     new FacesMessage("Claves direrentes"));
         } else {

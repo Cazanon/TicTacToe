@@ -1,5 +1,6 @@
 package es.art83.ticTacToe.models.daos.jpa;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -25,24 +26,26 @@ public class GameDaoJpa extends GenericDaoJpa<GameEntity, Integer> implements Ga
         EntityManager entityManager = DaoJpaFactory.getEntityManagerFactory().createEntityManager();
         // Se crea un criterio de consulta
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<String> query = builder.createQuery(String.class);
+        CriteriaQuery<GameEntity> query = builder.createQuery(GameEntity.class);
         // Se establece la clausula FROM
         Root<GameEntity> root = query.from(GameEntity.class);
         // Se establece la clausula SELECT
-        query.select(root.get("name")); // criteriaQuery.multiselect(root.get(atr))
+        query.select(root); // criteriaQuery.multiselect(root.get(atr))
         // Se configura el predicado
-        Predicate predicate1 = builder.equal(root.get("playerEntity").as(PlayerEntity.class),
-                player);
-        Predicate predicate2 = builder.isNotNull(root.get("name").as(String.class));
+        Predicate predicate = builder.equal(root.get("player").as(PlayerEntity.class), player);
         // Se establece el WHERE
-        query.where(builder.and(predicate1, predicate2));
+        query.where(predicate);
         // Se crea el resultado
-        TypedQuery<String> tq = entityManager.createQuery(query);
+        TypedQuery<GameEntity> tq = entityManager.createQuery(query);
         tq.setFirstResult(0);
         tq.setMaxResults(0); // Se buscan todos
-        List<String> result = tq.getResultList();
+        List<GameEntity> result = tq.getResultList();
         entityManager.close();
-        return result;
+        List<String> names = new ArrayList<String>();
+        for (GameEntity game : result) {
+            names.add(game.getName());
+        }
+        return names;
     }
 
     @Override
@@ -56,9 +59,8 @@ public class GameDaoJpa extends GenericDaoJpa<GameEntity, Integer> implements Ga
         // Se establece la clausula SELECT
         query.select(root); // criteriaQuery.multiselect(root.get(atr))
         // Se configura el predicado
-        Predicate predicate1 = builder.equal(root.get("playerEntity").as(PlayerEntity.class),
-                player);
-        Predicate predicate2 = builder.equal(root.get("name").as(String.class), gameName);
+        Predicate predicate1 = builder.equal(root.get("player").as(PlayerEntity.class), player);
+        Predicate predicate2 = builder.equal(root.get(GameEntity.NAME).as(String.class), gameName);
         Predicate predicate = builder.and(predicate1, predicate2);
         // Se establece el WHERE
         query.where(predicate);

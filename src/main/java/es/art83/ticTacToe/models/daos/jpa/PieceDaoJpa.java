@@ -28,7 +28,7 @@ public class PieceDaoJpa extends GenericDaoJpa<PieceEntity, Integer> implements 
         // Se establece la clausula SELECT
         query.select(root);
         // Se configura el predicado
-        Predicate predicate = builder.equal(root.get("coordinateEntity").as(CoordinateEntity.class),
+        Predicate predicate = builder.equal(root.get("coordinate").as(CoordinateEntity.class),
                 coordinateEntity);
         // Se establece el WHERE
         query.where(predicate);

@@ -3,6 +3,7 @@ package es.art83.ticTacToe.models.entities;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,9 @@ public class GameEntity {
     @GeneratedValue
     private Integer id;
 
+    public static final String NAME = "NAME";
+
+    @Column(name = NAME)
     private String name;
 
     @Embedded
@@ -29,8 +33,7 @@ public class GameEntity {
     @ManyToOne
     private PlayerEntity player;
 
-    public GameEntity(String name, PlayerEntity player, BoardEntity board,
-            TurnEntity turn) {
+    public GameEntity(String name, PlayerEntity player, BoardEntity board, TurnEntity turn) {
         this.setName(name);
         this.setPlayer(player);
         this.setBoard(board);
@@ -127,8 +130,7 @@ public class GameEntity {
 
     @Override
     public String toString() {
-        return "GameEntity[" + id + ":" + name + "," + player + "," + turn + ","
-                + board + "]";
+        return "GameEntity[" + id + ":" + name + "," + player + "," + turn + "," + board + "]";
     }
 
     @Override
