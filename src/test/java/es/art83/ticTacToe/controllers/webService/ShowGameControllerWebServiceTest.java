@@ -7,8 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.art83.ticTacToe.controllers.LogoutController;
-import es.art83.ticTacToe.controllers.webService.ControllerFactoryWebService;
-import es.art83.ticTacToe.controllers.webService.ShowGameControllerWebService;
+import es.art83.ticTacToe.controllers.ws.ControllerWsFactory;
+import es.art83.ticTacToe.controllers.ws.ShowGameControllerWs;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
 import es.art83.ticTacToe.webService.PlayerResource;
@@ -17,7 +17,7 @@ import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class ShowGameControllerWebServiceTest {
 
-    private ShowGameControllerWebService showGameController;
+    private ShowGameControllerWs showGameController;
 
     private PlayerEntity playerEntity;
 
@@ -25,8 +25,8 @@ public class ShowGameControllerWebServiceTest {
 
     @Before
     public void before() {
-        ControllerFactoryWebService factory = new ControllerFactoryWebService();
-        this.showGameController = (ShowGameControllerWebService) factory.getShowGameController();
+        ControllerWsFactory factory = new ControllerWsFactory();
+        this.showGameController = (ShowGameControllerWs) factory.getShowGameController();
         this.logout = factory.getLogoutController();
         this.playerEntity = new PlayerEntity("u", "pass");
         factory.getLoginController().register(playerEntity);
@@ -65,7 +65,7 @@ public class ShowGameControllerWebServiceTest {
 
     @Test
     public void testCreatedGame() {
-        assertTrue(this.showGameController.createdGame());
+        assertTrue(this.showGameController.openedGame());
     }
 
     @After

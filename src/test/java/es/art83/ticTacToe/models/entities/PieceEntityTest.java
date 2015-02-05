@@ -16,16 +16,16 @@ public class PieceEntityTest {
         assert COLORS.length == COORDINATES.length;
         for (int i = 0; i < COLORS.length; i++) {
             PieceEntity piece = new PieceEntity(COLORS[i], COORDINATES[i]);
-            assertEquals(COLORS[i], piece.getColorModel());
-            assertEquals(COORDINATES[i], piece.getCoordinateEntity());
+            assertEquals(COLORS[i], piece.getColor());
+            assertEquals(COORDINATES[i], piece.getCoordinate());
         }
     }
 
     @Test
     public void testPieceEntity() {
         PieceEntity piece = new PieceEntity();
-        assertEquals(null, piece.getColorModel());
-        assertEquals(null, piece.getCoordinateEntity());
+        assertEquals(null, piece.getColor());
+        assertEquals(null, piece.getCoordinate());
     }
 
 }

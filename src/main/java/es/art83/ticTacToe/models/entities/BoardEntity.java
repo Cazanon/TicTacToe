@@ -44,8 +44,8 @@ public class BoardEntity {
         assert color != null;
         List<CoordinateEntity> coordinates = new ArrayList<>();
         for (PieceEntity ficha : pieces) {
-            if (ficha.getColorModel() == color)
-                coordinates.add(ficha.getCoordinateEntity());
+            if (ficha.getColor() == color)
+                coordinates.add(ficha.getCoordinate());
         }
         return coordinates;
     }
@@ -53,7 +53,7 @@ public class BoardEntity {
     public List<CoordinateEntity> validDestinationCoordinates() {
         List<CoordinateEntity> coordinates = CoordinateEntity.allCoordinates();
         for (PieceEntity ficha : pieces) {
-            coordinates.remove(ficha.getCoordinateEntity());
+            coordinates.remove(ficha.getCoordinate());
         }
         return coordinates;
     }
@@ -81,7 +81,7 @@ public class BoardEntity {
     public PieceEntity remove(CoordinateEntity coordinate) {
         assert coordinate != null : "parametro null";
         for (PieceEntity piece : pieces) {
-            if (piece.getCoordinateEntity().equals(coordinate)) {
+            if (piece.getCoordinate().equals(coordinate)) {
                 this.pieces.remove(piece);
                 return piece;
             }

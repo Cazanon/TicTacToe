@@ -21,28 +21,28 @@ public class GameEntity {
     private String name;
 
     @Embedded
-    private TurnEntity turnEntity;
+    private TurnEntity turn;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private BoardEntity boardEntity;
+    private BoardEntity board;
 
     @ManyToOne
-    private PlayerEntity playerEntity;
+    private PlayerEntity player;
 
-    public GameEntity(String name, PlayerEntity playerEntity, BoardEntity boardEntity,
-            TurnEntity turnEntity) {
+    public GameEntity(String name, PlayerEntity player, BoardEntity board,
+            TurnEntity turn) {
         this.setName(name);
-        this.setPlayerEntity(playerEntity);
-        this.setBoardEntity(boardEntity);
-        this.setTurnEntity(turnEntity);
+        this.setPlayer(player);
+        this.setBoard(board);
+        this.setTurn(turn);
     }
 
-    public GameEntity(String name, PlayerEntity playerEntity) {
-        this(name, playerEntity, new BoardEntity(), new TurnEntity());
+    public GameEntity(String name, PlayerEntity player) {
+        this(name, player, new BoardEntity(), new TurnEntity());
     }
 
-    public GameEntity(PlayerEntity playerEntity) {
-        this(null, playerEntity);
+    public GameEntity(PlayerEntity player) {
+        this(null, player);
     }
 
     public GameEntity() {
@@ -61,81 +61,81 @@ public class GameEntity {
         this.name = name;
     }
 
-    public PlayerEntity getPlayerEntity() {
-        return this.playerEntity;
+    public PlayerEntity getPlayer() {
+        return this.player;
     }
 
-    private void setPlayerEntity(PlayerEntity playerEntity) {
-        this.playerEntity = playerEntity;
+    private void setPlayer(PlayerEntity player) {
+        this.player = player;
     }
 
-    private TurnEntity getTurnEntity() {
-        return this.turnEntity;
+    private TurnEntity getTurn() {
+        return this.turn;
     }
 
-    private void setTurnEntity(TurnEntity turnEntity) {
-        this.turnEntity = turnEntity;
+    private void setTurn(TurnEntity turn) {
+        this.turn = turn;
     }
 
-    private void setBoardEntity(BoardEntity boardEntity) {
-        this.boardEntity = boardEntity;
+    private void setBoard(BoardEntity board) {
+        this.board = board;
     }
 
     public ColorModel gameOver() {
-        ColorModel result = this.turnEntity.colorChanged();
-        if (!this.boardEntity.gameOver(result)) {
+        ColorModel result = this.turn.colorChanged();
+        if (!this.board.gameOver(result)) {
             result = null;
         }
         return result;
     }
 
     public List<PieceEntity> allPieces() {
-        return this.boardEntity.getPieces();
+        return this.board.getPieces();
     }
 
     public ColorModel turnColor() {
-        return this.turnEntity.getColor();
+        return this.turn.getColor();
     }
 
     public boolean hasAllPieces() {
-        return this.boardEntity.hasAllPieces();
+        return this.board.hasAllPieces();
     }
 
     public List<CoordinateEntity> validSourceCoordinates() {
-        return this.boardEntity.coordinates(this.turnColor());
+        return this.board.coordinates(this.turnColor());
     }
 
     public List<CoordinateEntity> validDestinationCoordinates() {
-        return this.boardEntity.validDestinationCoordinates();
+        return this.board.validDestinationCoordinates();
     }
 
     public void placePiece(CoordinateEntity coordinate) {
-        this.boardEntity.put(new PieceEntity(this.getTurnEntity().getColor(), coordinate));
-        this.turnEntity.change();
+        this.board.put(new PieceEntity(this.getTurn().getColor(), coordinate));
+        this.turn.change();
     }
 
-    public PieceEntity deletePiece(CoordinateEntity source) {
-        return this.boardEntity.remove(source);
+    public PieceEntity deletePiece(CoordinateEntity coordinate) {
+        return this.board.remove(coordinate);
     }
 
-    public void update(GameEntity gameEntity) {
-        this.turnEntity.update(gameEntity.turnEntity);
-        this.boardEntity.update(gameEntity.boardEntity);
-        this.setName(gameEntity.getName());
-        this.setPlayerEntity(gameEntity.getPlayerEntity());
+    public void update(GameEntity game) {
+        this.turn.update(game.turn);
+        this.board.update(game.board);
+        this.setName(game.getName());
+        this.setPlayer(game.getPlayer());
     }
 
     @Override
     public String toString() {
-        return "GameEntity[" + id + ":" + name + "," + playerEntity + "," + turnEntity + ","
-                + boardEntity + "]";
+        return "GameEntity[" + id + ":" + name + "," + player + "," + turn + ","
+                + board + "]";
     }
 
     @Override
     public GameEntity clone() {
-        BoardEntity boardClone = this.boardEntity.clone();
-        TurnEntity turnClone = this.turnEntity.clone();
-        return new GameEntity(this.name, this.playerEntity, boardClone, turnClone);
+        BoardEntity boardClone = this.board.clone();
+        TurnEntity turnClone = this.turn.clone();
+        return new GameEntity(this.name, this.player, boardClone, turnClone);
     }
 
     @Override
@@ -143,7 +143,7 @@ public class GameEntity {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((playerEntity == null) ? 0 : playerEntity.hashCode());
+        result = prime * result + ((player == null) ? 0 : player.hashCode());
         return result;
     }
 
@@ -158,7 +158,7 @@ public class GameEntity {
         } else {
             result = other.name != null && this.name.equals(other.name);
         }
-        return result && this.playerEntity.equals(other.playerEntity);
+        return result && this.player.equals(other.player);
     }
 
 }

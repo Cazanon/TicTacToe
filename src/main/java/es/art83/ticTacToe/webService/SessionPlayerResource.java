@@ -13,12 +13,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.MediaType;
 
-import es.art83.ticTacToe.models.daos.DAOFactory;
+import es.art83.ticTacToe.models.daos.DaoFactory;
 import es.art83.ticTacToe.models.entities.GameEntity;
 import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.ListStringWrapper;
-import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
+import es.art83.ticTacToe.models.utils.StateModel;
 
 @Path(SessionResource.PATH_SESSIONS + SessionResource.PATH_ID_PARAM
         + SessionPlayerResource.PATH_PLAYER)
@@ -34,16 +34,16 @@ public class SessionPlayerResource extends SessionResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
-    public Response createPlayer(@PathParam("id") Integer id, PlayerEntity playerEntity) {
-        PlayerEntity playerEntityBD = DAOFactory.getFactory().getPlayerDAO()
-                .read(playerEntity.getUser());
-        if (playerEntityBD != null
-                && playerEntityBD.getPassword().equals(playerEntity.getPassword())) {
-            SessionEntity sessionEntity = this.readSessionEntity(id);
-            sessionEntity.setPlayerEntity(playerEntityBD);
-            sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.CLOSED_GAME);
-            DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
-            this.info(id, " /POST: " + playerEntity);
+    public Response createPlayer(@PathParam("id") Integer id, PlayerEntity player) {
+        PlayerEntity playerBd = DaoFactory.getFactory().getPlayerDao()
+                .read(player.getUser());
+        if (playerBd != null
+                && playerBd.getPassword().equals(player.getPassword())) {
+            SessionEntity session = this.readSessionEntity(id);
+            session.setPlayer(playerBd);
+            session.setState(StateModel.CLOSED_GAME);
+            DaoFactory.getFactory().getSessionDao().update(session);
+            this.info(id, " /POST: " + player);
             return Response.created(
                     URI.create(SessionResource.PATH_SESSIONS + id
                             + PATH_PLAYER)).build();
@@ -54,18 +54,18 @@ public class SessionPlayerResource extends SessionResource {
     @DELETE
     @Consumes(MediaType.APPLICATION_XML)
     public void deletePlayer(@PathParam("id") Integer id) {
-        SessionEntity sessionEntity = this.readSessionEntity(id);
-        sessionEntity.setPlayerEntity(null);
-        sessionEntity.setSavedGame(true);
-        sessionEntity.setTicTacToeStateModel(TicTacToeStateModel.FINAL);
-        GameEntity gameEntity = sessionEntity.getGameEntity();
-        if (gameEntity != null) {
-            Integer gameId = gameEntity.getId();
-            sessionEntity.setGameEntity(null);
-            DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
-            DAOFactory.getFactory().getGameDAO().deleteByID(gameId);
+        SessionEntity session = this.readSessionEntity(id);
+        session.setPlayer(null);
+        session.setSavedGame(true);
+        session.setState(StateModel.FINAL);
+        GameEntity game = session.getGame();
+        if (game != null) {
+            Integer gameId = game.getId();
+            session.setGame(null);
+            DaoFactory.getFactory().getSessionDao().update(session);
+            DaoFactory.getFactory().getGameDao().deleteByID(gameId);
         } else {
-            DAOFactory.getFactory().getSessionDAO().update(sessionEntity);
+            DaoFactory.getFactory().getSessionDao().update(session);
         }
         this.info(id, " /DELETE");
     }
@@ -74,9 +74,9 @@ public class SessionPlayerResource extends SessionResource {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public ListStringWrapper nameGames(@PathParam("id") Integer id) {
-        SessionEntity sessionEntity = this.readSessionEntity(id);
-        List<String> result = DAOFactory.getFactory().getGameDAO()
-                .findPlayerGameNames(sessionEntity.getPlayerEntity());
+        SessionEntity session = this.readSessionEntity(id);
+        List<String> result = DaoFactory.getFactory().getGameDao()
+                .findPlayerGameNames(session.getPlayer());
         this.info(id, PATH_GAME_NAMES + " /GET: " + result);
         return new ListStringWrapper(result);
     }

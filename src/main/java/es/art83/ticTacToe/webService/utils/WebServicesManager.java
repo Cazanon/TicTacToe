@@ -10,8 +10,9 @@ import javax.ws.rs.core.Response;
 
 import org.apache.logging.log4j.LogManager;
 
-import es.art83.ticTacToe.controllers.webService.ControllerWebService;
+import es.art83.ticTacToe.controllers.ws.ControllerWebService;
 
+//TODO una clase sola en un paquete no es oportuno
 public class WebServicesManager<T> {
     private WebTarget webTarget;
 

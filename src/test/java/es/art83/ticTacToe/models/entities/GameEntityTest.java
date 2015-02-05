@@ -90,7 +90,7 @@ public class GameEntityTest {
             GameEntity game = new GameEntity(null, null, new BoardEntity(data.getPiecesGame()),
                     data.getTurnGame());
             if (data.getPutPieceGame() != null) {
-                game.placePiece(data.getPutPieceGame().getCoordinateEntity());
+                game.placePiece(data.getPutPieceGame().getCoordinate());
                 assertEquals(data.message(), data.getPutPiecesGame(), game.allPieces());
             }
             data.nextGame();
@@ -103,8 +103,8 @@ public class GameEntityTest {
             GameEntity game = new GameEntity(null, null, new BoardEntity(data.getPiecesGame()),
                     data.getTurnGame());
             if (data.getSourceMovePieceGame() != null) {
-                game.deletePiece(data.getSourceMovePieceGame().getCoordinateEntity());
-                game.placePiece(data.getDestinationMovePieceGame().getCoordinateEntity());
+                game.deletePiece(data.getSourceMovePieceGame().getCoordinate());
+                game.placePiece(data.getDestinationMovePieceGame().getCoordinate());
                 assertEquals(data.message(), data.getMovePiecesGame(), game.allPieces());
             }
             data.nextGame();

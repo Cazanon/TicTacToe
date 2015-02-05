@@ -10,19 +10,19 @@ import es.art83.ticTacToe.models.utils.ColorModel;
 public class TurnEntityTest {
 
     @Test
-    public void testTurnEntityColorModel() {
+    public void testTurnEntityColor() {
         for (ColorModel color : ColorModel.values()) {
-            this.testTurnEntityColorModel(new TurnEntity(color), color);
+            this.testTurnColor(new TurnEntity(color), color);
         }
     }
 
-    private void testTurnEntityColorModel(TurnEntity turn, ColorModel color) {
+    private void testTurnColor(TurnEntity turn, ColorModel color) {
         assertEquals(color, turn.getColor());
     }
 
     @Test
     public void testTurnEntity() {
-        this.testTurnEntityColorModel(new TurnEntity(), ColorModel.X);
+        this.testTurnColor(new TurnEntity(), ColorModel.X);
     }
 
     @Test
@@ -37,9 +37,9 @@ public class TurnEntityTest {
         for (ColorModel color : ColorModel.values()) {
             TurnEntity turn = new TurnEntity(color);
             turn.change();
-            this.testTurnEntityColorModel(turn, color.next());
+            this.testTurnColor(turn, color.next());
             turn.change();
-            this.testTurnEntityColorModel(turn, color);
+            this.testTurnColor(turn, color);
         }
     }
     

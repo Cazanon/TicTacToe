@@ -11,6 +11,7 @@ import org.junit.Test;
 import es.art83.ticTacToe.models.entities.data.BoardEntityTestData;
 import es.art83.ticTacToe.models.utils.ColorModel;
 
+//TODO repasar nombres de métodos de test con Entity, Model, ...
 public class BoardEntityTest {
 
     private BoardEntityTestData data;
@@ -99,7 +100,7 @@ public class BoardEntityTest {
             data.message();
             BoardEntity board = new BoardEntity(data.getPiecesBoard());
             if (data.getRemovePieceBoard() != null) {
-                board.remove(data.getRemovePieceBoard().getCoordinateEntity());
+                board.remove(data.getRemovePieceBoard().getCoordinate());
             }
             assertEquals(data.message(), data.getRemovePiecesBoard(), board.getPieces());
             data.nextBoard();

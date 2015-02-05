@@ -64,7 +64,7 @@ public class CoordinateEntity {
         this.column = column;
     }
 
-    // LUIS debería irse a board, son todas las coordenadas de un board
+    //TODO LUIS debería irse a board, son todas las coordenadas de un board
     // particular
     public static List<CoordinateEntity> allCoordinates() {
         List<CoordinateEntity> coordinates = new ArrayList<>();

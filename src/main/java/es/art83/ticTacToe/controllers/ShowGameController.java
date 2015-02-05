@@ -22,7 +22,7 @@ public interface ShowGameController {
 
     List<CoordinateEntity> validDestinationCoordinates();
 
-    boolean createdGame();
+    boolean openedGame();
     
     List<String> gameNames();
 

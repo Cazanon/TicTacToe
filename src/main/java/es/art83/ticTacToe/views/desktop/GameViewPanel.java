@@ -95,14 +95,19 @@ class GameViewPanel extends ViewPanel {
 
     @Override
     protected void updateComponents() {
-        boolean createdGame = showGameController.createdGame();
-        if (createdGame) {
-            boolean hasAllPieces = showGameController.hasAllPieces();
-            nameGameMsg = new JLabel("Name game:" + showGameController.gameName());
+        boolean openedGame = showGameController.openedGame();
+        String openedGameName = null;
+        if (openedGame) {
+            openedGameName = showGameController.gameName();
+            if (openedGameName == null) {
+                nameGameMsg.setText("");
+            } else {
+                nameGameMsg.setText("Name game: " + openedGameName);
+            }
             ColorModel[][] colors = new ColorModel[3][3];
             for (PieceEntity ficha : showGameController.allPieces()) {
-                colors[ficha.getCoordinateEntity().getRow()][ficha.getCoordinateEntity()
-                        .getColumn()] = ficha.getColorModel();
+                colors[ficha.getCoordinate().getRow()][ficha.getCoordinate()
+                        .getColumn()] = ficha.getColor();
             }
             for (int i = 0; i < CoordinateEntity.DIMENSION; i++) {
                 String text = i + ": ";
@@ -120,7 +125,7 @@ class GameViewPanel extends ViewPanel {
                 winnerMsg.setText("The winner is " + winner);
             } else {
                 turnMsg.setText("Turn: " + showGameController.turnColor());
-                if (hasAllPieces) {
+                if (showGameController.hasAllPieces()) {
                     DefaultComboBoxModel<CoordinateEntity> validSourceCoordinatesModel = new DefaultComboBoxModel<CoordinateEntity>();
                     for (CoordinateEntity coordinate : showGameController.validSourceCoordinates()) {
                         validSourceCoordinatesModel.addElement(coordinate);
@@ -135,11 +140,14 @@ class GameViewPanel extends ViewPanel {
             }
         }
         List<String> gameNames = showGameController.gameNames();
-        boolean existGames = gameNames.isEmpty();
+        System.out.println("Game names:" + gameNames);
+        boolean existGames = !gameNames.isEmpty();
         if (existGames) {
             DefaultComboBoxModel<String> gameNamesModel = new DefaultComboBoxModel<String>();
             for (String gameName : gameNames) {
-                gameNamesModel.addElement(gameName);
+                if (!gameName.equals(openedGameName)) {
+                    gameNamesModel.addElement(gameName);
+                }
             }
             this.gameNames.setModel(gameNamesModel);
         }
@@ -147,22 +155,23 @@ class GameViewPanel extends ViewPanel {
 
     @Override
     protected void visualizeComponents() {
-        boolean createdGame = showGameController.createdGame();
-        nameGameMsg.setVisible(createdGame);
-        boardMsg.setVisible(createdGame);
+        boolean openedGame = showGameController.openedGame();
+        nameGameMsg.setVisible(openedGame);
+        boardMsg.setVisible(openedGame);
         for (int i = 0; i < CoordinateEntity.DIMENSION; i++) {
-            rows[i].setVisible(createdGame);
+            rows[i].setVisible(openedGame);
         }
-        saveGame.setVisible(createdGame);
+        saveGame.setVisible(openedGame);
         boolean gameOver = false;
-        if (createdGame) {
+        if (openedGame) {
             gameOver = showGameController.gameOver() != null;
         }
-        turnMsg.setVisible(createdGame && !gameOver);
-        validSourceCoordinates.setVisible(createdGame && !gameOver && showGameController.hasAllPieces());
-        validDestinationCoordinates.setVisible(createdGame && !gameOver);
-        placePiece.setVisible(createdGame && !gameOver);
-        winnerMsg.setVisible(createdGame && gameOver);
+        turnMsg.setVisible(openedGame && !gameOver);
+        validSourceCoordinates.setVisible(openedGame && !gameOver
+                && showGameController.hasAllPieces());
+        validDestinationCoordinates.setVisible(openedGame && !gameOver);
+        placePiece.setVisible(openedGame && !gameOver);
+        winnerMsg.setVisible(openedGame && gameOver);
         createGame.setVisible(true);
         boolean existGames = !showGameController.gameNames().isEmpty();
         gameNames.setVisible(existGames);
@@ -173,27 +182,51 @@ class GameViewPanel extends ViewPanel {
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == logout) {
-            logoutController.logout();
-            frame.setPanel(new LoginViewPanel(frame));
+            this.logout();
+        } else if (event.getSource() == saveGame) {
+            this.saveGame();
         } else {
-            if (event.getSource() == saveGame) {
-                saveGameController.saveGame();
-            } else if (event.getSource() == placePiece) {
-                if (!showGameController.hasAllPieces()) {
-                    placePieceController.placePiece((CoordinateEntity) validDestinationCoordinates
-                            .getSelectedItem());
-                } else {
-                    placePieceController.placePiece(
-                            (CoordinateEntity) validSourceCoordinates.getSelectedItem(),
-                            (CoordinateEntity) validDestinationCoordinates.getSelectedItem());
-
-                }
+            if (event.getSource() == placePiece) {
+                this.placePiece();
             } else if (event.getSource() == createGame) {
-                createGameControler.createGame();
+                this.createGame();
             } else if (event.getSource() == openGame) {
-                openGameController.openGame((String) gameNames.getSelectedItem());
+                this.openGame();
             }
             this.updateAndVisualizeComponents();
         }
     }
+
+    private void logout() {
+        logoutController.logout();
+        frame.setPanel(new LoginViewPanel(frame));
+    }
+
+    private void saveGame() {
+        if (showGameController.gameName() == null) {
+            frame.setPanel(new SaveViewPanel(frame));
+        } else {
+            saveGameController.saveGame();
+        }
+    }
+
+    private void placePiece() {
+        if (!showGameController.hasAllPieces()) {
+            placePieceController.placePiece((CoordinateEntity) validDestinationCoordinates
+                    .getSelectedItem());
+        } else {
+            placePieceController.placePiece(
+                    (CoordinateEntity) validSourceCoordinates.getSelectedItem(),
+                    (CoordinateEntity) validDestinationCoordinates.getSelectedItem());
+        }
+    }
+
+    private void createGame() {
+        createGameControler.createGame();
+    }
+
+    private void openGame() {
+        openGameController.openGame((String) gameNames.getSelectedItem());
+    }
+
 }

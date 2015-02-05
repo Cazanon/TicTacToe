@@ -6,8 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.art83.ticTacToe.controllers.webService.ControllerFactoryWebService;
-import es.art83.ticTacToe.controllers.webService.LoginControllerWebService;
+import es.art83.ticTacToe.controllers.ws.ControllerWsFactory;
+import es.art83.ticTacToe.controllers.ws.LoginControllerWs;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.PlayerResource;
 import es.art83.ticTacToe.webService.SessionResource;
@@ -15,13 +15,13 @@ import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class LoginControllerWebServiceTest {
 
-    private LoginControllerWebService login;
+    private LoginControllerWs login;
 
     private PlayerEntity playerEntity;
 
     @Before
     public void before() {
-        this.login = (LoginControllerWebService) new ControllerFactoryWebService().getLoginController();
+        this.login = (LoginControllerWs) new ControllerWsFactory().getLoginController();
         this.playerEntity = new PlayerEntity("u", "pass");
     }
 

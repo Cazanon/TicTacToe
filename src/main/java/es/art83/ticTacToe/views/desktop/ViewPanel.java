@@ -9,14 +9,16 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import es.art83.ticTacToe.controllers.ejbs.ControllerFactoryEJB;
+import es.art83.ticTacToe.controllers.ejbs.ControllerEjbFactory;
 
 @SuppressWarnings("serial")
 abstract class ViewPanel extends JPanel implements ActionListener{
 
     protected Frame frame;
     
-    protected static ControllerFactoryEJB factory = new ControllerFactoryEJB();
+    protected static final int FIELD_LENGTH = 15;
+    
+    protected static ControllerEjbFactory factory = new ControllerEjbFactory();
     
     ViewPanel(Frame frame){
         this.frame = frame;

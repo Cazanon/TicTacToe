@@ -13,9 +13,9 @@ import es.art83.ticTacToe.models.entities.PlayerEntity;
 class LoginViewPanel extends UserViewPanel {
 
     private LogoutController logoutController;
-    
+
     private JLabel byeMsg;
-    
+
     private JButton login;
 
     private JButton register;
@@ -23,15 +23,15 @@ class LoginViewPanel extends UserViewPanel {
     LoginViewPanel(Frame frame) {
         super(frame);
     }
-    
+
     @Override
     protected void updateControllers() {
         logoutController = factory.getLogoutController();
         super.updateControllers();
     }
-    
+
     @Override
-    protected void createComponents(){
+    protected void createComponents() {
         byeMsg = this.createLabelInPanel("Bye!");
         super.createComponents();
         login = this.createButtonInPanel("Login");
@@ -49,17 +49,26 @@ class LoginViewPanel extends UserViewPanel {
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == login) {
-            boolean result = loginController.login(
-                    new PlayerEntity(user.getText(), new String(password.getPassword())));
-            if (result) {
-                frame.setPanel(new GameViewPanel(frame));
-            } else {
-                JOptionPane.showMessageDialog(null,
-                        "Unknow user! Try again");
-            }
+            this.login();
         } else if (event.getSource() == register) {
-            frame.setPanel(new RegisterViewPanel(frame));
+            this.register();
+        } else {
+            assert false;
         }
+    }
+    
+    private void login(){
+        boolean result = loginController.login(new PlayerEntity(user.getText(), new String(
+                password.getPassword())));
+        if (result) {
+            frame.setPanel(new GameViewPanel(frame));
+        } else {
+            JOptionPane.showMessageDialog(null, "Unknow user! Try again");
+        }
+    }
+    
+    private void register(){
+        frame.setPanel(new RegisterViewPanel(frame));
     }
 
 }

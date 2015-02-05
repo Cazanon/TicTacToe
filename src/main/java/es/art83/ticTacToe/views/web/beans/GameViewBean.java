@@ -49,7 +49,7 @@ public class GameViewBean extends ViewBean {
     @PostConstruct
     public void update() {
         ShowGameController showGameController = this.getControllerFactory().getShowGameController();
-        this.createdGame = showGameController.createdGame();
+        this.createdGame = showGameController.openedGame();
         if (this.createdGame) {
             this.gameName = showGameController.gameName();
             this.prepareBoarView(showGameController.allPieces());
@@ -70,8 +70,8 @@ public class GameViewBean extends ViewBean {
     private void prepareBoarView(List<PieceEntity> allPieces) {
         this.colors = new ColorModel[3][3];
         for (PieceEntity ficha : allPieces) {
-            this.colors[ficha.getCoordinateEntity().getRow()][ficha.getCoordinateEntity()
-                    .getColumn()] = ficha.getColorModel();
+            this.colors[ficha.getCoordinate().getRow()][ficha.getCoordinate()
+                    .getColumn()] = ficha.getColor();
         }
     }
 

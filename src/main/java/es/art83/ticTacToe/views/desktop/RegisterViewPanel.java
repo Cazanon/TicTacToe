@@ -45,22 +45,32 @@ class RegisterViewPanel extends UserViewPanel {
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == register) {
-            if (user.getText().equals("")
-                    || password.getPassword().length == 0
-                    || repeatedPassword.getPassword().length == 0
-                    || !new String(password.getPassword()).equals(new String(repeatedPassword
-                            .getPassword()))) {
-                JOptionPane.showMessageDialog(null,
-                        "The user can not be empty and passwords must match");
-            } else {
-                boolean result = loginController.register(new PlayerEntity(user.getText(),
-                        new String(password.getPassword())));
-                if (result) {
-                    frame.setPanel(new GameViewPanel(frame));
-                }
-            }
+            this.register();
         } else if (event.getSource() == cancel) {
-            frame.setPanel(new LoginViewPanel(frame));
+            this.cancel();
         }
     }
+
+    private void register() {
+        if (user.getText().equals("")
+                || password.getPassword().length == 0
+                || repeatedPassword.getPassword().length == 0
+                || !new String(password.getPassword()).equals(new String(repeatedPassword
+                        .getPassword()))) {
+            JOptionPane.showMessageDialog(null,
+                    "The user can not be empty and passwords must match");
+        } else {
+            boolean result = loginController.register(new PlayerEntity(user.getText(),
+                    new String(password.getPassword())));
+            if (result) {
+                frame.setPanel(new GameViewPanel(frame));
+            }
+        }
+    }
+    
+    private void cancel() {
+        frame.setPanel(new LoginViewPanel(frame));
+    }
+
+    
 }

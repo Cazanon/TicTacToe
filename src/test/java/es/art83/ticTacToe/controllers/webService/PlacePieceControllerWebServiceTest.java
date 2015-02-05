@@ -9,9 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.art83.ticTacToe.controllers.LogoutController;
-import es.art83.ticTacToe.controllers.webService.ControllerFactoryWebService;
-import es.art83.ticTacToe.controllers.webService.PlacePieceControllerWebService;
-import es.art83.ticTacToe.controllers.webService.ShowGameControllerWebService;
+import es.art83.ticTacToe.controllers.ws.ControllerWsFactory;
+import es.art83.ticTacToe.controllers.ws.PlacePieceControllerWs;
+import es.art83.ticTacToe.controllers.ws.ShowGameControllerWs;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
@@ -25,16 +25,16 @@ public class PlacePieceControllerWebServiceTest {
 
     private LogoutController logout;
 
-    private PlacePieceControllerWebService placeController;
+    private PlacePieceControllerWs placeController;
 
-    private ShowGameControllerWebService showGameController;
+    private ShowGameControllerWs showGameController;
 
     @Before
     public void before() {
-        ControllerFactoryWebService factory = new ControllerFactoryWebService();
-        this.placeController = (PlacePieceControllerWebService) factory.getPlacePieceController();
+        ControllerWsFactory factory = new ControllerWsFactory();
+        this.placeController = (PlacePieceControllerWs) factory.getPlacePieceController();
         this.logout = factory.getLogoutController();
-        this.showGameController = (ShowGameControllerWebService) factory.getShowGameController();
+        this.showGameController = (ShowGameControllerWs) factory.getShowGameController();
         this.playerEntity = new PlayerEntity("u", "pass");
         factory.getLoginController().register(playerEntity);
         factory.getCreateGameControler().createGame();
@@ -45,7 +45,7 @@ public class PlacePieceControllerWebServiceTest {
         this.placeController.placePiece(new CoordinateEntity(0, 0));
         List<PieceEntity> pieces = this.showGameController.allPieces();
         assertEquals(1, pieces.size());
-        assertEquals(new CoordinateEntity(0, 0), pieces.get(0).getCoordinateEntity());
+        assertEquals(new CoordinateEntity(0, 0), pieces.get(0).getCoordinate());
      }
 
     @Test

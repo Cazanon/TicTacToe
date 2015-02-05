@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.art83.ticTacToe.models.utils.TicTacToeStateModel;
+import es.art83.ticTacToe.models.utils.StateModel;
 import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class SessionResourceTest {
@@ -29,10 +29,10 @@ public class SessionResourceTest {
 
     @Test
     public void testStateInitial() {
-        TicTacToeStateModel state = new WebServicesManager<TicTacToeStateModel>(
+        StateModel state = new WebServicesManager<StateModel>(
                 SessionResource.PATH_SESSIONS, this.sessionId, SessionResource.PATH_STATE)
-                .entity(TicTacToeStateModel.class);
-        assertEquals(TicTacToeStateModel.INITIAL, state);
+                .entity(StateModel.class);
+        assertEquals(StateModel.INITIAL, state);
     }
 
     @Test

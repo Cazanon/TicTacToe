@@ -11,8 +11,6 @@ abstract class UserViewPanel extends ViewPanel {
 
     protected LoginController loginController;
     
-    protected static final int FIELD_LENGTH = 15;
-    
     protected JLabel userMsg;
     
     protected JTextField user;
