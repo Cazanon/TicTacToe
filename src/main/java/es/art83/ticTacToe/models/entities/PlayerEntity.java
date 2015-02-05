@@ -1,15 +1,26 @@
 package es.art83.ticTacToe.models.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
+@Table(name = PlayerEntity.TABLE)
 public class PlayerEntity {
+    public static final String TABLE = "PLAYER";
+
+    public static final String USER = "USER";
+
+    public static final String PASSWORD = "PASSWORD";
+
     @Id
+    @Column(name = USER)
     private String user;
 
+    @Column(name = PASSWORD)
     private String password;
 
     public PlayerEntity(String user, String password) {
@@ -63,6 +74,5 @@ public class PlayerEntity {
     public PlayerEntity clone() {
         return new PlayerEntity(this.user, this.password);
     }
-
 
 }

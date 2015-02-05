@@ -13,16 +13,20 @@ import es.art83.ticTacToe.models.utils.DirectionModel;
 @XmlRootElement
 @Embeddable
 public class CoordinateEntity {
+    public static final String ROW = "ROW";
+
+    public static final String COLUMN = "COLUM"; // COLUMN colisiona con SQL
+
     public static final int DIMENSION = 3;
 
     public static final int MIN = 0;
 
     public static final int MAX = DIMENSION - 1;
 
+    @Column(name = ROW)
     private int row;
 
-    @Column(name = "COLUM")
-    // Colisiona con SQL
+    @Column(name = COLUMN)
     private int column;
 
     public CoordinateEntity(int row, int column) {
@@ -77,7 +81,7 @@ public class CoordinateEntity {
     }
 
     public DirectionModel inDirection(CoordinateEntity coordinate) {
-        assert(!this.equals(coordinate));
+        assert (!this.equals(coordinate));
         if (this.inRow(coordinate)) {
             return DirectionModel.IN_ROW;
         } else if (this.inColumn(coordinate)) {
@@ -108,7 +112,7 @@ public class CoordinateEntity {
     }
 
     public DirectionModel inDirection(List<CoordinateEntity> coordinates) {
-        assert coordinates.size() == CoordinateEntity.DIMENSION-1;
+        assert coordinates.size() == CoordinateEntity.DIMENSION - 1;
         CoordinateEntity firstCoordinate = coordinates.get(0);
         DirectionModel direction = this.inDirection(firstCoordinate);
         coordinates.remove(firstCoordinate);
@@ -139,7 +143,7 @@ public class CoordinateEntity {
     public String toString() {
         return row + "-" + column;
     }
-    
+
     @Override
     public CoordinateEntity clone() {
         return new CoordinateEntity(row, column);
