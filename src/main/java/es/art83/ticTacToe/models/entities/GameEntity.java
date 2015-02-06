@@ -18,6 +18,7 @@ public class GameEntity {
     @GeneratedValue
     private Integer id;
 
+    // BLOQUEADO: nombre ---name---: GameDaoJpa
     private String name;
 
     @Embedded
@@ -26,6 +27,7 @@ public class GameEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private BoardEntity board;
 
+    // BLOQUEADO: nombre ---player---: GameDaoJpa
     @ManyToOne
     private PlayerEntity player;
 

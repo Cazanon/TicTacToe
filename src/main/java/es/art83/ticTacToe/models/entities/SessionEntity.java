@@ -23,9 +23,11 @@ public class SessionEntity {
 
     private boolean savedGame;
 
+    // BLOQUEADO: nombre ---player---: SessionDaoJpa
     @OneToOne
     private PlayerEntity player;
 
+    // BLOQUEADO: nombre ---game---: SessionDaoJpa
     @OneToOne(cascade = CascadeType.ALL)
     private GameEntity game;
 
@@ -74,8 +76,8 @@ public class SessionEntity {
 
     @Override
     public String toString() {
-        return "SessionEntity[" + id + ":" + state
-                + ",saved:" + savedGame + ";player:" + player + ";game:" + game + "]";
+        return "SessionEntity[" + id + ":" + state + ",saved:" + savedGame + ";player:" + player
+                + ";game:" + game + "]";
     }
 
 }

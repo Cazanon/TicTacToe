@@ -20,6 +20,7 @@ public class PieceEntity {
     @Enumerated(EnumType.STRING)
     private ColorModel color;
 
+    // BLOQUEADO: nombre ---coordinate---: PieceDaoJpa
     @Embedded
     private CoordinateEntity coordinate;
 
