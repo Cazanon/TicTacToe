@@ -12,6 +12,13 @@ public class LoginControllerEjb extends ControllerEjb implements LoginController
     }
 
     @Override
+    protected void changeState() {
+        assert this.getSession().getState() == StateModel.INITIAL
+                || this.getSession().getState() == StateModel.FINAL;
+        this.getSession().setState(StateModel.CLOSED_GAME);
+    }
+
+    @Override
     public boolean login(PlayerEntity player) {
         boolean result = false;
         PlayerEntity playerBD = DaoFactory.getFactory().getPlayerDao().read(player.getUser());
@@ -34,13 +41,6 @@ public class LoginControllerEjb extends ControllerEjb implements LoginController
             result = true;
         }
         return result;
-    }
-
-    @Override
-    protected void changeState() {
-        assert this.getSession().getState() == StateModel.INITIAL
-                || this.getSession().getState() == StateModel.FINAL;
-        this.getSession().setState(StateModel.CLOSED_GAME);
     }
 
     @Override

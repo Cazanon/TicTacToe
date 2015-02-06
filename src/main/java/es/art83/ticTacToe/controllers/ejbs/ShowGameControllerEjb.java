@@ -16,6 +16,12 @@ public class ShowGameControllerEjb extends ControllerEjb implements ShowGameCont
     }
 
     @Override
+    protected void changeState() {
+        assert this.getSession().getState() == StateModel.CLOSED_GAME
+                || this.getSession().getState() == StateModel.OPENED_GAME;
+    }
+
+    @Override
     public String gameName() {
         return this.getSession().getGame().getName();
     }
@@ -53,20 +59,13 @@ public class ShowGameControllerEjb extends ControllerEjb implements ShowGameCont
     @Override
     public boolean openedGame() {
         boolean result = this.getSession().getState() == StateModel.OPENED_GAME;
-        //TODO no lo entiendo, sobre este or!?!? sobraría nada más!
-        result = result || this.getSession().getGame() != null;
         return result;
     }
+
     @Override
     public List<String> gameNames() {
         return DaoFactory.getFactory().getGameDao()
                 .findPlayerGameNames(this.getSession().getPlayer());
-    }
-    
-    @Override
-    protected void changeState(){
-        assert this.getSession().getState() == StateModel.CLOSED_GAME
-                || this.getSession().getState() == StateModel.OPENED_GAME;
     }
 
 }

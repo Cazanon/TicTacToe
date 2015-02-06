@@ -12,11 +12,15 @@ public class SaveGameControllerEjb extends ControllerEjb implements SaveGameCont
     }
 
     @Override
+    protected void changeState() {
+        assert this.getSession().getState() == StateModel.CLOSED_GAME
+                || this.getSession().getState() == StateModel.OPENED_GAME;
+    }
+
+    @Override
     public void saveGame() {
         GameEntity game = this.getSession().getGame();
-        DaoFactory.getFactory().getGameDao().update(game);
-        this.getSession().setSavedGame(true);
-        this.changeState();
+        this.overWriteGame(game.getName());
     }
 
     @Override
@@ -35,12 +39,6 @@ public class SaveGameControllerEjb extends ControllerEjb implements SaveGameCont
         DaoFactory.getFactory().getGameDao().delete(game);
         this.saveGame(gameName);
         this.changeState();
-    }
-
-    @Override
-    protected void changeState() {
-        assert this.getSession().getState() == StateModel.CLOSED_GAME
-                || this.getSession().getState() == StateModel.OPENED_GAME;
     }
 
 }

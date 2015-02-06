@@ -10,18 +10,18 @@ public class LogoutControllerEjb extends ControllerEjb implements LogoutControll
     }
 
     @Override
+    protected void changeState() {
+        assert this.getSession().getState() == StateModel.CLOSED_GAME
+                || this.getSession().getState() == StateModel.OPENED_GAME;
+        this.getSession().setState(StateModel.FINAL);
+    }
+    
+    @Override
     public void logout() {
         this.getSession().setPlayer(null);
         this.getSession().setGame(null);
         this.getSession().setSavedGame(true);
         this.changeState();
-    }
-
-    @Override
-    protected void changeState() {
-        assert this.getSession().getState() == StateModel.CLOSED_GAME
-                || this.getSession().getState() == StateModel.OPENED_GAME;
-        this.getSession().setState(StateModel.FINAL);
     }
 
     // TODO es logged y logouted?!? o es loggedin y loggouted?!?

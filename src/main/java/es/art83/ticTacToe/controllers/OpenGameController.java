@@ -2,6 +2,6 @@ package es.art83.ticTacToe.controllers;
 
 public interface OpenGameController {
 
-    void openGame(String gameNameSelected);
+    void openGame(String selectedNameGame);
 
 }

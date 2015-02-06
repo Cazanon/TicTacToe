@@ -11,16 +11,17 @@ public class CreateGameControllerEjb extends ControllerEjb implements CreateGame
     }
 
     @Override
-    public void createGame() {
-       this.getSession().setGame(new GameEntity(this.getSession().getPlayer()));
-        this.changeState();
-    }
-
-    @Override
     protected void changeState() {
         assert this.getSession().getState() == StateModel.CLOSED_GAME
                 || this.getSession().getState() == StateModel.OPENED_GAME;
         this.getSession().setState(StateModel.OPENED_GAME);
     }
+    
+    @Override
+    public void createGame() {
+       this.getSession().setGame(new GameEntity(this.getSession().getPlayer()));
+        this.changeState();
+    }
+
 
 }

@@ -4,9 +4,9 @@ import es.art83.ticTacToe.models.entities.PlayerEntity;
 
 public interface LoginController {
 
-    boolean login(PlayerEntity playerEntity);
+    boolean login(PlayerEntity player);
 
-    boolean register(PlayerEntity playerEntity);
+    boolean register(PlayerEntity player);
     
     boolean logged();
 

@@ -10,17 +10,7 @@ public class OpenGameControllerEjb extends ControllerEjb implements OpenGameCont
     public OpenGameControllerEjb(Session session) {
         super(session);
     }
-    
-    @Override
-    public void openGame(String gameNameSelected) {
-        GameEntity game = DaoFactory.getFactory().getGameDao()
-                .findPlayerGame(this.getSession().getPlayer(), gameNameSelected);
-        game = game.clone();
-        this.getSession().setGame(game);
-        this.getSession().setSavedGame(true);
-        this.changeState();
-    }
-    
+
     @Override
     protected void changeState() {
         assert this.getSession().getState() == StateModel.CLOSED_GAME
@@ -28,4 +18,13 @@ public class OpenGameControllerEjb extends ControllerEjb implements OpenGameCont
         this.getSession().setState(StateModel.OPENED_GAME);
     }
 
+    @Override
+    public void openGame(String selectedNameGame) {
+        GameEntity game = DaoFactory.getFactory().getGameDao()
+                .findPlayerGame(this.getSession().getPlayer(), selectedNameGame);
+        game = game.clone();
+        this.getSession().setGame(game);
+        this.getSession().setSavedGame(true);
+        this.changeState();
+    }
 }

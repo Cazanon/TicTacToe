@@ -10,7 +10,17 @@ public class PlacePieceControllerEjb extends ControllerEjb implements PlacePiece
         super(session);
     }
 
-    //TODO los assert van al principio de cada método o del changeState! Todos igual
+    @Override
+    protected void changeState() {
+        assert this.getSession().getState() == StateModel.OPENED_GAME;
+        if (this.getSession().getGame().gameOver() != null) {
+            this.getSession().setState(StateModel.CLOSED_GAME);
+        }
+        this.getSession().setSavedGame(false);
+    }
+
+    // TODO los assert van al principio de cada método o del changeState! Todos
+    // igual
     @Override
     public void placePiece(CoordinateEntity coordinate) {
         this.getSession().getGame().placePiece(coordinate);
@@ -22,15 +32,6 @@ public class PlacePieceControllerEjb extends ControllerEjb implements PlacePiece
         this.getSession().getGame().deletePiece(source);
         this.getSession().getGame().placePiece(destination);
         this.changeState();
-    }
-    
-    @Override
-    protected void changeState() {
-        assert this.getSession().getState() == StateModel.OPENED_GAME;
-        if (this.getSession().getGame().gameOver() != null) {
-            this.getSession().setState(StateModel.CLOSED_GAME);
-        }
-        this.getSession().setSavedGame(false);
     }
 
 }
