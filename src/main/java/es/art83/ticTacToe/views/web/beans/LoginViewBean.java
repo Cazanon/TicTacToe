@@ -17,7 +17,7 @@ public class LoginViewBean extends PlayerViewBean {
     @PostConstruct
     public void update() {
         LogoutController logoutController = this.getControllerFactory().getLogoutController();
-        this.logouted = logoutController.logouted();
+        this.logouted = logoutController.loggedOut();
     }
 
     public boolean isLogouted() {

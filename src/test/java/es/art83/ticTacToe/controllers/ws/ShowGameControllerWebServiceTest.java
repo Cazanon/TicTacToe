@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.controllers.webService;
+package es.art83.ticTacToe.controllers.ws;
 
 import static org.junit.Assert.*;
 
@@ -13,7 +13,6 @@ import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
 import es.art83.ticTacToe.webService.PlayerResource;
 import es.art83.ticTacToe.webService.SessionResource;
-import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class ShowGameControllerWebServiceTest {
 
@@ -65,15 +64,15 @@ public class ShowGameControllerWebServiceTest {
 
     @Test
     public void testCreatedGame() {
-        assertTrue(this.showGameController.openedGame());
+        assertTrue(this.showGameController.existGame());
     }
 
     @After
     public void after() {
         this.logout.logout();
-        new WebServicesManager<>(SessionResource.PATH_SESSIONS,
+        ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS,
                 this.showGameController.getSessionId()).delete();
-        new WebServicesManager<>(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
+        ControllerWebService.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
     }
 
 }

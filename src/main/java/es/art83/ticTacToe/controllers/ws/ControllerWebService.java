@@ -1,5 +1,6 @@
 package es.art83.ticTacToe.controllers.ws;
 
+
 public class ControllerWebService {
     private String sessionId = null;
 
@@ -11,8 +12,6 @@ public class ControllerWebService {
 
     private static final String WEB = "/TicTacToe/rest";
 
-    //TODO habría que pasarlo por parámetro a WebServiceManager para evitar relación bidireccional
-    //TODO y pasará a ser privado
     public static final String URI = PROTOCOL + "://" + HOST + ":" + PORT + WEB;
 
     public ControllerWebService(String sessionId) {
@@ -22,6 +21,10 @@ public class ControllerWebService {
 
     public String getSessionId() {
         return sessionId;
+    }
+    
+    protected static WebServicesManager buildWebServiceManager(String... paths){
+        return new WebServicesManager(URI, paths);
     }
 
 }

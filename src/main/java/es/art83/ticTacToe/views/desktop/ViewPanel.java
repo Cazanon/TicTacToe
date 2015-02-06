@@ -11,8 +11,8 @@ import javax.swing.JTextField;
 
 import es.art83.ticTacToe.controllers.ejbs.ControllerEjbFactory;
 
-@SuppressWarnings("serial")
 abstract class ViewPanel extends JPanel implements ActionListener{
+    private static final long serialVersionUID = 1L;
 
     protected Frame frame;
     

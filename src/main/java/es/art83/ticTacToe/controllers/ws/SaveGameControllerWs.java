@@ -4,7 +4,6 @@ import es.art83.ticTacToe.controllers.SaveGameController;
 import es.art83.ticTacToe.webService.GameResource;
 import es.art83.ticTacToe.webService.SessionGameResource;
 import es.art83.ticTacToe.webService.SessionResource;
-import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class SaveGameControllerWs extends ControllerWebService implements SaveGameController {
 
@@ -14,30 +13,30 @@ public class SaveGameControllerWs extends ControllerWebService implements SaveGa
 
     @Override
     public void saveGame(String gameName) {
-        new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.getSessionId(),
+        ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.getSessionId(),
                 SessionGameResource.PATH_GAME, SessionGameResource.PATH_NAME).create(gameName);
-        WebServicesManager<?> webServicesManager = new WebServicesManager<>(GameResource.PATH_GAMES);
+        WebServicesManager webServicesManager = ControllerWebService.buildWebServiceManager(GameResource.PATH_GAMES);
         webServicesManager.addParams("sessionId", this.getSessionId());
         webServicesManager.create();
     }
 
     @Override
     public void saveGame() {
-        String gameName = new WebServicesManager<String>(SessionResource.PATH_SESSIONS,
+        String gameName = ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS,
                 this.getSessionId(), SessionGameResource.PATH_GAME, SessionGameResource.PATH_NAME)
                 .entity(String.class);
-        this.overWriteGame(gameName);
+        this.overwriteGame(gameName);
     }
     
     @Override
-    public void overWriteGame(String gameName) {
+    public void overwriteGame(String gameName) {
         // Se busca el juego y se borra
-        WebServicesManager<String> webServicesManager = new WebServicesManager<String>(
+        WebServicesManager webServicesManager = ControllerWebService.buildWebServiceManager(
                 GameResource.PATH_GAMES, GameResource.PATH_SEARCH);
         webServicesManager.addParams("sessionId", this.getSessionId());
         webServicesManager.addParams("name", gameName);
         String gameId = webServicesManager.entity(String.class);
-        new WebServicesManager<>(GameResource.PATH_GAMES, gameId).delete();
+        ControllerWebService.buildWebServiceManager(GameResource.PATH_GAMES, gameId).delete();
         this.saveGame(gameName);
     }
 

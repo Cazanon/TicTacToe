@@ -13,7 +13,6 @@ import es.art83.ticTacToe.models.utils.ListStringWrapper;
 import es.art83.ticTacToe.webService.SessionGameResource;
 import es.art83.ticTacToe.webService.SessionPlayerResource;
 import es.art83.ticTacToe.webService.SessionResource;
-import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class ShowGameControllerWs extends ControllerWebService implements
         ShowGameController {
@@ -27,34 +26,34 @@ public class ShowGameControllerWs extends ControllerWebService implements
 
     @Override
     public String gameName() {
-        return new WebServicesManager<String>(pathSessionsIdGame, SessionGameResource.PATH_NAME)
+        return ControllerWebService.buildWebServiceManager(pathSessionsIdGame, SessionGameResource.PATH_NAME)
                 .entity(String.class);
     }
 
     @Override
-    public List<PieceEntity> allPieces() {
+    public List<PieceEntity> piecesOnBoard() {
         GenericType<List<PieceEntity>> gerericType = new GenericType<List<PieceEntity>>() {
         };
-        List<PieceEntity> allPieces = new WebServicesManager<PieceEntity>(pathSessionsIdGame,
+        List<PieceEntity> allPieces = ControllerWebService.buildWebServiceManager(pathSessionsIdGame,
                 SessionGameResource.PATH_ALL_PIECES).entities(gerericType);
         return allPieces;
     }
 
     @Override
     public ColorModel gameOver() {
-        return new WebServicesManager<ColorModel>(pathSessionsIdGame,
+        return ControllerWebService.buildWebServiceManager(pathSessionsIdGame,
                 SessionGameResource.PATH_GAME_OVER).entity(ColorModel.class);
     }
 
     @Override
     public ColorModel turnColor() {
-        return new WebServicesManager<ColorModel>(pathSessionsIdGame, SessionGameResource.PATH_TURN)
+        return ControllerWebService.buildWebServiceManager(pathSessionsIdGame, SessionGameResource.PATH_TURN)
                 .entity(ColorModel.class);
     }
 
     @Override
     public boolean hasAllPieces() {
-        return new WebServicesManager<Boolean>(pathSessionsIdGame,
+        return ControllerWebService.buildWebServiceManager(pathSessionsIdGame,
                 SessionGameResource.PATH_HAS_ALL_PIECES).entityBoolean();
     }
 
@@ -62,7 +61,7 @@ public class ShowGameControllerWs extends ControllerWebService implements
     public List<CoordinateEntity> validSourceCoordinates() {
         GenericType<List<CoordinateEntity>> gerericType = new GenericType<List<CoordinateEntity>>() {
         };
-        return new WebServicesManager<CoordinateEntity>(pathSessionsIdGame,
+        return ControllerWebService.buildWebServiceManager(pathSessionsIdGame,
                 SessionGameResource.PATH_VALID_SOURCE_COORDINATES).entities(gerericType);
     }
 
@@ -70,19 +69,19 @@ public class ShowGameControllerWs extends ControllerWebService implements
     public List<CoordinateEntity> validDestinationCoordinates() {
         GenericType<List<CoordinateEntity>> gerericType = new GenericType<List<CoordinateEntity>>() {
         };
-        return new WebServicesManager<CoordinateEntity>(pathSessionsIdGame,
+        return ControllerWebService.buildWebServiceManager(pathSessionsIdGame,
                 SessionGameResource.PATH_VALID_DESTINATION_COORDINATES).entities(gerericType);
     }
 
     @Override
-    public boolean openedGame() {
-        return new WebServicesManager<Boolean>(SessionResource.PATH_SESSIONS, this.getSessionId(),
+    public boolean existGame() {
+        return ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.getSessionId(),
                 SessionResource.PATH_CREATED_GAME).entityBoolean();
     }
 
     @Override
-    public List<String> gameNames() {
-        ListStringWrapper listStringWrapper = new WebServicesManager<ListStringWrapper>(
+    public List<String> gameNamesOfPlayer() {
+        ListStringWrapper listStringWrapper = ControllerWebService.buildWebServiceManager(
                 SessionResource.PATH_SESSIONS, this.getSessionId(),
                 SessionPlayerResource.PATH_PLAYER, SessionPlayerResource.PATH_GAME_NAMES)
                 .entity(ListStringWrapper.class);

@@ -78,11 +78,11 @@ public class SaveViewPanel extends ViewPanel {
         if (gameName.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Game name can't be empty!");
         } else {
-            if (!showGameController.gameNames().contains(gameName)) { // nombre no duplicado
+            if (!showGameController.gameNamesOfPlayer().contains(gameName)) { // nombre no duplicado
                 saveGameController.saveGame(gameName.getText());
             } else {
                 duplicated = true;
-                saveGameController.overWriteGame(gameName.getText());
+                saveGameController.overwriteGame(gameName.getText());
             }
             frame.setPanel(new GameViewPanel(frame));
         }

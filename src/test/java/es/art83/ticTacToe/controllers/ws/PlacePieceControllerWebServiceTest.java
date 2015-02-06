@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.controllers.webService;
+package es.art83.ticTacToe.controllers.ws;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,7 +17,6 @@ import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.PlayerResource;
 import es.art83.ticTacToe.webService.SessionResource;
-import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class PlacePieceControllerWebServiceTest {
 
@@ -43,7 +42,7 @@ public class PlacePieceControllerWebServiceTest {
     @Test
     public void testPlaceCard() {
         this.placeController.placePiece(new CoordinateEntity(0, 0));
-        List<PieceEntity> pieces = this.showGameController.allPieces();
+        List<PieceEntity> pieces = this.showGameController.piecesOnBoard();
         assertEquals(1, pieces.size());
         assertEquals(new CoordinateEntity(0, 0), pieces.get(0).getCoordinate());
      }
@@ -53,15 +52,15 @@ public class PlacePieceControllerWebServiceTest {
         this.placeController.placePiece(new CoordinateEntity(0, 0));
         this.placeController.placePiece(new CoordinateEntity(2, 0));
         this.placeController.placePiece(new CoordinateEntity(0, 0), new CoordinateEntity(1, 1));
-        List<PieceEntity> pieces = this.showGameController.allPieces();
+        List<PieceEntity> pieces = this.showGameController.piecesOnBoard();
         assertEquals(3,pieces.size());
     }
 
     @After
     public void after() {
         this.logout.logout();
-        new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.placeController.getSessionId()).delete();
-        new WebServicesManager<>(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
+        ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.placeController.getSessionId()).delete();
+        ControllerWebService.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
     }
 
 }

@@ -95,7 +95,7 @@ class GameViewPanel extends ViewPanel {
 
     @Override
     protected void updateComponents() {
-        boolean openedGame = showGameController.openedGame();
+        boolean openedGame = showGameController.existGame();
         String openedGameName = null;
         if (openedGame) {
             openedGameName = showGameController.gameName();
@@ -105,7 +105,7 @@ class GameViewPanel extends ViewPanel {
                 nameGameMsg.setText("Name game: " + openedGameName);
             }
             ColorModel[][] colors = new ColorModel[3][3];
-            for (PieceEntity ficha : showGameController.allPieces()) {
+            for (PieceEntity ficha : showGameController.piecesOnBoard()) {
                 colors[ficha.getCoordinate().getRow()][ficha.getCoordinate()
                         .getColumn()] = ficha.getColor();
             }
@@ -139,7 +139,7 @@ class GameViewPanel extends ViewPanel {
                 validDestinationCoordinates.setModel(validDestinationCoordinatesModel);
             }
         }
-        List<String> gameNames = showGameController.gameNames();
+        List<String> gameNames = showGameController.gameNamesOfPlayer();
         System.out.println("Game names:" + gameNames);
         boolean existGames = !gameNames.isEmpty();
         if (existGames) {
@@ -155,7 +155,7 @@ class GameViewPanel extends ViewPanel {
 
     @Override
     protected void visualizeComponents() {
-        boolean openedGame = showGameController.openedGame();
+        boolean openedGame = showGameController.existGame();
         nameGameMsg.setVisible(openedGame);
         boardMsg.setVisible(openedGame);
         for (int i = 0; i < CoordinateEntity.DIMENSION; i++) {
@@ -173,7 +173,7 @@ class GameViewPanel extends ViewPanel {
         placePiece.setVisible(openedGame && !gameOver);
         winnerMsg.setVisible(openedGame && gameOver);
         createGame.setVisible(true);
-        boolean existGames = !showGameController.gameNames().isEmpty();
+        boolean existGames = !showGameController.gameNamesOfPlayer().isEmpty();
         gameNames.setVisible(existGames);
         openGame.setVisible(existGames);
         logout.setVisible(true);

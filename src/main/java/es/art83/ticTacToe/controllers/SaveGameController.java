@@ -5,6 +5,6 @@ public interface SaveGameController {
 
     void saveGame(String gameName);
 
-    void overWriteGame(String gameName);
+    void overwriteGame(String gameName);
 
 }

@@ -7,10 +7,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.art83.ticTacToe.controllers.ws.WebServicesManager;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
-public class PlayerResourceTest {
+public class PlayerResourceTest extends ResourceTest {
     private PlayerEntity player;
 
     @Before
@@ -20,18 +20,18 @@ public class PlayerResourceTest {
 
     @Test
     public void testCreateNoExist() {
-        assertTrue(new WebServicesManager<>(PlayerResource.PATH_PLAYERS).create(player));
+        assertTrue(new WebServicesManager(URI,PlayerResource.PATH_PLAYERS).create(player));
     }
 
     @Test
     public void testCreateExist() {
-        new WebServicesManager<>(PlayerResource.PATH_PLAYERS).create(player);
-        assertFalse(new WebServicesManager<>(PlayerResource.PATH_PLAYERS).create(player));
+        new WebServicesManager(URI,PlayerResource.PATH_PLAYERS).create(player);
+        assertFalse(new WebServicesManager(URI,PlayerResource.PATH_PLAYERS).create(player));
     }
 
     @After
     public void after() {
-        new WebServicesManager<>(PlayerResource.PATH_PLAYERS, this.player.getUser()).delete();
+        new WebServicesManager(URI,PlayerResource.PATH_PLAYERS, this.player.getUser()).delete();
     }
 
 }

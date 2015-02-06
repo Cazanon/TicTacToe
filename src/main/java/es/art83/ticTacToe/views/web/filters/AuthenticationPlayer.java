@@ -23,7 +23,7 @@ public class AuthenticationPlayer implements Filter {
             throws IOException, ServletException {
         ControllerFactory controllerFactory = (ControllerFactory) ((HttpServletRequest) request)
                 .getSession().getAttribute("controllerFactory");
-        if (!controllerFactory.getLoginController().logged()) {
+        if (!controllerFactory.getLoginController().loggedIn()) {
             LogManager.getLogger(this.getClass().getName()).info("Usuario no autorizado, reenviado a login...");
             ((HttpServletResponse) response).sendRedirect("../login.xhtml");
         } else {

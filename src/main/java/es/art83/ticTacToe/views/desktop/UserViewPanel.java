@@ -6,8 +6,8 @@ import javax.swing.JTextField;
 
 import es.art83.ticTacToe.controllers.LoginController;
 
-@SuppressWarnings("serial")
 abstract class UserViewPanel extends ViewPanel {
+    private static final long serialVersionUID = 1L;
 
     protected LoginController loginController;
     

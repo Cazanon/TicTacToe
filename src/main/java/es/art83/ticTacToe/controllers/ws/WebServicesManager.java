@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.webService.utils;
+package es.art83.ticTacToe.controllers.ws;
 
 import java.util.List;
 
@@ -10,16 +10,14 @@ import javax.ws.rs.core.Response;
 
 import org.apache.logging.log4j.LogManager;
 
-import es.art83.ticTacToe.controllers.ws.ControllerWebService;
-
 //TODO una clase sola en un paquete no es oportuno
-public class WebServicesManager<T> {
+public class WebServicesManager {
     private WebTarget webTarget;
 
     private Response response;
 
-    public WebServicesManager(String... paths) {
-        this.webTarget = ClientBuilder.newClient().target(ControllerWebService.URI);
+    public WebServicesManager(String uri, String... paths) {
+        this.webTarget = ClientBuilder.newClient().target(uri);
         for (String path : paths) {
             this.webTarget = this.webTarget.path(path);
         }
@@ -103,7 +101,7 @@ public class WebServicesManager<T> {
         return Response.Status.Family.SUCCESSFUL.equals(response.getStatusInfo().getFamily());
     }
 
-    public T entity(Class<T> clazz) {
+    public <T> T entity(Class<T> clazz) {
         T result = null;
         if (this.getResponse().hasEntity()) {
             result = this.getResponse().readEntity(clazz);
@@ -119,7 +117,7 @@ public class WebServicesManager<T> {
         return result;
     }
 
-    public List<T> entities(GenericType<List<T>> genericType) {
+    public <T> List<T> entities(GenericType<List<T>> genericType) {
         List<T> result = null;
         if (this.getResponse().hasEntity()) {
             result = this.getResponse().readEntity(genericType);

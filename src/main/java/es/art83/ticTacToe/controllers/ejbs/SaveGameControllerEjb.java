@@ -20,7 +20,7 @@ public class SaveGameControllerEjb extends ControllerEjb implements SaveGameCont
     @Override
     public void saveGame() {
         GameEntity game = this.getSession().getGame();
-        this.overWriteGame(game.getName());
+        this.overwriteGame(game.getName());
     }
 
     @Override
@@ -33,7 +33,7 @@ public class SaveGameControllerEjb extends ControllerEjb implements SaveGameCont
     }
 
     @Override
-    public void overWriteGame(String gameName) {
+    public void overwriteGame(String gameName) {
         GameEntity game = DaoFactory.getFactory().getGameDao()
                 .findPlayerGame(this.getSession().getPlayer(), gameName);
         DaoFactory.getFactory().getGameDao().deleteById(game.getId());

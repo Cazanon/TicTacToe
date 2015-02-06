@@ -21,7 +21,7 @@ public class SaveViewBean extends ViewBean {
 
     @PostConstruct
     public void update() {
-        this.gameNames = this.getControllerFactory().getShowGameController().gameNames();
+        this.gameNames = this.getControllerFactory().getShowGameController().gameNamesOfPlayer();
     }
 
     public boolean isOverWrote() {
@@ -63,7 +63,7 @@ public class SaveViewBean extends ViewBean {
 
     public String overWriteGame() {
         SaveGameController saveGameController = this.getControllerFactory().getSaveGameController();
-        saveGameController.overWriteGame(this.gameName);
+        saveGameController.overwriteGame(this.gameName);
         LogManager.getLogger(this.getClass().getName()).info(
                 "--- Partida sobrescrita: " + this.gameName + " ---");
         return "game";

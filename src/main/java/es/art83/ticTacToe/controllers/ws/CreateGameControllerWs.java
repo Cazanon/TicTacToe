@@ -3,7 +3,6 @@ package es.art83.ticTacToe.controllers.ws;
 import es.art83.ticTacToe.controllers.CreateGameController;
 import es.art83.ticTacToe.webService.SessionGameResource;
 import es.art83.ticTacToe.webService.SessionResource;
-import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class CreateGameControllerWs extends ControllerWebService implements CreateGameController {
 
@@ -13,11 +12,8 @@ public class CreateGameControllerWs extends ControllerWebService implements Crea
 
     @Override
     public void createGame() {
-        //Se busca si existe una partida a medias
-        
-        
-        
-        WebServicesManager<?> webServicesManager = new WebServicesManager<>(
+        // Se busca si existe una partida a medias
+        WebServicesManager webServicesManager = ControllerWebService.buildWebServiceManager(
                 SessionResource.PATH_SESSIONS, this.getSessionId(), SessionGameResource.PATH_GAME);
         webServicesManager.create();
     }

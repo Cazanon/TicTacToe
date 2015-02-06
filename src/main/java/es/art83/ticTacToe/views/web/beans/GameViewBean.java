@@ -50,10 +50,10 @@ public class GameViewBean extends ViewBean {
     @PostConstruct
     public void update() {
         ShowGameController showGameController = this.getControllerFactory().getShowGameController();
-        this.createdGame = showGameController.openedGame();
+        this.createdGame = showGameController.existGame();
         if (this.createdGame) {
             this.gameName = showGameController.gameName();
-            this.prepareBoarView(showGameController.allPieces());
+            this.prepareBoarView(showGameController.piecesOnBoard());
             this.winner = showGameController.gameOver();
             this.gameOver = this.winner != null;
             if (!this.gameOver) {
@@ -65,7 +65,7 @@ public class GameViewBean extends ViewBean {
                 this.validDestinationCoordinates = showGameController.validDestinationCoordinates();
             }
         }
-        this.gameNames = this.getControllerFactory().getShowGameController().gameNames();
+        this.gameNames = this.getControllerFactory().getShowGameController().gameNamesOfPlayer();
     }
 
     private void prepareBoarView(List<PieceEntity> allPieces) {

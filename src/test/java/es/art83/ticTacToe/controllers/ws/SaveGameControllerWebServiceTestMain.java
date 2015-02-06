@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.controllers.webService;
+package es.art83.ticTacToe.controllers.ws;
 
 
 import es.art83.ticTacToe.controllers.LogoutController;
@@ -9,7 +9,6 @@ import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.PlayerResource;
 import es.art83.ticTacToe.webService.SessionResource;
-import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class SaveGameControllerWebServiceTestMain {
 
@@ -45,9 +44,9 @@ public class SaveGameControllerWebServiceTestMain {
     public void after() {
         //Se deben borrar los juegos del usuario
         this.logout.logout();
-        new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.placeController.getSessionId())
+        ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.placeController.getSessionId())
                 .delete();
-        new WebServicesManager<>(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser())
+        ControllerWebService.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser())
                 .delete();
     }
 

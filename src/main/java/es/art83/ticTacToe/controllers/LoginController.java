@@ -8,6 +8,6 @@ public interface LoginController {
 
     boolean register(PlayerEntity player);
     
-    boolean logged();
+    boolean loggedIn();
 
 }

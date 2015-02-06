@@ -40,7 +40,7 @@ class LoginViewPanel extends UserViewPanel {
 
     @Override
     protected void visualizeComponents() {
-        byeMsg.setVisible(logoutController.logouted());
+        byeMsg.setVisible(logoutController.loggedOut());
         super.visualizeComponents();
         login.setVisible(true);
         register.setVisible(true);

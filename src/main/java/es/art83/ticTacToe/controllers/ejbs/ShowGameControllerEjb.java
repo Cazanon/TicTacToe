@@ -27,7 +27,7 @@ public class ShowGameControllerEjb extends ControllerEjb implements ShowGameCont
     }
 
     @Override
-    public List<PieceEntity> allPieces() {
+    public List<PieceEntity> piecesOnBoard() {
         return this.getSession().getGame().allPieces();
     }
 
@@ -56,17 +56,13 @@ public class ShowGameControllerEjb extends ControllerEjb implements ShowGameCont
         return this.getSession().getGame().validDestinationCoordinates();
     }
 
-    // El problema es que cuando se termina una partida nos encontramos en
-    // CLOSED_GAME, pero se debe mostrar el tablero ya que existe partida
     @Override
-    public boolean openedGame() {
-        boolean result = this.getSession().getState() == StateModel.OPENED_GAME
-                || this.getSession().getGame() != null;
-        return result;
+    public boolean existGame() {
+        return this.getSession().getGame() != null;
     }
 
     @Override
-    public List<String> gameNames() {
+    public List<String> gameNamesOfPlayer() {
         return DaoFactory.getFactory().getGameDao()
                 .findPlayerGameNames(this.getSession().getPlayer());
     }

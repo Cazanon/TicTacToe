@@ -34,48 +34,61 @@ public class ControllerEjbFactory extends ControllerFactory {
 
     public ControllerEjbFactory() {
         ticTacToeSession = new Session();
-        // TODO podrían pasar a ser singleton en sus getXXX
-        loginController = new LoginControllerEjb(ticTacToeSession);
-        logoutController = new LogoutControllerEjb(ticTacToeSession);
-        createGameController = new CreateGameControllerEjb(ticTacToeSession);
-        showGameController = new ShowGameControllerEjb(ticTacToeSession);
-        placePieceController = new PlacePieceControllerEjb(ticTacToeSession);
-        saveGameController = new SaveGameControllerEjb(ticTacToeSession);
-        openGameController = new OpenGameControllerEjb(ticTacToeSession);
     }
 
     @Override
     public LoginController getLoginController() {
+        if (loginController == null) {
+            loginController = new LoginControllerEjb(ticTacToeSession);
+        }
         return loginController;
     }
 
     @Override
     public LogoutController getLogoutController() {
+        if (logoutController == null) {
+            logoutController = new LogoutControllerEjb(ticTacToeSession);
+        }
         return logoutController;
     }
 
     @Override
     public CreateGameController getCreateGameControler() {
+        if (createGameController == null) {
+            createGameController = new CreateGameControllerEjb(ticTacToeSession);
+        }
         return createGameController;
     }
 
     @Override
     public OpenGameController getOpenGameController() {
+        if (openGameController == null) {
+            openGameController = new OpenGameControllerEjb(ticTacToeSession);
+        }
         return openGameController;
     }
 
     @Override
     public ShowGameController getShowGameController() {
+        if (showGameController == null) {
+            showGameController = new ShowGameControllerEjb(ticTacToeSession);
+        }
         return showGameController;
     }
 
     @Override
     public PlacePieceController getPlacePieceController() {
+        if (placePieceController == null) {
+            placePieceController = new PlacePieceControllerEjb(ticTacToeSession);
+        }
         return placePieceController;
     }
 
     @Override
     public SaveGameController getSaveGameController() {
+        if (saveGameController == null) {
+            saveGameController = new SaveGameControllerEjb(ticTacToeSession);
+        }
         return saveGameController;
     }
 

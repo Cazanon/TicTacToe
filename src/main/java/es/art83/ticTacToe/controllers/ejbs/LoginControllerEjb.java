@@ -44,7 +44,7 @@ public class LoginControllerEjb extends ControllerEjb implements LoginController
     }
 
     @Override
-    public boolean logged() {
+    public boolean loggedIn() {
         return this.getSession().getState() == StateModel.CLOSED_GAME
                 || this.getSession().getState() == StateModel.OPENED_GAME;
     }

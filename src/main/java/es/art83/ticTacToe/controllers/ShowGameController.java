@@ -10,7 +10,7 @@ public interface ShowGameController {
 
     String gameName();
 
-    List<PieceEntity> allPieces();
+    List<PieceEntity> piecesOnBoard();
 
     ColorModel gameOver();
 
@@ -22,8 +22,8 @@ public interface ShowGameController {
 
     List<CoordinateEntity> validDestinationCoordinates();
 
-    boolean openedGame();
+    boolean existGame();
     
-    List<String> gameNames();
+    List<String> gameNamesOfPlayer();
 
 }

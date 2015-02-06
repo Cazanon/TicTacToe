@@ -9,7 +9,6 @@ import es.art83.ticTacToe.controllers.PlacePieceController;
 import es.art83.ticTacToe.controllers.SaveGameController;
 import es.art83.ticTacToe.controllers.ShowGameController;
 import es.art83.ticTacToe.webService.SessionResource;
-import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 //@ManagedBean(name = "controllerFactory")
 //@SessionScoped
@@ -29,59 +28,72 @@ public class ControllerWsFactory extends ControllerFactory {
 
     private SaveGameController saveGameController;
 
+    private String sessionId = null;
+
     public ControllerWsFactory() {
-        String sessionId = null;
         // Crear peticion rest para crear contexto. Almacenar la referencia del
         // contexto en el servidor
-        WebServicesManager<String> webServicesManager = new WebServicesManager<>(
-                SessionResource.PATH_SESSIONS);
+        WebServicesManager webServicesManager = ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS);
+//                new WebServicesManager<>(
+//                SessionResource.PATH_SESSIONS);
         webServicesManager.create();
         sessionId = webServicesManager.entity(String.class);
-
-        // Pasarle la referencia a todos los controladores
-        //TODO podrían pasar a ser singleton en sus getXXX
-        this.loginController = new LoginControllerWs(sessionId);
-        this.logoutController = new LogoutControllerWs(sessionId);
-        this.createGameController = new CreateGameControllerWs(sessionId);
-        this.showGameController = new ShowGameControllerWs(sessionId);
-        this.placePieceController = new PlacePieceControllerWs(sessionId);
-        this.saveGameController = new SaveGameControllerWs(sessionId);
-        this.openGameController = new OpenGameControllerWs(sessionId);
     }
 
     @Override
     public LoginController getLoginController() {
-        return this.loginController;
+        if (loginController == null) {
+            loginController = new LoginControllerWs(sessionId);
+        }
+        return loginController;
     }
 
     @Override
     public LogoutController getLogoutController() {
-        return this.logoutController;
+        if (logoutController == null) {
+            logoutController = new LogoutControllerWs(sessionId);
+        }
+        return logoutController;
     }
 
     @Override
     public CreateGameController getCreateGameControler() {
+        if (createGameController == null) {
+            createGameController = new CreateGameControllerWs(sessionId);
+        }
         return createGameController;
     }
 
     @Override
     public OpenGameController getOpenGameController() {
-        return this.openGameController;
+        if (openGameController == null) {
+            openGameController = new OpenGameControllerWs(sessionId);
+        }
+        return openGameController;
     }
 
     @Override
     public ShowGameController getShowGameController() {
-        return this.showGameController;
+        if (showGameController == null) {
+            showGameController = new ShowGameControllerWs(sessionId);
+        }
+        return showGameController;
     }
 
     @Override
     public PlacePieceController getPlacePieceController() {
-        return this.placePieceController;
+        if (placePieceController == null) {
+            placePieceController = new PlacePieceControllerWs(sessionId);
+        }
+        return placePieceController;
     }
 
     @Override
     public SaveGameController getSaveGameController() {
-        return this.saveGameController;
+        if (saveGameController == null) {
+            saveGameController = new SaveGameControllerWs(sessionId);
+        }
+        return saveGameController;
     }
 
 }

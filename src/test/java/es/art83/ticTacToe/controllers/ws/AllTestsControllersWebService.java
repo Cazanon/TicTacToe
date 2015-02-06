@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.controllers.webService;
+package es.art83.ticTacToe.controllers.ws;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.controllers.webService;
+package es.art83.ticTacToe.controllers.ws;
 
 import static org.junit.Assert.*;
 
@@ -12,7 +12,6 @@ import es.art83.ticTacToe.controllers.ws.LogoutControllerWs;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.webService.PlayerResource;
 import es.art83.ticTacToe.webService.SessionResource;
-import es.art83.ticTacToe.webService.utils.WebServicesManager;
 
 public class LogoutControllerWebServiceTest {
 
@@ -39,23 +38,23 @@ public class LogoutControllerWebServiceTest {
     @Test
     public void testLogout() {
         this.logout.logout();
-        assertFalse(this.login.logged());
+        assertFalse(this.login.loggedIn());
     }
 
     @Test
     public void testIsByeTrue() {
         this.logout.logout();
-        assertTrue(this.logout.logouted());
+        assertTrue(this.logout.loggedOut());
     }
 
     @Test
     public void testIsByeFalse() {
-        assertFalse(this.logout.logouted());
+        assertFalse(this.logout.loggedOut());
     }
 
     @After
     public void after() {
-        new WebServicesManager<>(SessionResource.PATH_SESSIONS, this.logout.getSessionId()).delete();
-        new WebServicesManager<>(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
+        ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.logout.getSessionId()).delete();
+        ControllerWebService.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
     }
 }
