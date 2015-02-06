@@ -33,7 +33,7 @@ public class ControllerWsFactory extends ControllerFactory {
     public ControllerWsFactory() {
         // Crear peticion rest para crear contexto. Almacenar la referencia del
         // contexto en el servidor
-        WebServicesManager webServicesManager = ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS);
+        WsManager webServicesManager = ControllerWs.buildWebServiceManager(SessionResource.PATH_SESSIONS);
 //                new WebServicesManager<>(
 //                SessionResource.PATH_SESSIONS);
         webServicesManager.create();

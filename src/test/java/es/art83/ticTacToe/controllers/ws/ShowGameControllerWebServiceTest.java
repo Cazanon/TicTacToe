@@ -70,9 +70,9 @@ public class ShowGameControllerWebServiceTest {
     @After
     public void after() {
         this.logout.logout();
-        ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS,
+        ControllerWs.buildWebServiceManager(SessionResource.PATH_SESSIONS,
                 this.showGameController.getSessionId()).delete();
-        ControllerWebService.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
+        ControllerWs.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
     }
 
 }

@@ -5,10 +5,10 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import es.art83.ticTacToe.controllers.ws.AllTestsControllersWebService;
-import es.art83.ticTacToe.webService.AllTestsWebService;
+import es.art83.ticTacToe.ws.AllTestsWs;
 
 @RunWith(Suite.class)
-@SuiteClasses({AllTestsWebService.class, AllTestsControllersWebService.class})
+@SuiteClasses({AllTestsWs.class, AllTestsControllersWebService.class})
 public class AllTestsTicTacToe {
 
 }

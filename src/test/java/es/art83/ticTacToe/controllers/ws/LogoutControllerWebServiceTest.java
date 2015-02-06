@@ -54,7 +54,7 @@ public class LogoutControllerWebServiceTest {
 
     @After
     public void after() {
-        ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.logout.getSessionId()).delete();
-        ControllerWebService.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
+        ControllerWs.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.logout.getSessionId()).delete();
+        ControllerWs.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
     }
 }

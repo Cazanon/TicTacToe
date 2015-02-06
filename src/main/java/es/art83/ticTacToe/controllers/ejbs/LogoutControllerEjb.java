@@ -24,7 +24,6 @@ public class LogoutControllerEjb extends ControllerEjb implements LogoutControll
         this.changeState();
     }
 
-    // TODO es logged y logouted?!? o es loggedin y loggouted?!?
     @Override
     public boolean loggedOut() {
         return this.getSession().getState() == StateModel.FINAL;

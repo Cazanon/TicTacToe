@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.art83.ticTacToe.controllers.LogoutController;
-import es.art83.ticTacToe.controllers.ws.ControllerWebService;
+import es.art83.ticTacToe.controllers.ws.ControllerWs;
 import es.art83.ticTacToe.controllers.ws.ControllerWsFactory;
 import es.art83.ticTacToe.controllers.ws.CreateGameControllerWs;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
@@ -37,9 +37,9 @@ public class CreateGameControllerWebServiceTest {
     @After
     public void after() {
         this.logout.logout();
-        ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.create.getSessionId())
+        ControllerWs.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.create.getSessionId())
                 .delete();
-        ControllerWebService.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser())
+        ControllerWs.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser())
                 .delete();
     }
 }

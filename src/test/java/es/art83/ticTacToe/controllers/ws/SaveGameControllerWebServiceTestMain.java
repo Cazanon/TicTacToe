@@ -44,9 +44,9 @@ public class SaveGameControllerWebServiceTestMain {
     public void after() {
         //Se deben borrar los juegos del usuario
         this.logout.logout();
-        ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.placeController.getSessionId())
+        ControllerWs.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.placeController.getSessionId())
                 .delete();
-        ControllerWebService.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser())
+        ControllerWs.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser())
                 .delete();
     }
 

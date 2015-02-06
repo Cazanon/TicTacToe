@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.webService;
+package es.art83.ticTacToe.ws;
 
 import static org.junit.Assert.*;
 
@@ -6,8 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.art83.ticTacToe.controllers.ws.WebServicesManager;
+import es.art83.ticTacToe.controllers.ws.WsManager;
 import es.art83.ticTacToe.models.utils.StateModel;
+import es.art83.ticTacToe.webService.SessionResource;
 
 public class SessionResourceTest extends ResourceTest {
 
@@ -15,7 +16,7 @@ public class SessionResourceTest extends ResourceTest {
 
     @Before
     public void testCreate() {
-        WebServicesManager webService = new WebServicesManager(URI,
+        WsManager webService = new WsManager(URI,
                 SessionResource.PATH_SESSIONS);
         assertTrue(webService.create());
         this.sessionId = webService.entity(String.class);
@@ -23,13 +24,13 @@ public class SessionResourceTest extends ResourceTest {
 
     @Test
     public void testNotLogged() {
-        assertFalse(new WebServicesManager(URI,SessionResource.PATH_SESSIONS, this.sessionId,
+        assertFalse(new WsManager(URI,SessionResource.PATH_SESSIONS, this.sessionId,
                 SessionResource.PATH_LOGGED).entityBoolean());
     }
 
     @Test
     public void testStateInitial() {
-        StateModel state = new WebServicesManager(URI,
+        StateModel state = new WsManager(URI,
                 SessionResource.PATH_SESSIONS, this.sessionId, SessionResource.PATH_STATE)
                 .entity(StateModel.class);
         assertEquals(StateModel.INITIAL, state);
@@ -37,13 +38,13 @@ public class SessionResourceTest extends ResourceTest {
 
     @Test
     public void testSavedGameInitial() {
-        assertTrue(new WebServicesManager(URI,SessionResource.PATH_SESSIONS, this.sessionId,
+        assertTrue(new WsManager(URI,SessionResource.PATH_SESSIONS, this.sessionId,
                 SessionResource.PATH_SAVED_GAME).entityBoolean());
     }
 
     @After
     public void deleteSession() {
-        new WebServicesManager(URI,SessionResource.PATH_SESSIONS, this.sessionId).delete();
+        new WsManager(URI,SessionResource.PATH_SESSIONS, this.sessionId).delete();
     }
 
 }

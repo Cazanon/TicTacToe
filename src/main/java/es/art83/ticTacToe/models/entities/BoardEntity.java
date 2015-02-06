@@ -18,8 +18,7 @@ public class BoardEntity {
     @GeneratedValue
     private int id;
 
-    // TODO debería ser un set porque no hay orden de secuencia por ningún
-    // criterio
+    // TODO debería ser un set porque no hay orden de secuencia por ningún criterio
     @OneToMany(cascade = CascadeType.ALL)
     private List<PieceEntity> pieces;
 

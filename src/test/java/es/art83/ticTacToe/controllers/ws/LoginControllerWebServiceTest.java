@@ -48,7 +48,7 @@ public class LoginControllerWebServiceTest {
 
     @After
     public void after() {
-        ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.login.getSessionId()).delete();
-        ControllerWebService.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
+        ControllerWs.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.login.getSessionId()).delete();
+        ControllerWs.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
     }
 }

@@ -1,7 +1,7 @@
 package es.art83.ticTacToe.controllers.ws;
 
 
-public class ControllerWebService {
+public class ControllerWs {
     private String sessionId = null;
 
     private static final String PROTOCOL = "http";
@@ -14,7 +14,7 @@ public class ControllerWebService {
 
     public static final String URI = PROTOCOL + "://" + HOST + ":" + PORT + WEB;
 
-    public ControllerWebService(String sessionId) {
+    public ControllerWs(String sessionId) {
         assert sessionId != null;
         this.sessionId = sessionId;
     }
@@ -23,8 +23,8 @@ public class ControllerWebService {
         return sessionId;
     }
     
-    protected static WebServicesManager buildWebServiceManager(String... paths){
-        return new WebServicesManager(URI, paths);
+    protected static WsManager buildWebServiceManager(String... paths){
+        return new WsManager(URI, paths);
     }
 
 }

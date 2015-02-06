@@ -59,8 +59,8 @@ public class PlacePieceControllerWebServiceTest {
     @After
     public void after() {
         this.logout.logout();
-        ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.placeController.getSessionId()).delete();
-        ControllerWebService.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
+        ControllerWs.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.placeController.getSessionId()).delete();
+        ControllerWs.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
     }
 
 }

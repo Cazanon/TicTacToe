@@ -10,13 +10,12 @@ import javax.ws.rs.core.Response;
 
 import org.apache.logging.log4j.LogManager;
 
-//TODO una clase sola en un paquete no es oportuno
-public class WebServicesManager {
+public class WsManager {
     private WebTarget webTarget;
 
     private Response response;
 
-    public WebServicesManager(String uri, String... paths) {
+    public WsManager(String uri, String... paths) {
         this.webTarget = ClientBuilder.newClient().target(uri);
         for (String path : paths) {
             this.webTarget = this.webTarget.path(path);

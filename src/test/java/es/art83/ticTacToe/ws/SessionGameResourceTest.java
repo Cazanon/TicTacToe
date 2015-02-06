@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.webService;
+package es.art83.ticTacToe.ws;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -13,11 +13,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.art83.ticTacToe.controllers.ws.WebServicesManager;
+import es.art83.ticTacToe.controllers.ws.WsManager;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
+import es.art83.ticTacToe.webService.PlayerResource;
+import es.art83.ticTacToe.webService.SessionGameResource;
+import es.art83.ticTacToe.webService.SessionPlayerResource;
+import es.art83.ticTacToe.webService.SessionResource;
 
 public class SessionGameResourceTest extends ResourceTest {
     private String sessionId;
@@ -31,7 +35,7 @@ public class SessionGameResourceTest extends ResourceTest {
     @Before
     public void before() {
         // Create sessions
-        WebServicesManager webServiceClient = new WebServicesManager(URI,
+        WsManager webServiceClient = new WsManager(URI,
                 SessionResource.PATH_SESSIONS);
         webServiceClient.create();
         this.sessionId = webServiceClient.entity(String.class);
@@ -41,12 +45,12 @@ public class SessionGameResourceTest extends ResourceTest {
 
         // Register player
         this.player = new PlayerEntity("u", "pass");
-        new WebServicesManager(URI,PlayerResource.PATH_PLAYERS).create(player);
+        new WsManager(URI,PlayerResource.PATH_PLAYERS).create(player);
         // Login player
-        new WebServicesManager(URI,SessionResource.PATH_SESSIONS, this.sessionId,
+        new WsManager(URI,SessionResource.PATH_SESSIONS, this.sessionId,
                 SessionPlayerResource.PATH_PLAYER).create(player);
         // Create game
-        this.createGameOk = new WebServicesManager(URI,pathSessionsIdGame).create();
+        this.createGameOk = new WsManager(URI,pathSessionsIdGame).create();
 
     }
 
@@ -57,83 +61,83 @@ public class SessionGameResourceTest extends ResourceTest {
 
     @Test
     public void testTurnInitial() {
-        assertEquals(ColorModel.X, new WebServicesManager(URI,pathSessionsIdGame,
+        assertEquals(ColorModel.X, new WsManager(URI,pathSessionsIdGame,
                 SessionGameResource.PATH_TURN).entity(ColorModel.class));
     }
 
     @Test
     public void testTurnChanged() {
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 0));
-        assertEquals(ColorModel.O, new WebServicesManager(URI,pathSessionsIdGame,
+        assertEquals(ColorModel.O, new WsManager(URI,pathSessionsIdGame,
                 SessionGameResource.PATH_TURN).entity(ColorModel.class));
     }
 
     @Test
     public void testGameOver() {
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 0));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(1, 0));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 1));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(1, 1));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 2));
-        assertEquals(ColorModel.X, new WebServicesManager(URI,pathSessionsIdGame,
+        assertEquals(ColorModel.X, new WsManager(URI,pathSessionsIdGame,
                 SessionGameResource.PATH_GAME_OVER).entity(ColorModel.class));
     }
 
     @Test
     public void testNotName() {
-        assertNull(new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_NAME)
+        assertNull(new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_NAME)
                 .entity(String.class));
     }
 
     @Test
     public void testNotFullBoard() {
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 0));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 1));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 2));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(1, 0));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(1, 1));
-        assertFalse(new WebServicesManager(URI,pathSessionsIdGame,
+        assertFalse(new WsManager(URI,pathSessionsIdGame,
                 SessionGameResource.PATH_HAS_ALL_PIECES).entityBoolean());
     }
 
     @Test
     public void testfullBoard() {
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 0));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 1));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 2));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(1, 0));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(1, 1));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(1, 2));
-        assertTrue(new WebServicesManager(URI,pathSessionsIdGame,
+        assertTrue(new WsManager(URI,pathSessionsIdGame,
                 SessionGameResource.PATH_HAS_ALL_PIECES).entityBoolean());
     }
 
     @Test
     public void testAllPieces() {
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 0));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 1));
         GenericType<List<PieceEntity>> gerericType = new GenericType<List<PieceEntity>>() {
         };
-        List<PieceEntity> allPieces = new WebServicesManager(URI,pathSessionsIdGame,
+        List<PieceEntity> allPieces = new WsManager(URI,pathSessionsIdGame,
                 SessionGameResource.PATH_ALL_PIECES).entities(gerericType);
         assertEquals(2, allPieces.size());
         assertTrue(allPieces.contains(new PieceEntity(ColorModel.X, new CoordinateEntity(0, 0))));
@@ -142,31 +146,31 @@ public class SessionGameResourceTest extends ResourceTest {
 
     @Test
     public void testWinner() {
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 0));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(1, 0));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 1));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(1, 1));
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 2));
-        assertEquals(ColorModel.X, new WebServicesManager(URI,pathSessionsIdGame,
+        assertEquals(ColorModel.X, new WsManager(URI,pathSessionsIdGame,
                 SessionGameResource.PATH_GAME_OVER).entity(ColorModel.class));
     }
 
     @Test
     public void testPlacePiece() {
-        assertTrue(new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        assertTrue(new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 0)));
     }
 
     @Test
     public void testDeletePiece() {
-        new WebServicesManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        new WsManager(URI,pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(new CoordinateEntity(0, 0));
-        WebServicesManager webServiceClient = new WebServicesManager(URI,pathSessionsIdGame,
+        WsManager webServiceClient = new WsManager(URI,pathSessionsIdGame,
                 SessionGameResource.PATH_PIECE);
         webServiceClient.addMatrixParams("row", "0");
         webServiceClient.addMatrixParams("column", "0");
@@ -175,10 +179,10 @@ public class SessionGameResourceTest extends ResourceTest {
 
     @After
     public void after() {
-        new WebServicesManager(URI,SessionResource.PATH_SESSIONS, this.sessionId,
+        new WsManager(URI,SessionResource.PATH_SESSIONS, this.sessionId,
                 SessionPlayerResource.PATH_PLAYER).delete();
-        new WebServicesManager(URI,SessionResource.PATH_SESSIONS, this.sessionId).delete();
-        new WebServicesManager(URI,PlayerResource.PATH_PLAYERS, this.player.getUser()).delete();
+        new WsManager(URI,SessionResource.PATH_SESSIONS, this.sessionId).delete();
+        new WsManager(URI,PlayerResource.PATH_PLAYERS, this.player.getUser()).delete();
     }
 
 }

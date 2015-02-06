@@ -19,8 +19,6 @@ public class PlacePieceControllerEjb extends ControllerEjb implements PlacePiece
         this.getSession().setSavedGame(false);
     }
 
-    // TODO los assert van al principio de cada método o del changeState! Todos
-    // igual
     @Override
     public void placePiece(CoordinateEntity coordinate) {
         this.getSession().getGame().placePiece(coordinate);

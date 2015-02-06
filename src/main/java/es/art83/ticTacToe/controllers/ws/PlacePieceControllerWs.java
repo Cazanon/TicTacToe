@@ -5,7 +5,7 @@ import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.webService.SessionGameResource;
 import es.art83.ticTacToe.webService.SessionResource;
 
-public class PlacePieceControllerWs extends ControllerWebService implements PlacePieceController {
+public class PlacePieceControllerWs extends ControllerWs implements PlacePieceController {
 
     private String pathSessionsIdGame;
 
@@ -17,18 +17,18 @@ public class PlacePieceControllerWs extends ControllerWebService implements Plac
 
     @Override
     public void placePiece(CoordinateEntity coordinate) {
-        ControllerWebService.buildWebServiceManager(pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        ControllerWs.buildWebServiceManager(pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(coordinate);
     }
 
     @Override
     public void placePiece(CoordinateEntity sourceCoordinate, CoordinateEntity destinationCoordinate) {
-        WebServicesManager webServicesManager = ControllerWebService.buildWebServiceManager(pathSessionsIdGame,
+        WsManager webServicesManager = ControllerWs.buildWebServiceManager(pathSessionsIdGame,
                 SessionGameResource.PATH_PIECE);
         webServicesManager.addMatrixParams("row", String.valueOf(sourceCoordinate.getRow()));
         webServicesManager.addMatrixParams("column", String.valueOf(sourceCoordinate.getColumn()));
         webServicesManager.delete();
-        ControllerWebService.buildWebServiceManager(pathSessionsIdGame, SessionGameResource.PATH_PIECE)
+        ControllerWs.buildWebServiceManager(pathSessionsIdGame, SessionGameResource.PATH_PIECE)
                 .create(destinationCoordinate);
     }
 

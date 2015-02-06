@@ -14,7 +14,7 @@ import es.art83.ticTacToe.webService.SessionGameResource;
 import es.art83.ticTacToe.webService.SessionPlayerResource;
 import es.art83.ticTacToe.webService.SessionResource;
 
-public class ShowGameControllerWs extends ControllerWebService implements
+public class ShowGameControllerWs extends ControllerWs implements
         ShowGameController {
     private final String pathSessionsIdGame;
 
@@ -26,7 +26,7 @@ public class ShowGameControllerWs extends ControllerWebService implements
 
     @Override
     public String gameName() {
-        return ControllerWebService.buildWebServiceManager(pathSessionsIdGame, SessionGameResource.PATH_NAME)
+        return ControllerWs.buildWebServiceManager(pathSessionsIdGame, SessionGameResource.PATH_NAME)
                 .entity(String.class);
     }
 
@@ -34,26 +34,26 @@ public class ShowGameControllerWs extends ControllerWebService implements
     public List<PieceEntity> piecesOnBoard() {
         GenericType<List<PieceEntity>> gerericType = new GenericType<List<PieceEntity>>() {
         };
-        List<PieceEntity> allPieces = ControllerWebService.buildWebServiceManager(pathSessionsIdGame,
+        List<PieceEntity> allPieces = ControllerWs.buildWebServiceManager(pathSessionsIdGame,
                 SessionGameResource.PATH_ALL_PIECES).entities(gerericType);
         return allPieces;
     }
 
     @Override
     public ColorModel gameOver() {
-        return ControllerWebService.buildWebServiceManager(pathSessionsIdGame,
+        return ControllerWs.buildWebServiceManager(pathSessionsIdGame,
                 SessionGameResource.PATH_GAME_OVER).entity(ColorModel.class);
     }
 
     @Override
     public ColorModel turnColor() {
-        return ControllerWebService.buildWebServiceManager(pathSessionsIdGame, SessionGameResource.PATH_TURN)
+        return ControllerWs.buildWebServiceManager(pathSessionsIdGame, SessionGameResource.PATH_TURN)
                 .entity(ColorModel.class);
     }
 
     @Override
     public boolean hasAllPieces() {
-        return ControllerWebService.buildWebServiceManager(pathSessionsIdGame,
+        return ControllerWs.buildWebServiceManager(pathSessionsIdGame,
                 SessionGameResource.PATH_HAS_ALL_PIECES).entityBoolean();
     }
 
@@ -61,7 +61,7 @@ public class ShowGameControllerWs extends ControllerWebService implements
     public List<CoordinateEntity> validSourceCoordinates() {
         GenericType<List<CoordinateEntity>> gerericType = new GenericType<List<CoordinateEntity>>() {
         };
-        return ControllerWebService.buildWebServiceManager(pathSessionsIdGame,
+        return ControllerWs.buildWebServiceManager(pathSessionsIdGame,
                 SessionGameResource.PATH_VALID_SOURCE_COORDINATES).entities(gerericType);
     }
 
@@ -69,19 +69,19 @@ public class ShowGameControllerWs extends ControllerWebService implements
     public List<CoordinateEntity> validDestinationCoordinates() {
         GenericType<List<CoordinateEntity>> gerericType = new GenericType<List<CoordinateEntity>>() {
         };
-        return ControllerWebService.buildWebServiceManager(pathSessionsIdGame,
+        return ControllerWs.buildWebServiceManager(pathSessionsIdGame,
                 SessionGameResource.PATH_VALID_DESTINATION_COORDINATES).entities(gerericType);
     }
 
     @Override
     public boolean existGame() {
-        return ControllerWebService.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.getSessionId(),
+        return ControllerWs.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.getSessionId(),
                 SessionResource.PATH_CREATED_GAME).entityBoolean();
     }
 
     @Override
     public List<String> gameNamesOfPlayer() {
-        ListStringWrapper listStringWrapper = ControllerWebService.buildWebServiceManager(
+        ListStringWrapper listStringWrapper = ControllerWs.buildWebServiceManager(
                 SessionResource.PATH_SESSIONS, this.getSessionId(),
                 SessionPlayerResource.PATH_PLAYER, SessionPlayerResource.PATH_GAME_NAMES)
                 .entity(ListStringWrapper.class);

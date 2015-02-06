@@ -35,7 +35,6 @@ public class CoordinateEntity {
         this.setColumn(column);
     }
 
-    // LUIS debería irse a la vista: a un Bean o un CoordinateFormater
     public CoordinateEntity(String coordinate) {
         String[] fields = coordinate.split("-");
         try {
