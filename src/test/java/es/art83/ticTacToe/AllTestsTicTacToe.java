@@ -9,6 +9,6 @@ import es.art83.ticTacToe.webService.AllTestsWebService;
 
 @RunWith(Suite.class)
 @SuiteClasses({AllTestsWebService.class, AllTestsControllersWebService.class})
-public class AllTests {
+public class AllTestsTicTacToe {
 
 }
