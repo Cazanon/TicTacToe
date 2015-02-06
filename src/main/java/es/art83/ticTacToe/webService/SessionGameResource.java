@@ -56,21 +56,24 @@ public class SessionGameResource extends SessionResource {
         SessionEntity session = this.readSessionEntity(id);
         if (session.getPlayer() != null) {
             GameEntity game;
-            if (name != null) {
-                // Solo puede haber uno
-                game = DaoFactory.getFactory().getGameDao()
-                        .findPlayerGames(session.getPlayer(), name).get(0);
-                game = game.clone();
-                //TODO borrar todo comentario de código muerto
-                // DAOFactory.getFactory().getGameDAO().create(gameEntity.clone());
-            } else {
+            if (name == null) {
+                // Se crea un juego nuevo
                 game = new GameEntity(session.getPlayer());
-                // DAOFactory.getFactory().getGameDAO().create(gameEntity);
+            } else {
+                // Se quiere abrir un juego existente
+                game = DaoFactory.getFactory().getGameDao()
+                        .findPlayerGame(session.getPlayer(), name);
+                game = game.clone();
             }
+            GameEntity oldGame = session.getGame();
             session.setGame(game);
             session.setState(StateModel.OPENED_GAME);
             session.setSavedGame(true);
             DaoFactory.getFactory().getSessionDao().update(session);
+            // Se elimina la partida antigua de la sesión si existe
+            if (oldGame != null) {
+                DaoFactory.getFactory().getGameDao().deleteByID(oldGame.getId());
+            }
             this.info(id, "?name=" + name + " /POST: " + session);
             return Response.created(
                     URI.create(SessionResource.PATH_SESSIONS + session.getId()

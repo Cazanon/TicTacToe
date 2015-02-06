@@ -13,7 +13,6 @@ import es.art83.ticTacToe.models.utils.DirectionModel;
 @XmlRootElement
 @Embeddable
 public class CoordinateEntity {
-    public static final String ROW = "ROW";
 
     public static final String COLUMN = "COLUM"; // COLUMN colisiona con SQL
 
@@ -23,7 +22,6 @@ public class CoordinateEntity {
 
     public static final int MAX = DIMENSION - 1;
 
-    @Column(name = ROW)
     private int row;
 
     @Column(name = COLUMN)
@@ -68,7 +66,7 @@ public class CoordinateEntity {
         this.column = column;
     }
 
-    //TODO LUIS debería irse a board, son todas las coordenadas de un board
+    // TODO LUIS debería irse a board, son todas las coordenadas de un board
     // particular
     public static List<CoordinateEntity> allCoordinates() {
         List<CoordinateEntity> coordinates = new ArrayList<>();

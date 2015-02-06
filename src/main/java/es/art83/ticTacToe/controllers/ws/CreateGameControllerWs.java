@@ -13,6 +13,10 @@ public class CreateGameControllerWs extends ControllerWebService implements Crea
 
     @Override
     public void createGame() {
+        //Se busca si existe una partida a medias
+        
+        
+        
         WebServicesManager<?> webServicesManager = new WebServicesManager<>(
                 SessionResource.PATH_SESSIONS, this.getSessionId(), SessionGameResource.PATH_GAME);
         webServicesManager.create();

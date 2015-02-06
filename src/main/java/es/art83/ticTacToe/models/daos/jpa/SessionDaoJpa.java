@@ -21,7 +21,7 @@ public class SessionDaoJpa extends GenericDaoJpa<SessionEntity, Integer> impleme
     }
 
     @Override
-    public List<GameEntity> findPlayerGames(PlayerEntity player) {
+    public List<GameEntity> findPlayerGamesOfSession(PlayerEntity player) {
         EntityManager entityManager = DaoJpaFactory.getEntityManagerFactory().createEntityManager();
         // Se crea un criterio de consulta
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();

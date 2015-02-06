@@ -74,9 +74,7 @@ public class SessionPlayerResource extends SessionResource {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public ListStringWrapper nameGames(@PathParam("id") Integer id) {
-        System.out.println("======: id"+id);
         SessionEntity session = this.readSessionEntity(id);
-        System.out.println("======: session"+session);
         List<String> result = DaoFactory.getFactory().getGameDao()
                 .findPlayerGameNames(session.getPlayer());
         this.info(id, PATH_GAME_NAMES + " /GET: " + result);
