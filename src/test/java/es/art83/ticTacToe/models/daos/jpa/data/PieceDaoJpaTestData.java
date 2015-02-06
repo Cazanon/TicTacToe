@@ -1,10 +1,6 @@
 package es.art83.ticTacToe.models.daos.jpa.data;
 
 import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
-
-import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
 import es.art83.ticTacToe.utils.ArrayToListTransformer;

@@ -110,7 +110,7 @@ public class BoardEntityTest {
     @Test
     public void testExistTicTacToe() {
         while (data.hasNextBoard()) {
-            BoardEntity board = new BoardEntity(data.getPiecesBoard());
+            //BoardEntity board = new BoardEntity(data.getPiecesBoard());
             //assertEquals(data.message(), data.getExistTitTacToeBoard(), board.existTicTacToe());
             data.nextBoard();
         }

@@ -1,7 +1,5 @@
 package es.art83.ticTacToe.models.entities.data;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
