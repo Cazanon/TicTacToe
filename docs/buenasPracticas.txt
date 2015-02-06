@@ -1,0 +1,9 @@
+
+Colocar en el fuente de las entidades, las dependencias de criteria por si se realizan refactorizaciones
+Ejemplo: // BLOQUEADO: nombre ---name---: GameDaoJpa
+
+
+Incluir un método estático en la factoría para vaciar todas las tablas. Ayuda mucho en los test para dejar la BBDD vacias
+
+REALIZAR TEST HASTA ABURRIR!!!!! Y TENER UN TEST CLARO DE PARTIDA
+
