@@ -2,10 +2,6 @@ package es.art83.ticTacToe.webService;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,18 +50,8 @@ public class GameResourceTest {
         this.gameId = webServiceClient.entity(String.class);
     }
 
-    /**
-     * 
-     */
     @Test
     public void testFindGame() {
-//        BufferedReader t=new BufferedReader(new InputStreamReader(System.in));
-//        try {
-//            String d=t.readLine();
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
         WebServicesManager<String> webServiceClient = new WebServicesManager<>(
                 GameResource.PATH_GAMES);
         webServiceClient.addParams("sessionId", sessionId);

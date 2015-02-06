@@ -51,7 +51,7 @@ public class GameDaoJpa extends GenericDaoJpa<GameEntity, Integer> implements Ga
         return names;
     }
 
-    @Override
+   // @Override
     public List<GameEntity> findPlayerGames(PlayerEntity player, String gameName) {
         EntityManager entityManager = DaoJpaFactory.getEntityManagerFactory().createEntityManager();
         // Se crea un criterio de consulta

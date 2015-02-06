@@ -55,10 +55,5 @@ public class GameDaoMemory extends GenericDaoMemory<GameEntity, Integer> impleme
         return gameBD;
     }
 
-    @Override
-    public List<GameEntity> findPlayerGames(PlayerEntity player, String nameGame) {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
 }
