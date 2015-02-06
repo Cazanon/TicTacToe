@@ -33,8 +33,8 @@ public class PieceDaoJpa extends GenericDaoJpa<PieceEntity, Integer> implements 
         // Se establece el WHERE
         query.where(predicate);
         // Se crea el resultado
-        TypedQuery<PieceEntity> tq = entityManager.createQuery(query);
-        PieceEntity pieceEntity = tq.getSingleResult();
+        TypedQuery<PieceEntity> typedQuery = entityManager.createQuery(query);
+        PieceEntity pieceEntity = typedQuery.getSingleResult();
         entityManager.close();
         if (pieceEntity != null) {
             this.deleteByID(pieceEntity.getId());

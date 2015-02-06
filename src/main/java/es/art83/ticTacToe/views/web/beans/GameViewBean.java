@@ -22,7 +22,7 @@ public class GameViewBean extends ViewBean {
 
     private List<String> gameNames;
 
-    private String gameNameSelected;
+    private String selectedNameGame;
 
     private boolean createdGame;
 
@@ -76,11 +76,11 @@ public class GameViewBean extends ViewBean {
     }
 
     public String getGameNameSelected() {
-        return gameNameSelected;
+        return selectedNameGame;
     }
 
     public void setGameNameSelected(String gameNameSelected) {
-        this.gameNameSelected = gameNameSelected;
+        this.selectedNameGame = gameNameSelected;
     }
 
     public List<String> getGameNames() {
@@ -204,7 +204,7 @@ public class GameViewBean extends ViewBean {
 
     public String openGame() {
         OpenGameController openGameController = this.getControllerFactory().getOpenGameController();
-        openGameController.openGame(this.gameNameSelected);
+        openGameController.openGame(this.selectedNameGame);
         this.update();
         LogManager.getLogger(this.getClass().getName()).info("--- Partida abierta ---");
         return null;

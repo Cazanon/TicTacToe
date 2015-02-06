@@ -27,9 +27,6 @@ public class TurnEntity {
         this.color = color;
     }
 
-    // LUIS se debe quitar el get
-    // LUIS revisar en todo todo si ponemos el this ante atributos bajo
-    // necesidad o siempre
     public ColorModel colorChanged() {
         return this.color.next();
     }

@@ -36,10 +36,10 @@ public class SessionDaoJpa extends GenericDaoJpa<SessionEntity, Integer> impleme
         // Se establece el WHERE
         query.where(builder.and(predicate1, predicate2));
         // Se crea el resultado
-        TypedQuery<GameEntity> tq = entityManager.createQuery(query);
-        tq.setFirstResult(0);
-        tq.setMaxResults(0); // Se buscan todos
-        List<GameEntity> result = tq.getResultList();
+        TypedQuery<GameEntity> typedQuery = entityManager.createQuery(query);
+        typedQuery.setFirstResult(0);
+        typedQuery.setMaxResults(0); // Se buscan todos
+        List<GameEntity> result = typedQuery.getResultList();
         entityManager.close();
         return result;
     }

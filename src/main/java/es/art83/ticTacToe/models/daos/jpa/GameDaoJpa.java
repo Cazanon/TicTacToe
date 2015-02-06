@@ -37,10 +37,10 @@ public class GameDaoJpa extends GenericDaoJpa<GameEntity, Integer> implements Ga
         // Se establece el WHERE
         query.where(builder.and(predicate1, predicate2));
         // Se crea el resultado
-        TypedQuery<GameEntity> tq = entityManager.createQuery(query);
-        tq.setFirstResult(0);
-        tq.setMaxResults(0); // Se buscan todos
-        List<GameEntity> result = tq.getResultList();
+        TypedQuery<GameEntity> typedQuery = entityManager.createQuery(query);
+        typedQuery.setFirstResult(0);
+        typedQuery.setMaxResults(0); // Se buscan todos
+        List<GameEntity> result = typedQuery.getResultList();
         entityManager.close();
         List<String> names = new ArrayList<String>();
         for (GameEntity game : result) {
@@ -68,19 +68,19 @@ public class GameDaoJpa extends GenericDaoJpa<GameEntity, Integer> implements Ga
         // Se establece el WHERE
         query.where(predicate);
         // Se crea el resultado
-        TypedQuery<GameEntity> tq = entityManager.createQuery(query);
-        tq.setFirstResult(0);
-        tq.setMaxResults(0); // Se buscan todos
-        List<GameEntity> result = tq.getResultList();
+        TypedQuery<GameEntity> typedQuery = entityManager.createQuery(query);
+        typedQuery.setFirstResult(0);
+        typedQuery.setMaxResults(0); // Se buscan todos
+        List<GameEntity> result = typedQuery.getResultList();
         entityManager.close();
         return result;
     }
 
     @Override
-    public GameEntity findPlayerGame(PlayerEntity player, String gameNameSelected) {
+    public GameEntity findPlayerGame(PlayerEntity player, String selectedNameGame) {
         List<GameEntity> sessionGames = DaoFactory.getFactory().getSessionDao()
                 .findPlayerGamesOfSession(player);
-        List<GameEntity> playerGames = this.findPlayerGames(player, gameNameSelected);
+        List<GameEntity> playerGames = this.findPlayerGames(player, selectedNameGame);
         for (GameEntity sessionGame : sessionGames) {
             for (int i = 0; i < playerGames.size(); i++) {
                 if (playerGames.get(i).getId().equals(sessionGame.getId())) {

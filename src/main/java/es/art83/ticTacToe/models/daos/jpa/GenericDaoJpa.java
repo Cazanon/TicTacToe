@@ -105,10 +105,10 @@ public class GenericDaoJpa<T, ID> implements GenericDao<T, ID> {
         // No existen predicados
 
         // Se realiza la query
-        TypedQuery<T> tq = entityManager.createQuery(criteriaQuery);
-        tq.setFirstResult(0); // El primero es 0
-        tq.setMaxResults(0); // Se realiza la query, se buscan todos
-        List<T> result = tq.getResultList();
+        TypedQuery<T> typedQuery = entityManager.createQuery(criteriaQuery);
+        typedQuery.setFirstResult(0); // El primero es 0
+        typedQuery.setMaxResults(0); // Se realiza la query, se buscan todos
+        List<T> result = typedQuery.getResultList();
         entityManager.close();
         return result;
     }
