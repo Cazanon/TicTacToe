@@ -28,7 +28,7 @@ public class PlayerDaoMemory extends GenericDaoMemory<PlayerEntity, String> impl
     }
 
     @Override
-    public void deleteByID(String id) {
+    public void deleteById(String id) {
         this.delete(new PlayerEntity(id, null));
     }
 

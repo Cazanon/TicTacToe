@@ -37,7 +37,7 @@ public class PieceDaoJpa extends GenericDaoJpa<PieceEntity, Integer> implements 
         PieceEntity pieceEntity = typedQuery.getSingleResult();
         entityManager.close();
         if (pieceEntity != null) {
-            this.deleteByID(pieceEntity.getId());
+            this.deleteById(pieceEntity.getId());
         }
     }
 

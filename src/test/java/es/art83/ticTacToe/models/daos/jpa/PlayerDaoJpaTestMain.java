@@ -12,7 +12,7 @@ public class PlayerDaoJpaTestMain {
         dao.create(p2);
         PlayerEntity p3 = new PlayerEntity("u3", "pu3");
         dao.create(p3);
-        dao.deleteByID(p3.getUser());
+        dao.deleteById(p3.getUser());
         p1.setPassword("otra");
         dao.update(p1);
         System.out.println("Read u1: " + dao.read("u1"));

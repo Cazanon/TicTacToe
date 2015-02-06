@@ -32,7 +32,7 @@ public class GameDaoMemory extends GenericDaoMemory<GameEntity, Integer> impleme
     }
 
     @Override
-    public void deleteByID(Integer id) {
+    public void deleteById(Integer id) {
     }
 
     @Override

@@ -4,14 +4,14 @@ import es.art83.ticTacToe.models.entities.PlayerEntity;
 
 public class PlayerViewBean extends ViewBean {
 
-    private PlayerEntity playerEntity = new PlayerEntity();
+    private PlayerEntity player = new PlayerEntity();
 
     public PlayerEntity getPlayer() {
-        return playerEntity;
+        return player;
     }
 
-    public void setPlayer(PlayerEntity playerEntity) {
-        this.playerEntity = playerEntity;
+    public void setPlayer(PlayerEntity player) {
+        this.player = player;
     }
 
 }

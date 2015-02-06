@@ -27,7 +27,7 @@ public class SaveGameControllerEjb extends ControllerEjb implements SaveGameCont
     public void saveGame(String gameName) {
         GameEntity game = this.getSession().getGame();
         game.setName(gameName);
-        DaoFactory.getFactory().getGameDao().create(game);
+        DaoFactory.getFactory().getGameDao().create(game.clone());
         this.getSession().setSavedGame(true);
         this.changeState();
     }
@@ -36,7 +36,7 @@ public class SaveGameControllerEjb extends ControllerEjb implements SaveGameCont
     public void overWriteGame(String gameName) {
         GameEntity game = DaoFactory.getFactory().getGameDao()
                 .findPlayerGame(this.getSession().getPlayer(), gameName);
-        DaoFactory.getFactory().getGameDao().delete(game);
+        DaoFactory.getFactory().getGameDao().deleteById(game.getId());
         this.saveGame(gameName);
         this.changeState();
     }

@@ -73,7 +73,7 @@ public class GameResource {
     @DELETE
     @Consumes(MediaType.APPLICATION_XML)
     public void deleteGame(@PathParam("id") Integer id) {
-        DaoFactory.getFactory().getGameDao().deleteByID(id);
+        DaoFactory.getFactory().getGameDao().deleteById(id);
         this.debug("/" + id + " /DELETE");
     }
 

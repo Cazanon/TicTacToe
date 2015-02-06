@@ -22,6 +22,7 @@ public class GameViewBean extends ViewBean {
 
     private List<String> gameNames;
 
+    //???? nombre del metodo get/set
     private String selectedNameGame;
 
     private boolean createdGame;

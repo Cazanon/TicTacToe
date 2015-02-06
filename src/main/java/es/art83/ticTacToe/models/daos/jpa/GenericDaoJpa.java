@@ -63,14 +63,8 @@ public class GenericDaoJpa<T, ID> implements GenericDao<T, ID> {
         }
     }
 
-    // entity debe estar en estado de "Managed"
     @Override
-    public void delete(T entity) {
-        throw new UnsupportedOperationException("Operación no implementada");
-    }
-
-    @Override
-    public void deleteByID(ID id) {
+    public void deleteById(ID id) {
         EntityManager entityManager = DaoJpaFactory.getEntityManagerFactory().createEntityManager();
         T entity = entityManager.find(persistentClass, id);
         if (entity != null) {

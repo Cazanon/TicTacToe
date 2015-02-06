@@ -72,7 +72,7 @@ public class SessionGameResource extends SessionResource {
             DaoFactory.getFactory().getSessionDao().update(session);
             // Se elimina la partida antigua de la sesión si existe
             if (oldGame != null) {
-                DaoFactory.getFactory().getGameDao().deleteByID(oldGame.getId());
+                DaoFactory.getFactory().getGameDao().deleteById(oldGame.getId());
             }
             this.info(id, "?name=" + name + " /POST: " + session);
             return Response.created(
@@ -205,7 +205,7 @@ public class SessionGameResource extends SessionResource {
         PieceEntity piece = session.getGame().deletePiece(coordinate);
         DaoFactory.getFactory().getSessionDao().update(session);
         // Falta elimiar la pieza de la tabla, se van acumulando
-        DaoFactory.getFactory().getPieceDao().deleteByID(piece.getId());
+        DaoFactory.getFactory().getPieceDao().deleteById(piece.getId());
         this.info(id, SessionGameResource.PATH_PIECE + ";" + row + ";" + column + " /DELETE");
     }
 

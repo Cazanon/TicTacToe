@@ -92,7 +92,7 @@ public class SessionResource {
         SessionEntity session = sessionDao.read(id);
         assert (session.getGame() == null);
         assert (session.getPlayer() == null);
-        sessionDao.deleteByID(id);
+        sessionDao.deleteById(id);
         this.debug("/" + session.getId() + " /DELETE");
     }
 

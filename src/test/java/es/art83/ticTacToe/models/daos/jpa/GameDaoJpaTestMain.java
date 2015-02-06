@@ -25,7 +25,7 @@ public class GameDaoJpaTestMain {
     }
 
     public void deleteTest() {
-        DaoJpaFactory.getFactory().getGameDao().deleteByID(this.game.getId());
+        DaoJpaFactory.getFactory().getGameDao().deleteById(this.game.getId());
     }
 
     public void updateTest() {

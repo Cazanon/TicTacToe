@@ -63,7 +63,7 @@ public class SessionPlayerResource extends SessionResource {
             Integer gameId = game.getId();
             session.setGame(null);
             DaoFactory.getFactory().getSessionDao().update(session);
-            DaoFactory.getFactory().getGameDao().deleteByID(gameId);
+            DaoFactory.getFactory().getGameDao().deleteById(gameId);
         } else {
             DaoFactory.getFactory().getSessionDao().update(session);
         }

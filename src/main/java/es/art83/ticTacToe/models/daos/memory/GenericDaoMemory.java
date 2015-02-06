@@ -16,7 +16,7 @@ public abstract class GenericDaoMemory<T, ID> implements GenericDao<T, ID> {
         return entityList;
     }
     
-    @Override
+    //@Override
     public void delete(T entity) {
         entityList.remove(entity);
     }
