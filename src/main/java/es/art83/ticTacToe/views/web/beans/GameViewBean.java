@@ -92,8 +92,8 @@ public class GameViewBean extends ViewBean {
         return this.createdGame;
     }
 
-    public boolean isZeroGameNames() {
-        return this.gameNames.size() == 0;
+    public boolean isExistGames() {
+        return this.gameNames.size() > 0;
     }
 
     public boolean isGameNamed() {
@@ -104,7 +104,7 @@ public class GameViewBean extends ViewBean {
         return this.gameName;
     }
 
-    public ColorModel[][] getFichas() {
+    public ColorModel[][] getPiecesColor() {
         return colors;
     }
 
@@ -171,7 +171,7 @@ public class GameViewBean extends ViewBean {
         return next;
     }
 
-    public String placeCard() {
+    public String placePiece() {
         PlacePieceController placeCardController = this.getControllerFactory()
                 .getPlacePieceController();
         if (this.hasAllPieces) {

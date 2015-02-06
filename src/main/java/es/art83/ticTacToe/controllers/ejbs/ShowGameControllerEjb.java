@@ -56,9 +56,12 @@ public class ShowGameControllerEjb extends ControllerEjb implements ShowGameCont
         return this.getSession().getGame().validDestinationCoordinates();
     }
 
+    // El problema es que cuando se termina una partida nos encontramos en
+    // CLOSED_GAME, pero se debe mostrar el tablero ya que existe partida
     @Override
     public boolean openedGame() {
-        boolean result = this.getSession().getState() == StateModel.OPENED_GAME;
+        boolean result = this.getSession().getState() == StateModel.OPENED_GAME
+                || this.getSession().getGame() != null;
         return result;
     }
 
