@@ -8,7 +8,7 @@ import es.art83.ticTacToe.webService.SessionResource;
 public class LogoutControllerWs extends ControllerWs implements LogoutController {
     private final String pathSessionsId;
 
-    public LogoutControllerWs(String sessionId) {
+    LogoutControllerWs(String sessionId) {
         super(sessionId);
         this.pathSessionsId = SessionResource.PATH_SESSIONS + "/" + this.getSessionId();
     }

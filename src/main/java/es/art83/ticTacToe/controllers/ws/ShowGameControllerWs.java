@@ -18,7 +18,7 @@ public class ShowGameControllerWs extends ControllerWs implements
         ShowGameController {
     private final String pathSessionsIdGame;
 
-    public ShowGameControllerWs(String sessionId) {
+    ShowGameControllerWs(String sessionId) {
         super(sessionId);
         this.pathSessionsIdGame = SessionResource.PATH_SESSIONS + "/" + this.getSessionId()
                 + SessionGameResource.PATH_GAME;

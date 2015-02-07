@@ -9,7 +9,7 @@ public class PlacePieceControllerWs extends ControllerWs implements PlacePieceCo
 
     private String pathSessionsIdGame;
 
-    public PlacePieceControllerWs(String sessionId) {
+    PlacePieceControllerWs(String sessionId) {
         super(sessionId);
         this.pathSessionsIdGame = SessionResource.PATH_SESSIONS + "/" + this.getSessionId()
                 + SessionGameResource.PATH_GAME;

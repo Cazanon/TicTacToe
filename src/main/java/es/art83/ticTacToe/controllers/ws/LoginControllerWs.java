@@ -9,7 +9,7 @@ import es.art83.ticTacToe.webService.SessionResource;
 public class LoginControllerWs extends ControllerWs implements LoginController {
     private final String pathSessionsId;
 
-    public LoginControllerWs(String sessionId) {
+    LoginControllerWs(String sessionId) {
         super(sessionId);
         this.pathSessionsId = SessionResource.PATH_SESSIONS + "/" + this.getSessionId();
     }

@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.art83.ticTacToe.models.entities.data.GameEntityTestData;
-
 public class GameEntityTest {
 
     private GameEntityTestData data;

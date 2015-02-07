@@ -7,8 +7,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.art83.ticTacToe.models.entities.data.CoordinateEntityTestData;
-
 public class CoordinateEntityTest {
 
     private CoordinateEntityTestData data;

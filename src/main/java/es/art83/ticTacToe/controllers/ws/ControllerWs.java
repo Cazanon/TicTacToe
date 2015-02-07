@@ -14,12 +14,12 @@ abstract class ControllerWs {
 
     private static final String URI = PROTOCOL + "://" + HOST + ":" + PORT + WEB;
 
-    public ControllerWs(String sessionId) {
+    protected ControllerWs(String sessionId) {
         assert sessionId != null;
         this.sessionId = sessionId;
     }
 
-    public String getSessionId() {
+    protected String getSessionId() {
         return sessionId;
     }
     

@@ -6,7 +6,7 @@ import es.art83.ticTacToe.webService.SessionResource;
 
 public class OpenGameControllerWs extends ControllerWs implements OpenGameController {
 
-    public OpenGameControllerWs(String sessionId) {
+    OpenGameControllerWs(String sessionId) {
         super(sessionId);
     }
 

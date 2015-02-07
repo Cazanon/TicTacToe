@@ -6,7 +6,7 @@ import es.art83.ticTacToe.webService.SessionResource;
 
 public class CreateGameControllerWs extends ControllerWs implements CreateGameController {
 
-    public CreateGameControllerWs(String sessionId) {
+    CreateGameControllerWs(String sessionId) {
         super(sessionId);
     }
 
