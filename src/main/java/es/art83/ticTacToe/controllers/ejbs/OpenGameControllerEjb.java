@@ -7,7 +7,7 @@ import es.art83.ticTacToe.models.utils.StateModel;
 
 public class OpenGameControllerEjb extends ControllerEjb implements OpenGameController {
 
-    public OpenGameControllerEjb(Session session) {
+    OpenGameControllerEjb(Session session) {
         super(session);
     }
 

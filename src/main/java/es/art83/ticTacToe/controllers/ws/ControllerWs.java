@@ -1,7 +1,7 @@
 package es.art83.ticTacToe.controllers.ws;
 
 
-public class ControllerWs {
+abstract class ControllerWs {
     private String sessionId = null;
 
     private static final String PROTOCOL = "http";
@@ -12,7 +12,7 @@ public class ControllerWs {
 
     private static final String WEB = "/TicTacToe/rest";
 
-    public static final String URI = PROTOCOL + "://" + HOST + ":" + PORT + WEB;
+    private static final String URI = PROTOCOL + "://" + HOST + ":" + PORT + WEB;
 
     public ControllerWs(String sessionId) {
         assert sessionId != null;

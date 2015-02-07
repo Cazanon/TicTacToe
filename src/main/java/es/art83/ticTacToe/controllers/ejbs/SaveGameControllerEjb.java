@@ -7,7 +7,7 @@ import es.art83.ticTacToe.models.utils.StateModel;
 
 public class SaveGameControllerEjb extends ControllerEjb implements SaveGameController {
 
-    public SaveGameControllerEjb(Session session) {
+    SaveGameControllerEjb(Session session) {
         super(session);
     }
 

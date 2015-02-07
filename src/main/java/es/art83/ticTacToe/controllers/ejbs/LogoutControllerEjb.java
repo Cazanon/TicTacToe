@@ -5,7 +5,7 @@ import es.art83.ticTacToe.models.utils.StateModel;
 
 public class LogoutControllerEjb extends ControllerEjb implements LogoutController {
 
-    public LogoutControllerEjb(Session session) {
+    LogoutControllerEjb(Session session) {
         super(session);
     }
 

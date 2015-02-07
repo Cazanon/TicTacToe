@@ -6,7 +6,7 @@ import es.art83.ticTacToe.models.utils.StateModel;
 
 public class PlacePieceControllerEjb extends ControllerEjb implements PlacePieceController {
 
-    public PlacePieceControllerEjb(Session session) {
+    PlacePieceControllerEjb(Session session) {
         super(session);
     }
 

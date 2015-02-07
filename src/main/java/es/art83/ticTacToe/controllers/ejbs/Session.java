@@ -4,7 +4,7 @@ import es.art83.ticTacToe.models.entities.GameEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.StateModel;
 
-public class Session {
+class Session {
     private StateModel state;
 
     private PlayerEntity player;

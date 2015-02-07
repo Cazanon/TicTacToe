@@ -7,8 +7,11 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import es.art83.ticTacToe.controllers.ControllerFactory;
 import es.art83.ticTacToe.controllers.ejbs.ControllerEjbFactory;
 
 abstract class ViewPanel extends JPanel implements ActionListener{
@@ -18,7 +21,7 @@ abstract class ViewPanel extends JPanel implements ActionListener{
     
     protected static final int FIELD_LENGTH = 15;
     
-    protected static ControllerEjbFactory factory = new ControllerEjbFactory();
+    protected static ControllerFactory factory = new ControllerEjbFactory();
     
     ViewPanel(Frame frame){
         this.frame = frame;
@@ -69,6 +72,14 @@ abstract class ViewPanel extends JPanel implements ActionListener{
         JPasswordField result = new JPasswordField(length);
         this.add(result);
         return result;
+    }
+    
+    protected JTextArea createTextAreaWithScrollInPanel(int length, int height){
+    	JTextArea textArea = new JTextArea(3,length); 
+    	textArea.setEditable(false);
+    	JScrollPane scrollPane = new JScrollPane(textArea);    
+        this.add(scrollPane);
+        return textArea;
     }
     
 }
