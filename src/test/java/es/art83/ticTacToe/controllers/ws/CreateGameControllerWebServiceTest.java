@@ -9,8 +9,8 @@ import es.art83.ticTacToe.controllers.ws.ControllerWs;
 import es.art83.ticTacToe.controllers.ws.ControllerWsFactory;
 import es.art83.ticTacToe.controllers.ws.CreateGameControllerWs;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.ws.PlayerResource;
-import es.art83.ticTacToe.ws.SessionResource;
+import es.art83.ticTacToe.ws.PlayerUris;
+import es.art83.ticTacToe.ws.SessionUris;
 
 public class CreateGameControllerWebServiceTest {
 
@@ -37,9 +37,9 @@ public class CreateGameControllerWebServiceTest {
     @After
     public void after() {
         this.logout.logout();
-        ControllerWs.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.create.getSessionId())
+        ControllerWs.buildWebServiceManager(SessionUris.PATH_SESSIONS, this.create.getSessionId())
                 .delete();
-        ControllerWs.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser())
+        ControllerWs.buildWebServiceManager(PlayerUris.PATH_PLAYERS, this.playerEntity.getUser())
                 .delete();
     }
 }

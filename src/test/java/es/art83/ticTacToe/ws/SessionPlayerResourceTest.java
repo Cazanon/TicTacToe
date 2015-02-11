@@ -10,9 +10,6 @@ import org.junit.Test;
 
 import es.art83.ticTacToe.controllers.ws.WsManager;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.ws.PlayerResource;
-import es.art83.ticTacToe.ws.SessionPlayerResource;
-import es.art83.ticTacToe.ws.SessionResource;
 
 public class SessionPlayerResourceTest extends ResourceTest {
     private String sessionId;
@@ -22,32 +19,32 @@ public class SessionPlayerResourceTest extends ResourceTest {
     @Before
     public void before() {
         WsManager webService = new WsManager(URI,
-                SessionResource.PATH_SESSIONS);
+                SessionUris.PATH_SESSIONS);
         webService.create();
         this.sessionId = webService.entity(String.class);
 
         this.player = new PlayerEntity("u", "pass");
-        new WsManager(URI,PlayerResource.PATH_PLAYERS).create(player);
+        new WsManager(URI,PlayerUris.PATH_PLAYERS).create(player);
     }
 
     @Test
     public void testLoginPlayerExist() {
-        assertTrue(new WsManager(URI,SessionResource.PATH_SESSIONS, this.sessionId,
-                SessionPlayerResource.PATH_PLAYER).create(player));
+        assertTrue(new WsManager(URI,SessionUris.PATH_SESSIONS, this.sessionId,
+                SessionPlayerUris.PATH_PLAYER).create(player));
     }
 
     @Test
     public void testLoginPlayerNotExist() {
         PlayerEntity player2 = new PlayerEntity("u2", "upass");
-        assertFalse(new WsManager(URI,SessionResource.PATH_SESSIONS, this.sessionId,
-                SessionPlayerResource.PATH_PLAYER).create(player2));
+        assertFalse(new WsManager(URI,SessionUris.PATH_SESSIONS, this.sessionId,
+                SessionPlayerUris.PATH_PLAYER).create(player2));
     }
 
     @Test
     public void testLoginPlayerNotPass() {
         PlayerEntity player2 = new PlayerEntity("u", "no");
-        assertFalse(new WsManager(URI,SessionResource.PATH_SESSIONS, this.sessionId,
-                SessionPlayerResource.PATH_PLAYER).create(player2));
+        assertFalse(new WsManager(URI,SessionUris.PATH_SESSIONS, this.sessionId,
+                SessionPlayerUris.PATH_PLAYER).create(player2));
     }
 
     public void testLogoutPlayer() {
@@ -60,8 +57,8 @@ public class SessionPlayerResourceTest extends ResourceTest {
 
     @After
     public void after() {
-        new WsManager(URI,SessionResource.PATH_SESSIONS, this.sessionId).delete();
-        new WsManager(URI,PlayerResource.PATH_PLAYERS, this.player.getUser()).delete();
+        new WsManager(URI,SessionUris.PATH_SESSIONS, this.sessionId).delete();
+        new WsManager(URI,PlayerUris.PATH_PLAYERS, this.player.getUser()).delete();
     }
 
 }

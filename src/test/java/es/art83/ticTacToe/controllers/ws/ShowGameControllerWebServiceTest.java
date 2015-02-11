@@ -11,8 +11,8 @@ import es.art83.ticTacToe.controllers.ws.ControllerWsFactory;
 import es.art83.ticTacToe.controllers.ws.ShowGameControllerWs;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
-import es.art83.ticTacToe.ws.PlayerResource;
-import es.art83.ticTacToe.ws.SessionResource;
+import es.art83.ticTacToe.ws.PlayerUris;
+import es.art83.ticTacToe.ws.SessionUris;
 
 public class ShowGameControllerWebServiceTest {
 
@@ -70,9 +70,9 @@ public class ShowGameControllerWebServiceTest {
     @After
     public void after() {
         this.logout.logout();
-        ControllerWs.buildWebServiceManager(SessionResource.PATH_SESSIONS,
+        ControllerWs.buildWebServiceManager(SessionUris.PATH_SESSIONS,
                 this.showGameController.getSessionId()).delete();
-        ControllerWs.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
+        ControllerWs.buildWebServiceManager(PlayerUris.PATH_PLAYERS, this.playerEntity.getUser()).delete();
     }
 
 }

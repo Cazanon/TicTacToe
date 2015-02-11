@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.ws;
+package es.art83.ticTacToe.ws.rest;
 
 import java.net.URI;
 import java.util.List;
@@ -21,18 +21,15 @@ import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.ListStringWrapper;
 import es.art83.ticTacToe.models.utils.StateModel;
+import es.art83.ticTacToe.ws.SessionUris;
+import es.art83.ticTacToe.ws.SessionPlayerUris;
 
-@Path(SessionResource.PATH_SESSIONS + SessionResource.PATH_ID_PARAM
-        + SessionPlayerResource.PATH_PLAYER)
+@Path(SessionUris.PATH_SESSIONS + SessionUris.PATH_ID_PARAM + SessionPlayerUris.PATH_PLAYER)
 public class SessionPlayerResource {
-
-    public static final String PATH_PLAYER = "/player";
-
-    public static final String PATH_GAME_NAMES = "/gameNames";
 
     private void debug(Integer id, String msg) {
         LogManager.getLogger(this.getClass()).debug(
-                SessionResource.PATH_SESSIONS + "/" + id + SessionPlayerResource.PATH_PLAYER + msg);
+                SessionUris.PATH_SESSIONS + "/" + id + SessionPlayerUris.PATH_PLAYER + msg);
     }
 
     @POST
@@ -45,7 +42,7 @@ public class SessionPlayerResource {
             session.setState(StateModel.CLOSED_GAME);
             DaoFactory.getFactory().getSessionDao().update(session);
             this.debug(id, " /POST: " + player);
-            return Response.created(URI.create(SessionResource.PATH_SESSIONS + id + PATH_PLAYER))
+            return Response.created(URI.create(SessionUris.PATH_SESSIONS + id + SessionPlayerUris.PATH_PLAYER))
                     .build();
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -70,14 +67,14 @@ public class SessionPlayerResource {
         this.debug(id, " /DELETE");
     }
 
-    @Path(SessionPlayerResource.PATH_GAME_NAMES)
+    @Path(SessionPlayerUris.PATH_GAME_NAMES)
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public ListStringWrapper nameGames(@PathParam("id") Integer id) {
         SessionEntity session = SessionResource.readSession(id);
         List<String> result = DaoFactory.getFactory().getGameDao()
                 .findPlayerGameNames(session.getPlayer());
-        this.debug(id, PATH_GAME_NAMES + " /GET: " + result);
+        this.debug(id, SessionPlayerUris.PATH_GAME_NAMES + " /GET: " + result);
         return new ListStringWrapper(result);
     }
 
