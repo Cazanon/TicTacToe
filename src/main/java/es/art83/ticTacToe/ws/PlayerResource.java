@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.webService;
+package es.art83.ticTacToe.ws;
 
 import java.net.URI;
 

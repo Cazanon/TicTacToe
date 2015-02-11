@@ -7,8 +7,8 @@ import es.art83.ticTacToe.controllers.ws.PlacePieceControllerWs;
 import es.art83.ticTacToe.controllers.ws.SaveGameControllerWs;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.webService.PlayerResource;
-import es.art83.ticTacToe.webService.SessionResource;
+import es.art83.ticTacToe.ws.PlayerResource;
+import es.art83.ticTacToe.ws.SessionResource;
 
 public class SaveGameControllerWebServiceTestMain {
 

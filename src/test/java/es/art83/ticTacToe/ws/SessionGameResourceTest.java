@@ -18,10 +18,10 @@ import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PieceEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
-import es.art83.ticTacToe.webService.PlayerResource;
-import es.art83.ticTacToe.webService.SessionGameResource;
-import es.art83.ticTacToe.webService.SessionPlayerResource;
-import es.art83.ticTacToe.webService.SessionResource;
+import es.art83.ticTacToe.ws.PlayerResource;
+import es.art83.ticTacToe.ws.SessionGameResource;
+import es.art83.ticTacToe.ws.SessionPlayerResource;
+import es.art83.ticTacToe.ws.SessionResource;
 
 public class SessionGameResourceTest extends ResourceTest {
     private String sessionId;

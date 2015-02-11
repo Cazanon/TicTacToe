@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.webService;
+package es.art83.ticTacToe.ws;
 
 import java.net.URI;
 
@@ -34,12 +34,11 @@ public class SessionResource {
 
     public static final String PATH_CREATED_GAME = "/createdGame";
 
-    protected void debug(String msg) {
+    private void debug(String msg) {
         LogManager.getLogger(this.getClass()).debug(PATH_SESSIONS + msg);
     }
 
-    //TODO readSession sin Entity
-    protected SessionEntity readSessionEntity(Integer id) {
+    static SessionEntity readSession(Integer id) {
         SessionEntity session = DaoFactory.getFactory().getSessionDao().read(id);
         if (session != null) {
             return session;
@@ -61,7 +60,7 @@ public class SessionResource {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public String logged(@PathParam("id") Integer id) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = readSession(id);
         Boolean result = session.getPlayer() != null;
         this.debug("/" + session.getId() + PATH_LOGGED + " /GET: " + result);
         return Boolean.toString(result);
@@ -70,7 +69,7 @@ public class SessionResource {
     @Path(PATH_ID_PARAM + PATH_STATE)
     @GET
     public StateModel state(@PathParam("id") Integer id) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = readSession(id);
         StateModel result = session.getState();
         this.debug("/" + session.getId() + PATH_STATE + " /GET: " + result);
         return result;
@@ -79,7 +78,7 @@ public class SessionResource {
     @Path(PATH_ID_PARAM + PATH_SAVED_GAME)
     @GET
     public String savedGame(@PathParam("id") Integer id) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = readSession(id);
         Boolean result = session.isSavedGame();
         this.debug(session.getId() + SessionResource.PATH_SAVED_GAME + " /GET: " + result);
         return Boolean.toString(result);
@@ -99,7 +98,7 @@ public class SessionResource {
     @Path(PATH_ID_PARAM + PATH_CREATED_GAME)
     @GET
     public String createdGame(@PathParam("id") Integer id) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = readSession(id);
         Boolean result = session.getGame() != null;
         this.debug("/" + session.getId() + PATH_CREATED_GAME + " /GET:" + result);
         return Boolean.toString(result);

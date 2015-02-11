@@ -2,8 +2,8 @@ package es.art83.ticTacToe.controllers.ws;
 
 import es.art83.ticTacToe.controllers.LogoutController;
 import es.art83.ticTacToe.models.utils.StateModel;
-import es.art83.ticTacToe.webService.SessionPlayerResource;
-import es.art83.ticTacToe.webService.SessionResource;
+import es.art83.ticTacToe.ws.SessionPlayerResource;
+import es.art83.ticTacToe.ws.SessionResource;
 
 public class LogoutControllerWs extends ControllerWs implements LogoutController {
     private final String pathSessionsId;

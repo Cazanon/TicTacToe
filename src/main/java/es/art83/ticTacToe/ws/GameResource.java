@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.webService;
+package es.art83.ticTacToe.ws;
 
 import java.net.URI;
 
@@ -27,11 +27,11 @@ public class GameResource {
 
     public static final String PATH_SEARCH = "/search";
 
-    private static final String PATH_ID_PARAM = "/{id}";
+    public static final String PATH_ID_PARAM = "/{id}";
 
     // TODO sus clases hermanas tienen el mismo debug parametrizable o info con
     // otro log?!?
-    protected void debug(String msg) {
+    private void debug(String msg) {
         LogManager.getLogger(this.getClass()).debug(PATH_GAMES + msg);
     }
 

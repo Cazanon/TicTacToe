@@ -9,8 +9,8 @@ import org.junit.Test;
 import es.art83.ticTacToe.controllers.ws.ControllerWsFactory;
 import es.art83.ticTacToe.controllers.ws.LoginControllerWs;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.webService.PlayerResource;
-import es.art83.ticTacToe.webService.SessionResource;
+import es.art83.ticTacToe.ws.PlayerResource;
+import es.art83.ticTacToe.ws.SessionResource;
 
 public class LoginControllerWebServiceTest {
 

@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.webService;
+package es.art83.ticTacToe.ws;
 
 import java.net.URI;
 import java.util.List;
@@ -15,6 +15,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.logging.log4j.LogManager;
+
 import es.art83.ticTacToe.models.daos.DaoFactory;
 import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
@@ -24,7 +26,7 @@ import es.art83.ticTacToe.models.utils.ColorModel;
 import es.art83.ticTacToe.models.utils.StateModel;
 
 @Path(SessionResource.PATH_SESSIONS + SessionResource.PATH_ID_PARAM + SessionGameResource.PATH_GAME)
-public class SessionGameResource extends SessionResource {
+public class SessionGameResource {
 
     public static final String PATH_GAME = "/game";
 
@@ -47,13 +49,14 @@ public class SessionGameResource extends SessionResource {
     public static final String PATH_ID = "/id";
 
     protected void info(Integer id, String msg) {
-        this.debug("/" + id + SessionGameResource.PATH_GAME + msg);
+        LogManager.getLogger(this.getClass()).debug(
+                SessionResource.PATH_SESSIONS + "/" + id + SessionGameResource.PATH_GAME + msg);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
     public Response createGame(@PathParam("id") Integer id, @QueryParam("name") String name) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = SessionResource.readSession(id);
         if (session.getPlayer() != null) {
             GameEntity game;
             if (name == null) {
@@ -87,7 +90,7 @@ public class SessionGameResource extends SessionResource {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public ColorModel isGameOver(@PathParam("id") Integer id) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = SessionResource.readSession(id);
         ColorModel result = session.getGame().gameOver();
         this.info(id, SessionGameResource.PATH_GAME_OVER + " /GET: " + result);
         return result;
@@ -97,7 +100,7 @@ public class SessionGameResource extends SessionResource {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public String gameName(@PathParam("id") Integer id) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = SessionResource.readSession(id);
         String result = session.getGame().getName();
         this.info(id, SessionGameResource.PATH_NAME + " /GET: " + result);
         return result;
@@ -107,7 +110,7 @@ public class SessionGameResource extends SessionResource {
     @POST
     @Produces(MediaType.APPLICATION_XML)
     public Response setGameName(@PathParam("id") Integer id, String name) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = SessionResource.readSession(id);
         session.getGame().setName(name);
         // DAOFactory.getFactory().getGameDAO().update(sessionEntity.getGame());
         DaoFactory.getFactory().getSessionDao().update(session);
@@ -122,7 +125,7 @@ public class SessionGameResource extends SessionResource {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public String hasAllPieces(@PathParam("id") Integer id) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = SessionResource.readSession(id);
         Boolean result = session.getGame().hasAllPieces();
         this.info(id, SessionGameResource.PATH_HAS_ALL_PIECES + " /GET: " + result);
         return Boolean.toString(result);
@@ -132,7 +135,7 @@ public class SessionGameResource extends SessionResource {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public List<PieceEntity> allPieces(@PathParam("id") Integer id) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = SessionResource.readSession(id);
         List<PieceEntity> result = session.getGame().allPieces();
         this.info(id, SessionGameResource.PATH_ALL_PIECES + " /GET: " + result);
         return result;
@@ -142,7 +145,7 @@ public class SessionGameResource extends SessionResource {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public ColorModel turnColor(@PathParam("id") Integer id) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = SessionResource.readSession(id);
         ColorModel result = session.getGame().turnColor();
         this.info(id, SessionGameResource.PATH_TURN + " /GET: " + result);
         return result;
@@ -152,7 +155,7 @@ public class SessionGameResource extends SessionResource {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public List<CoordinateEntity> validSourceCoordinates(@PathParam("id") Integer id) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = SessionResource.readSession(id);
         List<CoordinateEntity> result = session.getGame().validSourceCoordinates();
         this.info(id, SessionGameResource.PATH_VALID_SOURCE_COORDINATES + " /GET: " + result);
         return result;
@@ -162,7 +165,7 @@ public class SessionGameResource extends SessionResource {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public List<CoordinateEntity> validDestinationCoordinates(@PathParam("id") Integer id) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = SessionResource.readSession(id);
         List<CoordinateEntity> result = session.getGame().validDestinationCoordinates();
         this.info(id, SessionGameResource.PATH_VALID_DESTINATION_COORDINATES + " /GET: " + result);
         return result;
@@ -171,7 +174,7 @@ public class SessionGameResource extends SessionResource {
     @Path(SessionGameResource.PATH_ID)
     @GET
     public Integer gameId(@PathParam("id") Integer id) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = SessionResource.readSession(id);
         Integer result = session.getGame().getId();
         this.info(id, SessionGameResource.PATH_ID + " /GET: " + result);
         return result;
@@ -181,7 +184,7 @@ public class SessionGameResource extends SessionResource {
     @POST
     @Consumes(MediaType.APPLICATION_XML)
     public Response createPiece(@PathParam("id") Integer id, CoordinateEntity coordinateEntity) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = SessionResource.readSession(id);
         session.getGame().placePiece(coordinateEntity);
         if (session.getGame().gameOver() != null) {
             session.setState(StateModel.CLOSED_GAME);
@@ -200,7 +203,7 @@ public class SessionGameResource extends SessionResource {
     @Consumes(MediaType.APPLICATION_XML)
     public void deletePiece(@PathParam("id") Integer id, @MatrixParam("row") int row,
             @MatrixParam("column") int column) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = SessionResource.readSession(id);
         CoordinateEntity coordinate = new CoordinateEntity(row, column);
         PieceEntity piece = session.getGame().deletePiece(coordinate);
         DaoFactory.getFactory().getSessionDao().update(session);

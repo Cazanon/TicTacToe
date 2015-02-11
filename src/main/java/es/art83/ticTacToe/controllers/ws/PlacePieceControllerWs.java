@@ -2,8 +2,8 @@ package es.art83.ticTacToe.controllers.ws;
 
 import es.art83.ticTacToe.controllers.PlacePieceController;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
-import es.art83.ticTacToe.webService.SessionGameResource;
-import es.art83.ticTacToe.webService.SessionResource;
+import es.art83.ticTacToe.ws.SessionGameResource;
+import es.art83.ticTacToe.ws.SessionResource;
 
 public class PlacePieceControllerWs extends ControllerWs implements PlacePieceController {
 

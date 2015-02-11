@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import es.art83.ticTacToe.controllers.ws.WsManager;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.webService.PlayerResource;
+import es.art83.ticTacToe.ws.PlayerResource;
 
 public class PlayerResourceTest extends ResourceTest {
     private PlayerEntity player;

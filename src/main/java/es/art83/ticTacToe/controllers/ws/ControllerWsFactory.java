@@ -8,7 +8,7 @@ import es.art83.ticTacToe.controllers.OpenGameController;
 import es.art83.ticTacToe.controllers.PlacePieceController;
 import es.art83.ticTacToe.controllers.SaveGameController;
 import es.art83.ticTacToe.controllers.ShowGameController;
-import es.art83.ticTacToe.webService.SessionResource;
+import es.art83.ticTacToe.ws.SessionResource;
 
 //@ManagedBean(name = "controllerFactory")
 //@SessionScoped

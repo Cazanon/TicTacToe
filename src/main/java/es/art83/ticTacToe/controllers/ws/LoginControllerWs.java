@@ -2,9 +2,9 @@ package es.art83.ticTacToe.controllers.ws;
 
 import es.art83.ticTacToe.controllers.LoginController;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.webService.PlayerResource;
-import es.art83.ticTacToe.webService.SessionPlayerResource;
-import es.art83.ticTacToe.webService.SessionResource;
+import es.art83.ticTacToe.ws.PlayerResource;
+import es.art83.ticTacToe.ws.SessionPlayerResource;
+import es.art83.ticTacToe.ws.SessionResource;
 
 public class LoginControllerWs extends ControllerWs implements LoginController {
     private final String pathSessionsId;
