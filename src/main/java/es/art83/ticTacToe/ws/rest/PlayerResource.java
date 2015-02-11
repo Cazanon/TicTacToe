@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.webService;
+package es.art83.ticTacToe.ws.rest;
 
 import java.net.URI;
 
@@ -14,16 +14,13 @@ import org.apache.logging.log4j.LogManager;
 
 import es.art83.ticTacToe.models.daos.DaoFactory;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
+import es.art83.ticTacToe.ws.PlayerUris;
 
-@Path(PlayerResource.PATH_PLAYERS)
+@Path(PlayerUris.PATH_PLAYERS)
 public class PlayerResource {
 
-    public static final String PATH_PLAYERS = "/players";
-
-    public static final String PATH_USER_PARAM = "/{user}";
-
-    protected void debug(String msg) {
-        LogManager.getLogger(this.getClass()).debug(PATH_PLAYERS + msg);
+    private void debug(String msg) {
+        LogManager.getLogger(this.getClass()).debug(PlayerUris.PATH_PLAYERS + msg);
     }
 
     @POST
@@ -34,7 +31,7 @@ public class PlayerResource {
                 .read(player.getUser());
         if (playerBd == null) {
             DaoFactory.getFactory().getPlayerDao().create(player);
-            result = Response.created(URI.create(PATH_PLAYERS + "/" + player.getUser()))
+            result = Response.created(URI.create(PlayerUris.PATH_PLAYERS + "/" + player.getUser()))
                     .build();
             this.debug(" /POST: " + player.getUser());
         } else {
@@ -44,7 +41,7 @@ public class PlayerResource {
         return result;
     }
 
-    @Path(PATH_USER_PARAM)
+    @Path(PlayerUris.PATH_USER_PARAM)
     @DELETE
     public void delete(@PathParam("user") String user) {
         DaoFactory.getFactory().getPlayerDao().deleteById(user);

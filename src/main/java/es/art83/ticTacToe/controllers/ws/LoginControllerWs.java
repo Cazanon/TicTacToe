@@ -2,21 +2,21 @@ package es.art83.ticTacToe.controllers.ws;
 
 import es.art83.ticTacToe.controllers.LoginController;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.webService.PlayerResource;
-import es.art83.ticTacToe.webService.SessionPlayerResource;
-import es.art83.ticTacToe.webService.SessionResource;
+import es.art83.ticTacToe.ws.PlayerUris;
+import es.art83.ticTacToe.ws.SessionPlayerUris;
+import es.art83.ticTacToe.ws.SessionUris;
 
 public class LoginControllerWs extends ControllerWs implements LoginController {
     private final String pathSessionsId;
 
     LoginControllerWs(String sessionId) {
         super(sessionId);
-        this.pathSessionsId = SessionResource.PATH_SESSIONS + "/" + this.getSessionId();
+        this.pathSessionsId = SessionUris.PATH_SESSIONS + "/" + this.getSessionId();
     }
 
     @Override
     public boolean login(PlayerEntity player) {
-        return ControllerWs.buildWebServiceManager(pathSessionsId, SessionPlayerResource.PATH_PLAYER)
+        return ControllerWs.buildWebServiceManager(pathSessionsId, SessionPlayerUris.PATH_PLAYER)
                 .create(player);
     }
 
@@ -24,7 +24,7 @@ public class LoginControllerWs extends ControllerWs implements LoginController {
     public boolean register(PlayerEntity player) {
         boolean result = false;
         WsManager webServicesManager = ControllerWs.buildWebServiceManager(
-                PlayerResource.PATH_PLAYERS);
+                PlayerUris.PATH_PLAYERS);
         if (webServicesManager.create(player)) {
             result = this.login(player);
         }
@@ -34,7 +34,7 @@ public class LoginControllerWs extends ControllerWs implements LoginController {
     @Override
     public boolean loggedIn() {
        return ControllerWs.buildWebServiceManager(
-               pathSessionsId, SessionResource.PATH_LOGGED).entityBoolean();
+               pathSessionsId, SessionUris.PATH_LOGGED).entityBoolean();
     }
 
 }

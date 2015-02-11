@@ -10,8 +10,8 @@ import es.art83.ticTacToe.controllers.ws.ControllerWsFactory;
 import es.art83.ticTacToe.controllers.ws.LoginControllerWs;
 import es.art83.ticTacToe.controllers.ws.LogoutControllerWs;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.webService.PlayerResource;
-import es.art83.ticTacToe.webService.SessionResource;
+import es.art83.ticTacToe.ws.PlayerUris;
+import es.art83.ticTacToe.ws.SessionUris;
 
 public class LogoutControllerWebServiceTest {
 
@@ -54,7 +54,7 @@ public class LogoutControllerWebServiceTest {
 
     @After
     public void after() {
-        ControllerWs.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.logout.getSessionId()).delete();
-        ControllerWs.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser()).delete();
+        ControllerWs.buildWebServiceManager(SessionUris.PATH_SESSIONS, this.logout.getSessionId()).delete();
+        ControllerWs.buildWebServiceManager(PlayerUris.PATH_PLAYERS, this.playerEntity.getUser()).delete();
     }
 }

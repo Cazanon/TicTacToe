@@ -1,4 +1,4 @@
-package es.art83.ticTacToe.webService;
+package es.art83.ticTacToe.ws.rest;
 
 import java.net.URI;
 import java.util.List;
@@ -13,40 +13,37 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.logging.log4j.LogManager;
+
 import es.art83.ticTacToe.models.daos.DaoFactory;
 import es.art83.ticTacToe.models.entities.GameEntity;
 import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.ListStringWrapper;
 import es.art83.ticTacToe.models.utils.StateModel;
+import es.art83.ticTacToe.ws.SessionUris;
+import es.art83.ticTacToe.ws.SessionPlayerUris;
 
-@Path(SessionResource.PATH_SESSIONS + SessionResource.PATH_ID_PARAM
-        + SessionPlayerResource.PATH_PLAYER)
-public class SessionPlayerResource extends SessionResource {
+@Path(SessionUris.PATH_SESSIONS + SessionUris.PATH_ID_PARAM + SessionPlayerUris.PATH_PLAYER)
+public class SessionPlayerResource {
 
-    public static final String PATH_PLAYER = "/player";
-
-    public static final String PATH_GAME_NAMES = "/gameNames";
-
-    protected void info(Integer id, String msg) {
-        this.debug("/" + id + SessionPlayerResource.PATH_PLAYER + msg);
+    private void debug(Integer id, String msg) {
+        LogManager.getLogger(this.getClass()).debug(
+                SessionUris.PATH_SESSIONS + "/" + id + SessionPlayerUris.PATH_PLAYER + msg);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
     public Response createPlayer(@PathParam("id") Integer id, PlayerEntity player) {
-        PlayerEntity playerBd = DaoFactory.getFactory().getPlayerDao()
-                .read(player.getUser());
-        if (playerBd != null
-                && playerBd.getPassword().equals(player.getPassword())) {
-            SessionEntity session = this.readSessionEntity(id);
+        PlayerEntity playerBd = DaoFactory.getFactory().getPlayerDao().read(player.getUser());
+        if (playerBd != null && playerBd.getPassword().equals(player.getPassword())) {
+            SessionEntity session = SessionResource.readSession(id);
             session.setPlayer(playerBd);
             session.setState(StateModel.CLOSED_GAME);
             DaoFactory.getFactory().getSessionDao().update(session);
-            this.info(id, " /POST: " + player);
-            return Response.created(
-                    URI.create(SessionResource.PATH_SESSIONS + id
-                            + PATH_PLAYER)).build();
+            this.debug(id, " /POST: " + player);
+            return Response.created(URI.create(SessionUris.PATH_SESSIONS + id + SessionPlayerUris.PATH_PLAYER))
+                    .build();
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
@@ -54,7 +51,7 @@ public class SessionPlayerResource extends SessionResource {
     @DELETE
     @Consumes(MediaType.APPLICATION_XML)
     public void deletePlayer(@PathParam("id") Integer id) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = SessionResource.readSession(id);
         session.setPlayer(null);
         session.setSavedGame(true);
         session.setState(StateModel.FINAL);
@@ -67,17 +64,17 @@ public class SessionPlayerResource extends SessionResource {
         } else {
             DaoFactory.getFactory().getSessionDao().update(session);
         }
-        this.info(id, " /DELETE");
+        this.debug(id, " /DELETE");
     }
 
-    @Path(SessionPlayerResource.PATH_GAME_NAMES)
+    @Path(SessionPlayerUris.PATH_GAME_NAMES)
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public ListStringWrapper nameGames(@PathParam("id") Integer id) {
-        SessionEntity session = this.readSessionEntity(id);
+        SessionEntity session = SessionResource.readSession(id);
         List<String> result = DaoFactory.getFactory().getGameDao()
                 .findPlayerGameNames(session.getPlayer());
-        this.info(id, PATH_GAME_NAMES + " /GET: " + result);
+        this.debug(id, SessionPlayerUris.PATH_GAME_NAMES + " /GET: " + result);
         return new ListStringWrapper(result);
     }
 

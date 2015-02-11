@@ -1,18 +1,16 @@
 package es.art83.ticTacToe.controllers.ws;
 
-
 import es.art83.ticTacToe.controllers.LogoutController;
 import es.art83.ticTacToe.controllers.ws.ControllerWsFactory;
 import es.art83.ticTacToe.controllers.ws.PlacePieceControllerWs;
 import es.art83.ticTacToe.controllers.ws.SaveGameControllerWs;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
-import es.art83.ticTacToe.webService.PlayerResource;
-import es.art83.ticTacToe.webService.SessionResource;
+import es.art83.ticTacToe.ws.PlayerUris;
+import es.art83.ticTacToe.ws.SessionUris;
 
 public class SaveGameControllerWebServiceTestMain {
 
-    
     private PlayerEntity playerEntity;
 
     private LogoutController logout;
@@ -21,7 +19,6 @@ public class SaveGameControllerWebServiceTestMain {
 
     private SaveGameControllerWs saveGameController;
 
-    
     public void before() {
         ControllerWsFactory factory = new ControllerWsFactory();
         this.placeController = (PlacePieceControllerWs) factory.getPlacePieceController();
@@ -32,28 +29,25 @@ public class SaveGameControllerWebServiceTestMain {
         factory.getCreateGameControler().createGame();
     }
 
-    
     public void testSaveGame() {
         this.placeController.placePiece(new CoordinateEntity(0, 0));
         this.placeController.placePiece(new CoordinateEntity(0, 1));
         this.saveGameController.saveGame("partida1");
     }
 
-
-    
     public void after() {
-        //Se deben borrar los juegos del usuario
+        // Se deben borrar los juegos del usuario
         this.logout.logout();
-        ControllerWs.buildWebServiceManager(SessionResource.PATH_SESSIONS, this.placeController.getSessionId())
-                .delete();
-        ControllerWs.buildWebServiceManager(PlayerResource.PATH_PLAYERS, this.playerEntity.getUser())
+        ControllerWs.buildWebServiceManager(SessionUris.PATH_SESSIONS,
+                this.placeController.getSessionId()).delete();
+        ControllerWs.buildWebServiceManager(PlayerUris.PATH_PLAYERS, this.playerEntity.getUser())
                 .delete();
     }
 
     public static void main(String[] args) {
-        SaveGameControllerWebServiceTestMain test= new SaveGameControllerWebServiceTestMain();
+        SaveGameControllerWebServiceTestMain test = new SaveGameControllerWebServiceTestMain();
         test.before();
         test.testSaveGame();
-        //test.after() // Falta por implementar
+        // test.after() // Falta por implementar
     }
 }

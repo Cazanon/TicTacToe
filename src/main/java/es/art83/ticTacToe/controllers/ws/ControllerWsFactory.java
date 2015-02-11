@@ -8,7 +8,7 @@ import es.art83.ticTacToe.controllers.OpenGameController;
 import es.art83.ticTacToe.controllers.PlacePieceController;
 import es.art83.ticTacToe.controllers.SaveGameController;
 import es.art83.ticTacToe.controllers.ShowGameController;
-import es.art83.ticTacToe.webService.SessionResource;
+import es.art83.ticTacToe.ws.SessionUris;
 
 //@ManagedBean(name = "controllerFactory")
 //@SessionScoped
@@ -33,7 +33,8 @@ public class ControllerWsFactory extends ControllerFactory {
     public ControllerWsFactory() {
         // Crear peticion rest para crear contexto. Almacenar la referencia del
         // contexto en el servidor
-        WsManager webServicesManager = ControllerWs.buildWebServiceManager(SessionResource.PATH_SESSIONS);
+
+        WsManager webServicesManager = ControllerWs.buildWebServiceManager(SessionUris.PATH_SESSIONS);
         webServicesManager.create();
         sessionId = webServicesManager.entity(String.class);
     }
