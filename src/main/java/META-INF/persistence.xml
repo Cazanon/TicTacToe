@@ -4,7 +4,6 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="tictactoe" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>spike.Entidad</class>
 		<class>es.art83.ticTacToe.models.entities.BoardEntity</class>
 		<class>es.art83.ticTacToe.models.entities.GameEntity</class>
 		<class>es.art83.ticTacToe.models.entities.PieceEntity</class>
