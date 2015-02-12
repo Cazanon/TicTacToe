@@ -35,7 +35,7 @@ public class DaoJpaFactory extends DaoFactory {
         Map<String, String> properties = new HashMap<>();
         properties.put(PersistenceUnitProperties.DDL_GENERATION,
                 PersistenceUnitProperties.DROP_AND_CREATE);
-        entityManagerFactory = Persistence.createEntityManagerFactory("BBDD", properties);
+        entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT, properties);
         LogManager.getLogger(DaoJpaFactory.class).debug("create Entity Manager Factory");
     }
 
