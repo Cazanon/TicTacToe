@@ -30,7 +30,7 @@ public class GameResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
-    public Response create(@QueryParam("sessionId") Integer sessionId) {
+    public Response createGame(@QueryParam("sessionId") Integer sessionId) {
         Response result;
         SessionEntity session = DaoFactory.getFactory().getSessionDao().read(sessionId);
         GameEntity game = DaoFactory.getFactory().getGameDao().read(session.getGame().getId());

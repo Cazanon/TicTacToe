@@ -25,7 +25,7 @@ public class PlayerResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
-    public Response create(PlayerEntity player) {
+    public Response createPlayer(PlayerEntity player) {
         Response result;
         PlayerEntity playerBd = DaoFactory.getFactory().getPlayerDao()
                 .read(player.getUser());
@@ -43,7 +43,7 @@ public class PlayerResource {
 
     @Path(PlayerUris.PATH_USER_PARAM)
     @DELETE
-    public void delete(@PathParam("user") String user) {
+    public void deletePlayer(@PathParam("user") String user) {
         DaoFactory.getFactory().getPlayerDao().deleteById(user);
         this.debug("/" + user + " /DELETE");
     }

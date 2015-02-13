@@ -38,7 +38,7 @@ public class SessionResource {
     }
 
     @POST
-    public Response create() {
+    public Response createSession() {
         SessionEntity session = new SessionEntity();
         DaoFactory.getFactory().getSessionDao().create(session);
         this.debug(" POST/ sessionId: " + session.getId());
@@ -76,7 +76,7 @@ public class SessionResource {
 
     @Path(SessionUris.PATH_ID_PARAM)
     @DELETE
-    public void delete(@PathParam("id") Integer id) {
+    public void deleteSession(@PathParam("id") Integer id) {
         SessionDao sessionDao = DaoFactory.getFactory().getSessionDao();
         SessionEntity session = sessionDao.read(id);
         assert (session.getGame() == null);

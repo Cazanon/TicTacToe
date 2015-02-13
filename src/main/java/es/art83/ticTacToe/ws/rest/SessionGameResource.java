@@ -71,7 +71,7 @@ public class SessionGameResource {
     @Path(SessionGameUris.PATH_GAME_OVER)
     @GET
     @Produces(MediaType.APPLICATION_XML)
-    public ColorModel isGameOver(@PathParam("id") Integer id) {
+    public ColorModel gameOver(@PathParam("id") Integer id) {
         SessionEntity session = SessionResource.readSession(id);
         ColorModel result = session.getGame().gameOver();
         this.debug(id, SessionGameUris.PATH_GAME_OVER + " /GET: " + result);
@@ -180,6 +180,7 @@ public class SessionGameResource {
                         + SessionGameUris.PATH_GAME + SessionGameUris.PATH_PIECE)).build();
     }
 
+    //TODO los parámetros row and column deberían ser un CoordinateEntity
     @Path(SessionGameUris.PATH_PIECE)
     @DELETE
     @Consumes(MediaType.APPLICATION_XML)
