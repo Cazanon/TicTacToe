@@ -23,7 +23,7 @@ public class BoardEntity {
     private List<PieceEntity> pieces;
 
     public BoardEntity() {
-        this(new ArrayList<>());
+        this(new ArrayList<PieceEntity>());
     }
 
     public BoardEntity(List<PieceEntity> list) {

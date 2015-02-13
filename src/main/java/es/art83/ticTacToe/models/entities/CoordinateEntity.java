@@ -68,7 +68,7 @@ public class CoordinateEntity {
     // TODO LUIS debería irse a board, son todas las coordenadas de un board
     // particular
     public static List<CoordinateEntity> allCoordinates() {
-        List<CoordinateEntity> coordinates = new ArrayList<>();
+        List<CoordinateEntity> coordinates = new ArrayList<CoordinateEntity>();
         for (int i = MIN; i < MAX + 1; i++) {
             for (int j = MIN; j < MAX + 1; j++) {
                 coordinates.add(new CoordinateEntity(i, j));
