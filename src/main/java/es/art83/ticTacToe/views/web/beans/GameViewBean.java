@@ -96,6 +96,7 @@ public class GameViewBean extends ViewBean {
         return this.gameNames.size() > 0;
     }
 
+    //TODO debería ser isNamedGame
     public boolean isGameNamed() {
         return this.gameName != null;
     }
