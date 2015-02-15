@@ -6,7 +6,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import es.art83.ticTacToe.controllers.LogoutController;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 
 @SuppressWarnings("serial")

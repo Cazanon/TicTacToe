@@ -2,11 +2,12 @@ package es.art83.ticTacToe.controllers.ejbs;
 
 import es.art83.ticTacToe.controllers.PlacePieceController;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
+import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.utils.StateModel;
 
 public class PlacePieceControllerEjb extends ControllerEjb implements PlacePieceController {
 
-    PlacePieceControllerEjb(Session session) {
+    PlacePieceControllerEjb(SessionEntity session) {
         super(session);
     }
 

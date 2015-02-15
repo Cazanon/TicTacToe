@@ -3,11 +3,12 @@ package es.art83.ticTacToe.controllers.ejbs;
 import es.art83.ticTacToe.controllers.OpenGameController;
 import es.art83.ticTacToe.models.daos.DaoFactory;
 import es.art83.ticTacToe.models.entities.GameEntity;
+import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.utils.StateModel;
 
 public class OpenGameControllerEjb extends ControllerEjb implements OpenGameController {
 
-    OpenGameControllerEjb(Session session) {
+    OpenGameControllerEjb(SessionEntity session) {
         super(session);
     }
 

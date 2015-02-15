@@ -1,14 +1,16 @@
 package es.art83.ticTacToe.controllers.ejbs;
 
+import es.art83.ticTacToe.models.entities.SessionEntity;
+
 abstract class ControllerEjb {
 
-    private Session ticTacToeSession;
+    private SessionEntity ticTacToeSession;
 
-    protected ControllerEjb(Session ticTacToeSession) {
+    protected ControllerEjb(SessionEntity ticTacToeSession) {
         this.ticTacToeSession = ticTacToeSession;
     }
 
-    protected Session getSession() {
+    protected SessionEntity getSession() {
         return ticTacToeSession;
     }
     

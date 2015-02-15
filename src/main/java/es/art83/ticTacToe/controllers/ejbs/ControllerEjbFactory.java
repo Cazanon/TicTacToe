@@ -11,12 +11,13 @@ import es.art83.ticTacToe.controllers.OpenGameController;
 import es.art83.ticTacToe.controllers.PlacePieceController;
 import es.art83.ticTacToe.controllers.SaveGameController;
 import es.art83.ticTacToe.controllers.ShowGameController;
+import es.art83.ticTacToe.models.entities.SessionEntity;
 
 @ManagedBean(name = "controllerFactory")
 @SessionScoped
 public class ControllerEjbFactory extends ControllerFactory {
 
-    private Session ticTacToeSession;
+    private SessionEntity ticTacToeSession;
 
     private LoginController loginController;
 
@@ -33,7 +34,7 @@ public class ControllerEjbFactory extends ControllerFactory {
     private SaveGameController saveGameController;
 
     public ControllerEjbFactory() {
-        ticTacToeSession = new Session();
+        ticTacToeSession = new SessionEntity();
     }
 
     @Override

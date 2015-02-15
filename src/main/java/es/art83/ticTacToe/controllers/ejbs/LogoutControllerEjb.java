@@ -1,11 +1,12 @@
 package es.art83.ticTacToe.controllers.ejbs;
 
 import es.art83.ticTacToe.controllers.LogoutController;
+import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.utils.StateModel;
 
 public class LogoutControllerEjb extends ControllerEjb implements LogoutController {
 
-    LogoutControllerEjb(Session session) {
+    LogoutControllerEjb(SessionEntity session) {
         super(session);
     }
 
@@ -26,7 +27,7 @@ public class LogoutControllerEjb extends ControllerEjb implements LogoutControll
 
     @Override
     public boolean savedGame() {
-        return this.getSession().getSavedGame();
+        return this.getSession().isSavedGame();
     }
 
 }

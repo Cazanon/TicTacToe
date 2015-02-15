@@ -3,11 +3,12 @@ package es.art83.ticTacToe.controllers.ejbs;
 import es.art83.ticTacToe.controllers.SaveGameController;
 import es.art83.ticTacToe.models.daos.DaoFactory;
 import es.art83.ticTacToe.models.entities.GameEntity;
+import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.utils.StateModel;
 
 public class SaveGameControllerEjb extends ControllerEjb implements SaveGameController {
 
-    SaveGameControllerEjb(Session session) {
+    SaveGameControllerEjb(SessionEntity session) {
         super(session);
     }
 

@@ -6,12 +6,13 @@ import es.art83.ticTacToe.controllers.ShowGameController;
 import es.art83.ticTacToe.models.daos.DaoFactory;
 import es.art83.ticTacToe.models.entities.CoordinateEntity;
 import es.art83.ticTacToe.models.entities.PieceEntity;
+import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.utils.ColorModel;
 import es.art83.ticTacToe.models.utils.StateModel;
 
 public class ShowGameControllerEjb extends ControllerEjb implements ShowGameController {
 
-    ShowGameControllerEjb(Session session) {
+    ShowGameControllerEjb(SessionEntity session) {
         super(session);
     }
 

@@ -3,11 +3,12 @@ package es.art83.ticTacToe.controllers.ejbs;
 import es.art83.ticTacToe.controllers.LoginController;
 import es.art83.ticTacToe.models.daos.DaoFactory;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
+import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.utils.StateModel;
 
 public class LoginControllerEjb extends ControllerEjb implements LoginController {
 
-    LoginControllerEjb(Session session) {
+    LoginControllerEjb(SessionEntity session) {
         super(session);
     }
 

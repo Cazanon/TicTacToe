@@ -2,11 +2,12 @@ package es.art83.ticTacToe.controllers.ejbs;
 
 import es.art83.ticTacToe.controllers.CreateGameController;
 import es.art83.ticTacToe.models.entities.GameEntity;
+import es.art83.ticTacToe.models.entities.SessionEntity;
 import es.art83.ticTacToe.models.utils.StateModel;
 
 public class CreateGameControllerEjb extends ControllerEjb implements CreateGameController {
 
-    CreateGameControllerEjb(Session session) {
+    CreateGameControllerEjb(SessionEntity session) {
         super(session);
     }
 
