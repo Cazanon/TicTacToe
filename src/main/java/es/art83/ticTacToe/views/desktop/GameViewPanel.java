@@ -234,7 +234,7 @@ class GameViewPanel extends ViewPanel {
 	private void logout() {
 		LoginViewPanel loginViewPanel = new LoginViewPanel(frame);
 		if (showGameController.existGame() && !logoutController.savedGame()) {
-			frame.setPanel(new SaveViewPanel(frame, true));
+			frame.setPanel(new LogoutViewPanel(frame));
 		} else {
 			logoutController.logout();
 			frame.setPanel(loginViewPanel);

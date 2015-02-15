@@ -9,6 +9,7 @@ public abstract class DaoFactory {
         DaoFactory.factory = factory;
     }
 
+    //TODO romper esta referencia a DaoJpaFactory pq crea una dependencia bidireccional
     public static DaoFactory getFactory() {
         if (factory == null) {
             factory = new DaoJpaFactory();

@@ -25,11 +25,6 @@ public class LogoutControllerEjb extends ControllerEjb implements LogoutControll
     }
 
     @Override
-    public boolean loggedOut() {
-        return this.getSession().getState() == StateModel.FINAL;
-    }
-
-    @Override
     public boolean savedGame() {
         return this.getSession().getSavedGame();
     }

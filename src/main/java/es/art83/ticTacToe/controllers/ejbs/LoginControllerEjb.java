@@ -17,6 +17,11 @@ public class LoginControllerEjb extends ControllerEjb implements LoginController
                 || this.getSession().getState() == StateModel.FINAL;
         this.getSession().setState(StateModel.CLOSED_GAME);
     }
+    
+    @Override
+    public boolean loggedOut() {
+        return this.getSession().getState() == StateModel.FINAL;
+    }
 
     @Override
     public boolean login(PlayerEntity player) {

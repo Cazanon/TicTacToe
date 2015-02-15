@@ -4,8 +4,6 @@ public interface LogoutController {
 
     void logout();
 
-    boolean loggedOut();
-
     boolean savedGame();
 
 }

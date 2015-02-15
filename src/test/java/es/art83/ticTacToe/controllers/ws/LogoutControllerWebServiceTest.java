@@ -44,12 +44,12 @@ public class LogoutControllerWebServiceTest {
     @Test
     public void testIsByeTrue() {
         this.logout.logout();
-        assertTrue(this.logout.loggedOut());
+        assertTrue(this.login.loggedOut());
     }
 
     @Test
     public void testIsByeFalse() {
-        assertFalse(this.logout.loggedOut());
+        assertFalse(this.login.loggedOut());
     }
 
     @After

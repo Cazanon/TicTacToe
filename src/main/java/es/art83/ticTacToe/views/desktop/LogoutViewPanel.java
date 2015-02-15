@@ -45,9 +45,9 @@ public class LogoutViewPanel extends ViewPanel {
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == save) {
-
+        	frame.setPanel(new SaveViewPanel(frame, true));
         } else if (event.getSource() == cancel) {
-
+        	frame.setPanel(new LoginViewPanel(frame));
         } else {
             assert false;
         }

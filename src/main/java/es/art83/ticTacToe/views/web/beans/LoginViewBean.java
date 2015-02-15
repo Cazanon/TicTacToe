@@ -8,20 +8,19 @@ import javax.faces.context.FacesContext;
 import org.apache.logging.log4j.LogManager;
 
 import es.art83.ticTacToe.controllers.LoginController;
-import es.art83.ticTacToe.controllers.LogoutController;
 
 @ManagedBean
 public class LoginViewBean extends PlayerViewBean {
-    private boolean logouted;
+    private boolean loggedOut;
 
     @PostConstruct
     public void update() {
-        LogoutController logoutController = this.getControllerFactory().getLogoutController();
-        this.logouted = logoutController.loggedOut();
+        LoginController loginController = this.getControllerFactory().getLoginController();
+        this.loggedOut = loginController.loggedOut();
     }
 
     public boolean isLogouted() {
-        return this.logouted;
+        return this.loggedOut;
     }
 
     public String login() {

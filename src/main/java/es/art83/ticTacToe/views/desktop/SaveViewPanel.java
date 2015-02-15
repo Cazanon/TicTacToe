@@ -128,7 +128,7 @@ public class SaveViewPanel extends ViewPanel {
 			duplicated = false;
 			this.updateAndVisualizeComponents();
 		} else {
-			frame.setPanel(new GameViewPanel(frame));
+			frame.setPanel(new LogoutViewPanel(frame));
 		}
 	}
 	

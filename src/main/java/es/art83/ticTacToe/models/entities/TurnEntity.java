@@ -23,7 +23,7 @@ public class TurnEntity {
         return color;
     }
 
-    public void setColor(ColorModel color) {
+    private void setColor(ColorModel color) {
         this.color = color;
     }
 

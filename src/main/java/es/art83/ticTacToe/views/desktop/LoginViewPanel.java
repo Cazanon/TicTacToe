@@ -12,8 +12,6 @@ import es.art83.ticTacToe.models.entities.PlayerEntity;
 @SuppressWarnings("serial")
 class LoginViewPanel extends UserViewPanel {
 
-    private LogoutController logoutController;
-
     private JLabel byeMsg;
 
     private JButton login;
@@ -26,7 +24,7 @@ class LoginViewPanel extends UserViewPanel {
 
     @Override
     protected void updateControllers() {
-        logoutController = factory.getLogoutController();
+        loginController = factory.getLoginController();
         super.updateControllers();
     }
 
@@ -40,7 +38,7 @@ class LoginViewPanel extends UserViewPanel {
 
     @Override
     protected void visualizeComponents() {
-        byeMsg.setVisible(logoutController.loggedOut());
+        byeMsg.setVisible(loginController.loggedOut());
         super.visualizeComponents();
         login.setVisible(true);
         register.setVisible(true);

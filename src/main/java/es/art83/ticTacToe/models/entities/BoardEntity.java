@@ -18,7 +18,7 @@ public class BoardEntity {
     @GeneratedValue
     private int id;
 
-    // TODO debería ser un set porque no hay orden de secuencia por ningún criterio
+    // TODO debería ser un Set, no List, porque no hay orden de secuencia por ningún criterio
     @OneToMany(cascade = CascadeType.ALL)
     private List<PieceEntity> pieces;
 
@@ -41,7 +41,7 @@ public class BoardEntity {
 
     public List<CoordinateEntity> coordinates(ColorModel color) {
         assert color != null;
-        List<CoordinateEntity> coordinates = new ArrayList<>();
+        List<CoordinateEntity> coordinates = new ArrayList<CoordinateEntity>();
         for (PieceEntity ficha : pieces) {
             if (ficha.getColor() == color)
                 coordinates.add(ficha.getCoordinate());
@@ -89,7 +89,7 @@ public class BoardEntity {
     }
 
     public void update(BoardEntity board) {
-        List<PieceEntity> pieces = new ArrayList<>(board.pieces);
+        List<PieceEntity> pieces = new ArrayList<PieceEntity>(board.pieces);
         this.setPieces(pieces);
     }
 
@@ -100,7 +100,7 @@ public class BoardEntity {
 
     @Override
     public BoardEntity clone() {
-        List<PieceEntity> pieces = new ArrayList<>();
+        List<PieceEntity> pieces = new ArrayList<PieceEntity>();
         for (PieceEntity pieceEntity : this.pieces) {
             pieces.add(pieceEntity.clone());
         }
