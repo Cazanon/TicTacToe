@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import es.art83.ticTacToe.models.entities.GameEntity;
 import es.art83.ticTacToe.models.entities.PlayerEntity;
 import es.art83.ticTacToe.models.utils.StateModel;
+import es.art83.ticTacToe.utils.Dependence;
 
 @Entity
 public class SessionEntity {
@@ -23,11 +24,11 @@ public class SessionEntity {
 
     private boolean savedGame;
 
-    // BLOQUEADO: nombre ---player---: SessionDaoJpa
+    @Dependence(name = "player", dependencies = {"SessionDaoJpa"})
     @OneToOne
     private PlayerEntity player;
 
-    // BLOQUEADO: nombre ---game---: SessionDaoJpa
+    @Dependence(name = "game", dependencies = {"SessionDaoJpa"})
     @OneToOne(cascade = CascadeType.ALL)
     private GameEntity game;
 

@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import es.art83.ticTacToe.models.utils.ColorModel;
+import es.art83.ticTacToe.utils.Dependence;
 
 @Entity
 public class GameEntity {
@@ -18,7 +19,7 @@ public class GameEntity {
     @GeneratedValue
     private Integer id;
 
-    // BLOQUEADO: nombre ---name---: GameDaoJpa
+    @Dependence(name = "name", dependencies = {"GameDaoJPA"})
     private String name;
 
     @Embedded
@@ -27,8 +28,8 @@ public class GameEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private BoardEntity board;
 
-    // BLOQUEADO: nombre ---player---: GameDaoJpa
     @ManyToOne
+    @Dependence(name = "player", dependencies = {"GameDaoJPA"})
     private PlayerEntity player;
 
     public GameEntity(String name, PlayerEntity player, BoardEntity board, TurnEntity turn) {
