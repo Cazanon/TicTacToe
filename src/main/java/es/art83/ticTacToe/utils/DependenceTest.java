@@ -8,7 +8,6 @@ import java.util.Arrays;
 public class DependenceTest {
     private Class<?> clazz;
 
-    
     public DependenceTest(Class<?> clazz) {
         this.clazz = clazz;
     }
@@ -18,8 +17,6 @@ public class DependenceTest {
             if (annotation.annotationType().equals(Dependence.class)) {
                 Dependence dependence = (Dependence) annotation;
                 if (!name.equals(dependence.name())) {
-                    // throw new DependenceException(dependence.name(),
-                    // Arrays.toString(dependence.dependencies()));
                     throw new AssertionError("Broken dependency \"" + dependence.name()
                             + "\" with: " + Arrays.toString(dependence.dependencies()));
                 }
@@ -28,17 +25,11 @@ public class DependenceTest {
     }
 
     public void test() {
-        Method[] metodos = clazz.getMethods();
-
-        for (Method method : metodos) {
-            testAnotation(method.getName(), method.getAnnotations());
+        for (Method method : clazz.getMethods()) {
+            this.testAnotation(method.getName(), method.getAnnotations());
         }
-
-        Field[] fields = clazz.getDeclaredFields();
-        for (Field field : fields) {
-            testAnotation(field.getName(), field.getAnnotations());
+        for (Field field : clazz.getDeclaredFields()) {
+            this.testAnotation(field.getName(), field.getAnnotations());
         }
-
     }
-
 }
